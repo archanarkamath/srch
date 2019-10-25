@@ -1,0 +1,9 @@
+uuid: eadd29ba-0ed3-4843-9c72-d015e72d748c
+langcode: en
+status: true
+dependencies: {  }
+id: human_resources
+label: 'Human Resources'
+weight: 4
+is_admin: null
+permissions: {  }

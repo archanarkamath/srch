@@ -1,0 +1,52 @@
+
+		Employee
+----------------------------
+
+Personal					Official			Work Exp							Qualificaion
+--------					--------			--------							------------
+First Name					EmpID				Prev Employement					Education Qualification
+Last Name					Branch list				Skill set			
+Father's Name				Department list								
+Mother's Name				Designation	 list							
+
+Gender						Role				list					
+Date of Birth				supervisor	--autosuggestion jqry							
+Marital status				Email									
+Blood Group					Date Of Joining							
+
+Religion					Job type Full / Half list
+Nationality					Shift Timing list
+
+Permanent Address			
+Residense Address			
+
+Phone No
+Alternative Phone No
+
+Emergency Contact No
+Relationship
+
+Pers Email ID
+
+
+
+
+
+Work and accademics
+
+*********************************************************8
+matricumatio/ 10th   stream       board/university      year of passout     % score
+12th
+graducation
+post grd.
+
+*********************************************************
+
+slno    Company name     Designation      From date   todate      Exp(Label)
+
+
+
+
+
+
+

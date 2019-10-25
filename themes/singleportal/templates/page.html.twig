@@ -1,0 +1,50 @@
+  <div id="wrapper">
+      <nav class="navbar navbar-default navbar-static-top m-b-0">
+            <div class="navbar-header">
+                
+                    {{ page.header }}
+				
+            </div>
+            <!-- /.navbar-header -->
+            <!-- /.navbar-top-links -->
+            <!-- /.navbar-static-side -->
+        </nav>
+        <!-- End Top Navigation -->
+        <!-- ============================================================== -->
+        <!-- Left Sidebar - style you can find in sidebar.scss  -->
+        <!-- ============================================================== -->
+       
+	   {{ page.mainmenu }}
+        
+	  
+        <div id="page-wrapper">
+            <div class="container-fluid">
+{{ page.breadcrumb }}
+			<main>
+				<!-- .row -->
+                <div class="row">
+                    <div class="col-md-12">
+                      {% set url = url('<current>') %}
+                      {% if 'dashboard' in url|render|render %}
+                        <div>
+                      {% else %}
+                        <div class="white-box">
+                      {% endif %}
+                      {{ page.message }}
+                      {{ page.content }}
+                        </div>
+                    </div>
+                </div>
+                <!-- .row -->
+			</main>	
+			
+			</div>
+			
+			{{ page.footer }}
+            
+        </div>
+        <!-- ============================================================== -->
+        <!-- End Page Content -->
+        <!-- ============================================================== -->
+    </div>
+  
