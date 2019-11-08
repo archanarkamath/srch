@@ -130,7 +130,7 @@ class EmployeeModel extends ControllerBase  {
 	{
 		$query = db_select(DataModel::EMPPERSONAL, 'n');
 		$query -> innerJoin(DataModel::EMPOFFICIAL, 'nf','n.userpk = nf.userpk');
-    $query->orderBy('createdon', 'DESC');
+    $query->orderBy('n.createdon', 'DESC');
 		$query->fields('n');	
 		$query->fields('nf');	
     $result = $query->execute()->fetchAll();

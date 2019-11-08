@@ -18,6 +18,7 @@ class Employee extends ControllerBase {
 
     global $base_url;
     $asset_url = $base_url.'/'.\Drupal::theme()->getActiveTheme()->getPath();
+	$rows = [];
     foreach ($result as $row => $content) {
 	  $codepk_encoded = $encrypt->encode($content->userpk);
       $html = ['#markup' => '<a href="'.$base_url.'/employee/edit/'.$codepk_encoded.'" style="text-align:center"> 
