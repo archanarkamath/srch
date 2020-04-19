@@ -1,5 +1,5 @@
 jQuery(document).ready(function(){  
-
+jQuery('body').removeAttr('style');
 jQuery("#printit").on('click', function() {
  jQuery('#printable').printThis({});
    });
