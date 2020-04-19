@@ -1,5 +1,5 @@
 dashboard.dash:
- path: '/dashboard'
+ path: '/home'
  defaults:
    _title: 'Dashboard'
    _controller: '\Drupal\dashboard\Controller\DashboardController::display'
