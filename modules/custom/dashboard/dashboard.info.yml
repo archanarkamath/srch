@@ -1,5 +1,0 @@
-name: Dashboard
-description: This modules includes dashboard configuration
-core: 8.x
-package: custom
-type: module

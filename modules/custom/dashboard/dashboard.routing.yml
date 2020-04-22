@@ -1,7 +1,0 @@
-dashboard.dash:
- path: '/dashboard'
- defaults:
-   _title: 'Dashboard'
-   _controller: '\Drupal\dashboard\Controller\DashboardController::display'
- requirements:
-   _permission: 'access content'  

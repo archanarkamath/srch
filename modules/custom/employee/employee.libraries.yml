@@ -1,6 +1,0 @@
-emp-contact:
-  js: 
-    js/address.js: {}
-emp-academic:
-  js: 
-    js/academic.js: {}
