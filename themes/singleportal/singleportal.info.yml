@@ -1,0 +1,13 @@
+core: 8.x
+type: theme
+name: 'Single Portal '
+base theme: classy
+description: 'Single Portal theme'
+
+regions:
+  header: 'Header'
+  mainmenu: 'Main Navigation'
+  breadcrumb: 'Breadcrumb'
+  message: 'Status Message'
+  content: 'Content'
+  footer: 'Footer'
