@@ -28,6 +28,11 @@ function singleportal_preprocess_page(&$variables) {
 		$variables['#attached']['library'][] = 'singleportal/js-footer';
 	}
 	
+	if(\Drupal::service('path.current')->getPath() == '/home')
+	{
+		$variables['#attached']['library'][] = 'singleportal/dashboard';
+	}
+	
 	$variables['site_name'] = \Drupal::config('system.site')->get('name');
 	
 	$variables['site_logo'] = file_create_url("public://logo-title.png");
@@ -61,7 +66,7 @@ function singleportal_preprocess_menu__account(&$variables) {
       $gender = $content->gender;
       $firstname = $content->firstname;
     }    
-    if($firstname == NULL)
+    if(@$firstname == NULL)
       $variables['username'] = $username->getUsername();
     else
       $variables['username'] = $firstname;
@@ -73,7 +78,7 @@ function singleportal_preprocess_menu__account(&$variables) {
     }
     else
     {
-      if($gender == NULL)
+      if(@$gender == NULL)
         $variables['propic'] = 'male.jpg';
       else if($gender == 'F')
         $variables['propic'] = 'female.jpg';
