@@ -1,0 +1,22 @@
+uuid: c8ca8d60-d75a-43ec-a965-dd2098c0035e
+langcode: en
+status: true
+dependencies:
+  module:
+    - system
+  theme:
+    - singleportal
+_core:
+  default_config_hash: KHQIJ7Vfl25lTjzIc7qIvnuistt-Mw2O0kG4jCofmkI
+id: singleportal_messages
+theme: singleportal
+region: message
+weight: -4
+provider: null
+plugin: system_messages_block
+settings:
+  id: system_messages_block
+  label: 'Status messages'
+  provider: system
+  label_display: '0'
+visibility: {  }
