@@ -57,14 +57,15 @@ class DepartmentForm extends FormBase {
     );
 
     $form['department']['cancel'] = array(
-      '#type'                     => 'submit',
-      '#value'                    => t('Cancel'),
+      '#type' => 'link',
+	  '#title' => t('Cancel'),
       '#attributes'               => ['class'   => ['btn btn-default']],
-      '#limit_validation_errors'  => array(),
+      //'#limit_validation_errors'  => array(),
       '#prefix'                   => '',
       '#suffix'                   => '</div></div>',
+      '#url' => \Drupal\Core\Url::fromRoute('company.departmentview'),
     );
-    $form['department']['cancel']['#submit'][] = '::ActionCancel';
+    //$form['department']['cancel']['#submit'][] = '::ActionCancel';
     $form['company']['#suffix'] = '</div></div>';
         return $form;
 

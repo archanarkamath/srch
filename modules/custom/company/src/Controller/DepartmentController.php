@@ -36,6 +36,7 @@ class DepartmentController extends ControllerBase {
                         <div class="row"><div class="col-sm-6"><a href ="add"><span  type="button" class="btn btn-info">
                         <i class="mdi mdi-plus"></i> Add </span></a></div> <br><br><br></div></div><div class="row"><div class="col-sm-12">',
       '#suffix'     => '</div></div></div></div></div></div>',
+	  '#empty'		=>	'No Department has been created yet.'
     );
     return $element;
   }

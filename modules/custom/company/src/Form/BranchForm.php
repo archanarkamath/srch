@@ -138,14 +138,15 @@ $form['branch']['pincode'] = array(
 		  );
 		  
 	$form['branch']['cancel'] = array(
-    '#type' => 'submit',
-    '#value' => t('Cancel'),
+      '#type' => 'link',
+	  '#title' => t('Cancel'),
 	  '#attributes' => ['class' => ['btn btn-default']],
-	  '#limit_validation_errors' => array(),
+	  //'#limit_validation_errors' => array(),
 	  '#prefix' => '',
-	  '#suffix' => '</div></div>',
+	  '#suffix' => '</div></div>',	  
+      '#url' => \Drupal\Core\Url::fromRoute('company.branchview'),
 		  );
-	$form['branch']['cancel']['#submit'][] = '::ActionCancel';
+	//$form['branch']['cancel']['#submit'][] = '::ActionCancel';
 	
 	$form['branch']['#suffix'] = '</div></div>';
 	
@@ -161,10 +162,10 @@ $form['branch']['pincode'] = array(
   public function validateForm(array &$form, FormStateInterface $form_state) {
 	  $field = $form_state->getValues();
   }
-	public function ActionCancel(array &$form, FormStateInterface $form_state)
-	{	  
+  public function ActionCancel(array &$form, FormStateInterface $form_state)
+  {	  
 	$form_state->setRedirect('company.branchview');
-	}
+   }
   /**
    * {@inheritdoc}
    */
@@ -199,14 +200,14 @@ $form['branch']['pincode'] = array(
 		if($mode == 'add')
 		{ 
 			$brnobj->setBranch($data);
-			drupal_set_message("succesfully saved.");
+			drupal_set_message($data['codevalues'] . " has been created.");
 		}
 		if($mode == 'edit')
 		{
 			$pk = $libobj->getIdFromUrl();
 			$pk = $encrypt->decode($pk);
 			$brnobj->updateBranch($data, $pk);
-			drupal_set_message("succesfully Updated.");
+			drupal_set_message($data['codevalues'] . " has succesfully Updated.");
 		}
   	$form_state->setRedirect('company.branchview');
 	
