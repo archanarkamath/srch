@@ -40,9 +40,10 @@ class Employee extends ControllerBase {
                         <div class="panel-body">	
                         <hr>
                         <div id="editable-datatable_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
-                        <div class="row"><div class="col-sm-6"><a href ="/portal/employee/preview"><span  type="button" class="btn btn-info" style="background-color: #4c5667">
+                        <div class="row"><div class="col-sm-6"><a href ="'.$base_url.'/employee/add/personal"><span  type="button" class="btn btn-info" style="background-color: #4c5667">
                         <i class="mdi mdi-plus"></i> Add </span></a></div> <br><br><br></div></div><div class="row"><div class="col-sm-12">',
       '#suffix'     => '</div></div></div></div></div></div>',
+	  '#empty'		=>	'No Employee has been added yet.'
     );
     return $element;
   }
