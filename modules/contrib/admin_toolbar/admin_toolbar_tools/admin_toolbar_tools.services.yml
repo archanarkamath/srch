@@ -1,4 +1,5 @@
 services:
-  admin_toolbar_tools.toolbar_handler:
-    class: Drupal\admin_toolbar_tools\ToolbarHandler
-    arguments: ['@module_handler']
+  admin_toolbar_tools.helper:
+    class: Drupal\admin_toolbar_tools\AdminToolbarToolsHelper
+    arguments:
+     - '@entity_type.manager'

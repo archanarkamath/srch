@@ -71,4 +71,10 @@ time-picker:
       assets/plugins/bower_components/timepicker/bootstrap-timepicker.min.css: {}
   js:
     assets/plugins/bower_components/timepicker/bootstrap-timepicker.min.js: { weight:-96 }
-    assets/js/timepicker.js: { weight:-95 } 
+    assets/js/timepicker.js: { weight:-95 }
+
+dashboard:
+  js:
+    assets/plugins/bower_components/waypoints/lib/jquery.waypoints.js: {}
+    assets/plugins/bower_components/counterup/jquery.counterup.min.js: {}
+    assets/js/dashboard3.js: {}

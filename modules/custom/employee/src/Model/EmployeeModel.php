@@ -130,11 +130,21 @@ class EmployeeModel extends ControllerBase  {
 	{
 		$query = db_select(DataModel::EMPPERSONAL, 'n');
 		$query -> innerJoin(DataModel::EMPOFFICIAL, 'nf','n.userpk = nf.userpk');
-    $query->orderBy('n.createdon', 'DESC');
+		$query->orderBy('n.createdon', 'DESC');
 		$query->fields('n');	
 		$query->fields('nf');	
-    $result = $query->execute()->fetchAll();
+		$result = $query->execute()->fetchAll();
 		return $result;
     
 	}
+
+	public function getEmployeeCount()
+	{
+		$query = db_select(DataModel::EMPPERSONAL, 'n');
+		$query->condition('status', 1, "=");
+		$query->fields('n');	
+		$result = $query->execute()->fetchAll();
+		return count($result);
+	}
+	
 }
