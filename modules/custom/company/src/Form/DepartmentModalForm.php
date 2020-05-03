@@ -10,6 +10,10 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\Component\Utility\UrlHelper;
 use Drupal\Core\Ajax\AjaxResponse;
 use Drupal\Core\Ajax\CloseModalDialogCommand;
+use Drupal\Core\Ajax\ReplaceCommand;
+use Drupal\Core\Ajax\AppendCommand;
+
+
 class DepartmentModalForm extends DepartmentForm {
   public function getFormId() {
     return 'department_modal_form';
@@ -57,12 +61,13 @@ class DepartmentModalForm extends DepartmentForm {
      );
 
    
-   $brnobj->setDepartment($fieldData);
-   //drupal_set_message("succesfully saved.");
-    //$renderer = \Drupal::service('renderer');
+    $brnobj->setDepartment($fieldData);
+   
+    $renderer = \Drupal::service('renderer');
 	$response = new AjaxResponse();
 	$response->addCommand(new CloseModalDialogCommand());
-	//$response->addCommand(new AppendCommand('#edit-department', 'hello'));
+	
+	$response->addCommand(new AppendCommand('#edit-department', '<option value="'.$codename.'" selected>'.$name.'</option>'));
 	//\Drupal::formBuilder()->doBuildForm($form['#multistep-form-four'], $field, $form_state);
 	//$response->addCommand(new ReplaceCommand("#edit-department", $renderer->render($form['employee']['department'])));
     return $response;
