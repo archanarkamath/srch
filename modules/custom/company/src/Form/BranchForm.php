@@ -53,7 +53,7 @@ class BranchForm extends FormBase {
       '#prefix'        => '<div class="row">',
       //'#suffix'        => '</div>',
       '#default_value' => isset($data)? $data->codevalues : '',
-      '#field_suffix' => '<i class="mdi mdi-help-circle" title="Branch name of your company " data-toggle="tooltip"></i>',
+      '#field_suffix' => '<i class="fadehide mdi mdi-help-circle" title="Branch name of your company " data-toggle="tooltip"></i>',
 
     );
 	
@@ -66,7 +66,7 @@ class BranchForm extends FormBase {
       '#suffix'        => '</div>',
       '#default_value' => isset($data)? $data->codename : '',
       '#disabled'      =>  isset($data)? "disabled" : '',
-      '#field_suffix' => '<i class="mdi mdi-help-circle" title="Unique code for this branch used for internal backend purpose. Cannot be changed once added" data-toggle="tooltip"></i>',
+      '#field_suffix' => '<i class="fadehide mdi mdi-help-circle" title="Unique code for this branch used for internal backend purpose. Cannot be changed once added" data-toggle="tooltip"></i>',
     );
     	
 	$statelist = $libobj->getStateList();

@@ -5,6 +5,8 @@ namespace Drupal\company\Controller;
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Link;
 use Drupal\Core\Url;
+use Symfony\Component\DependencyInjection\ContainerInterface;
+
 
 class DepartmentController extends ControllerBase {
   public function display() {
@@ -38,5 +40,15 @@ class DepartmentController extends ControllerBase {
       '#suffix'     => '</div></div></div></div></div></div>',
     );
     return $element;
+  }
+  
+  public function openDeptModal()
+  {
+	  $libModal = new \Drupal\library\Controller\ModalFormController;
+	  $formBuild = 'Drupal\company\Form\DepartmentModalForm';
+	  $formTitle = 'Add New Department';
+	  $modal_width = '500';
+	  $modalForm = $libModal->openModalForm($formBuild,  $formTitle, $modal_width);
+	  return $modalForm;
   }
 }

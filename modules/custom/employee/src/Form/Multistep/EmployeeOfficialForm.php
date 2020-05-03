@@ -25,10 +25,13 @@ class EmployeeOfficialForm extends EmployeeFormBase {
    * {@inheritdoc}.
    */
   public function buildForm(array $form, FormStateInterface $form_state) {
+	 
+	 global $base_url;
+	 
     if(!$this->store->get('academic_bypass'))
       {	
-        $response = new RedirectResponse(\Drupal::url('employee.empaddacademic'));
-        $response->send();
+        //$response = new RedirectResponse(\Drupal::url('employee.empaddacademic'));
+        //$response->send();
       }
       
     $form = parent::buildForm($form, $form_state);
@@ -55,7 +58,7 @@ class EmployeeOfficialForm extends EmployeeFormBase {
     '#title'         => $this->t('Employee ID'),
     '#default_value' => $this->store->get('id') ? $this->store->get('id') : '',
     '#attributes'    => ['class' => ['form-control', 'validate[required]']],
-    '#field_suffix' => '<i class="mdi mdi-help-circle" title="Employee id of the person" data-toggle="tooltip"></i>',
+    '#field_suffix' => '<i class="fadehide mdi mdi-help-circle" title="Employee id of the person" data-toggle="tooltip"></i>',
 
   );
     
@@ -80,8 +83,8 @@ class EmployeeOfficialForm extends EmployeeFormBase {
     '#title'         => $this->t('Department'),
     '#default_value' => $this->store->get('department') ? $this->store->get('department') : '',	
     '#attributes'    => ['class' => ['form-control', 'validate[required]']],
-		'#options' => $deplist,
-    
+	'#options' => $deplist,
+    '#field_suffix' => '<a href="'.$base_url.'/department/modal" class="use-ajax button"><i class="fadehide mdi mdi-settings fa-fw"></i></a>',
     '#ajax' => [
 					'callback' => '::getList',
 					'wrapper' => 'desgn_list',
@@ -121,7 +124,7 @@ class EmployeeOfficialForm extends EmployeeFormBase {
     '#default_value' => $this->store->get('role') ? $this->store->get('role') : '',	
     '#attributes'    => ['class' => ['form-control', 'validate[required]']],
     '#options'       => $rolelist,
-    '#field_suffix' => '<i class="mdi mdi-help-circle" title="Provide Role for employee. Default role will be Authenticated if no special role is given." data-toggle="tooltip"></i>',
+    '#field_suffix' => '<i class="fadehide mdi mdi-help-circle" title="Provide Role for employee. Default role will be Authenticated if no special role is given." data-toggle="tooltip"></i>',
 
   );
   
@@ -139,7 +142,7 @@ class EmployeeOfficialForm extends EmployeeFormBase {
     '#title'         => $this->t('Email'),
     '#default_value' => $this->store->get('officialemail') ? $this->store->get('officialemail') : '',	
     '#attributes'    => ['class' => ['form-control', 'validate[required,custom[email]]']],
-    '#field_suffix' => '<i class="mdi mdi-help-circle" title="Your Official Email ID" data-toggle="tooltip"></i>',
+    '#field_suffix' => '<i class="fadehide mdi mdi-help-circle" title="Your Official Email ID" data-toggle="tooltip"></i>',
   );
   $form['employee']['doj'] = array(
     '#type'          => 'textfield',
@@ -167,7 +170,7 @@ class EmployeeOfficialForm extends EmployeeFormBase {
     '#options'       => $jobshift,
     '#default_value' => $this->store->get('jobtype') ? $this->store->get('jobtype') : '',	
     '#attributes'    => ['class' => ['form-control', 'validate[required]']],
-    '#field_suffix' => '<i class="mdi mdi-help-circle" title="Helps to identify working hours" data-toggle="tooltip"></i>',
+    '#field_suffix' => '<i class="fadehide mdi mdi-help-circle" title="Helps to identify working hours" data-toggle="tooltip"></i>',
 
   );
   

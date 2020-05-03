@@ -43,7 +43,7 @@ class DesignationForm extends FormBase {
       '#suffix'        => '</div></div>',
       '#default_value' => isset($data)? $data->codename : '',
       '#disabled'      =>  isset($data)? "disabled" : '',
-      '#field_suffix' => '<i class="mdi mdi-help-circle" title="Unique code for this Designation used for internal backend purpose. Cannot be changed once added" data-toggle="tooltip"></i>',
+      '#field_suffix' => '<i class="fadehide mdi mdi-help-circle" title="Unique code for this Designation used for internal backend purpose. Cannot be changed once added" data-toggle="tooltip"></i>',
 
     );
     
@@ -69,7 +69,7 @@ class DesignationForm extends FormBase {
       '#prefix'        => '<div class="row"><div class="col-md-3"></div><div class="col-md-6">',
       '#suffix'        => '</div></div>',
       '#default_value' => isset($data)? $dept : '',
-      '#field_suffix' => '<i class="mdi mdi-help-circle" title="Select Department name in which this Designation belongs" data-toggle="tooltip"></i>',
+      '#field_suffix' => '<i class="fadehide mdi mdi-help-circle" title="Select Department name in which this Designation belongs" data-toggle="tooltip"></i>',
 
     );
     $form['designation']['#type'] = 'actions';
