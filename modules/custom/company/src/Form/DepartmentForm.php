@@ -21,15 +21,16 @@ class DepartmentForm extends FormBase {
       $pk = $libobj->getIdFromUrl();	
       $data = $brnobj->getDepartmentDetailsById($pk);
     }
+	
+	$form['#attached']['library'][] = 'singleportal/master-validation';
 	$form['#attributes']['class'] = 'form-horizontal';
 	$form['#attributes']['autocomplete'] = 'off';
     $form['department']['#prefix'] = '<div class="row"> <div class="panel panel-inverse">
-                                      <div class="panel-heading"> Department details</div><div class="panel-body">';
+                                      <div class="panel-heading">Add Department Details</div><div class="panel-body">';
     $form['department']['name'] = array(
       '#type'          => 'textfield',
       '#title'         => t('Department Name:'),
-      '#required'      => TRUE,
-      '#attributes'    => ['class' => ['form-control']],
+      '#attributes'    => ['class' => ['form-control', 'validate[required,custom[onlyLetterSp]]']],
       '#prefix'        => '<div class="row">',
       '#suffix'        => '</div>',
       '#default_value' => isset($data)? $data->codevalues : '',
@@ -37,8 +38,7 @@ class DepartmentForm extends FormBase {
     $form['department']['code'] = array(
       '#type'          => 'textfield',
       '#title'         => t('Department Code:'),
-      '#required'      => TRUE,
-      '#attributes'    => ['class' => ['form-control']],
+      '#attributes'    => ['class' => ['form-control', 'validate[required,custom[onlyLetterSp]]']],
       '#prefix'        => '<div class="row">',
       '#suffix'        => '</div>',
       '#default_value' => isset($data)? $data->codename : '',
@@ -46,7 +46,7 @@ class DepartmentForm extends FormBase {
       '#field_suffix' => '<i class="mdi mdi-help-circle" title="Unique Code for this department used for internal backend purpose. Cannot be changed once added" data-toggle="tooltip"></i>',
 
     );
-    $form['department']['#type'] = 'actions';
+    
     $form['department']['submit'] = array(
       '#type'          => 'submit',
       '#default_value' => ($mode == 'add') ? $this->t('Submit') : $this->t('Update'),
@@ -65,6 +65,7 @@ class DepartmentForm extends FormBase {
       '#suffix'                   => '</div></div>',
       '#url' => \Drupal\Core\Url::fromRoute('company.departmentview'),
     );
+	//$form['department']['#type'] = 'actions';
     //$form['department']['cancel']['#submit'][] = '::ActionCancel';
     $form['company']['#suffix'] = '</div></div>';
         return $form;

@@ -27,7 +27,7 @@ class DepartmentController extends ControllerBase {
       '#type'       => 'table',
       '#header'     =>  array(t('Sl No.'), t('Department Name'), t('Department Code'), t('Action')),      
       '#rows'       =>  $rows,
-      '#attributes' => ['class' => ['text-center table table-hover table-striped table-bordered dataTable']],
+      '#attributes' => ['class' => ['text-center table table-hover table-striped table-bordered dataTable'], 'border' => '1', 'rules' => 'all', 'style'=>['text-align-last: center;']],
       '#prefix'     => '<div class="panel panel-info">
                         <h3 class="box-title">Department Details</h3><hr>
                         <div class="panel-wrapper collapse in" aria-expanded="true">

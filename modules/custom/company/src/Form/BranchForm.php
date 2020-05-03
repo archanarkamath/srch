@@ -141,7 +141,6 @@ $form['branch']['pincode'] = array(
       '#type' => 'link',
 	  '#title' => t('Cancel'),
 	  '#attributes' => ['class' => ['btn btn-default']],
-	  //'#limit_validation_errors' => array(),
 	  '#prefix' => '',
 	  '#suffix' => '</div></div>',	  
       '#url' => \Drupal\Core\Url::fromRoute('company.branchview'),
