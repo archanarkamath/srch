@@ -298,12 +298,12 @@ public function buildForm(array $form, FormStateInterface $form_state) {
 		if($mode == 'add' )
 		{
 			$compobj->setCompany($data);
-			drupal_set_message("succesfully saved.");
+			drupal_set_message($data['companyname'] . " has succesfully created.");
 		}
 		if($mode == 'edit' )
 		{
 			$compobj->updateCompany($data);
-			drupal_set_message("succesfully Updated.");
+			drupal_set_message($data['companyname'] . "  has succesfully Updated.");
 		}
 		
 		/*

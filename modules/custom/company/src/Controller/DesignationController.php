@@ -29,9 +29,9 @@ class DesignationController extends ControllerBase {
       '#type'       => 'table',
       '#header'     =>  array(t('Sl No.'), t('Designation Name'), t('Designation Code'),t('Department'), t('Action')),      
       '#rows'       =>  $rows,
-      '#attributes' => ['class' => ['text-center table table-hover table-striped table-bordered dataTable']],
+      '#attributes' => ['class' => ['text-center table table-hover table-striped table-bordered dataTable'], 'border' => '1', 'rules' => 'all', 'style'=>['text-align-last: center;']],
       '#prefix'     => '<div class="panel panel-info">
-                        <h3 class="box-title">Designation Details</h3><hr>
+                        <h3 class="box-title">Designation List</h3><hr>
                         <div class="panel-wrapper collapse in" aria-expanded="true">
                         <div class="panel-body">    
                         <div id="editable-datatable_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
