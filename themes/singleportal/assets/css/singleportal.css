@@ -44,12 +44,15 @@ main
   border-style: none;
   line-height: 3;
 }
-.mdi-help-circle
+.fadehide
 {
 	opacity: 0.30;
 }
-.mdi-help-circle:hover
+.fadehide:hover
 {
 	opacity: 1;
 }
-
+.ui-dialog-titlebar-close
+{
+	background-image: url(../../assets/images/icon/closed.png) !important;
+}

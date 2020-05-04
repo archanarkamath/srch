@@ -54,7 +54,7 @@ public function buildForm(array $form, FormStateInterface $form_state) {
 	  '#prefix' => '<div class="row">',
 	  '#suffix' => '</div>',
 	  '#default_value' => isset($data)? $data->codevalues : '',
-    '#field_suffix' => '<i class="mdi mdi-help-circle" title="For EX: Morning Shift / Evenging Shift / Night Shift" data-toggle="tooltip"></i>',
+    '#field_suffix' => '<i class="fadehide mdi mdi-help-circle" title="For EX: Morning Shift / Evenging Shift / Night Shift" data-toggle="tooltip"></i>',
 
 
     );
@@ -66,7 +66,7 @@ public function buildForm(array $form, FormStateInterface $form_state) {
 	  '#prefix' => '<div class="row">',
 	  '#suffix' => '</div>',
 	  '#default_value' => isset($data)? $data->description : '',
-    '#field_suffix' => '<i class="mdi mdi-help-circle" title="Shift Start Timing" data-toggle="tooltip"></i>',
+    '#field_suffix' => '<i class="fadehide mdi mdi-help-circle" title="Shift Start Timing" data-toggle="tooltip"></i>',
     );
 	
 	$form['company']['totime'] = array(
@@ -76,7 +76,7 @@ public function buildForm(array $form, FormStateInterface $form_state) {
 	  '#prefix' => '<div class="row">',
 	  '#suffix' => '</div>',
 	  '#default_value' => isset($data)? $data->email : '',
-    '#field_suffix' => '<i class="mdi mdi-help-circle" title="Shift End Timing" data-toggle="tooltip"></i>',
+    '#field_suffix' => '<i class="fadehide mdi mdi-help-circle" title="Shift End Timing" data-toggle="tooltip"></i>',
     );
 	
 	
