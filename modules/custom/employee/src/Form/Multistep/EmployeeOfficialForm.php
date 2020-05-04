@@ -91,7 +91,7 @@ class EmployeeOfficialForm extends EmployeeFormBase {
 					'event' => 'change',
 					'progress' => [
 					  'type' => 'throbber',
-					  'message' => t(''),
+					  //'message' => t(''),
 					],
 				  ],
   );
