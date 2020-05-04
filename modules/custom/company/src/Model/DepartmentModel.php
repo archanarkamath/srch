@@ -65,12 +65,12 @@ public function getDepartmentId($codename)
 		$query->condition('status', 1, "=");
 		$query->condition('codetype', 'department', "=");
 		$result = $query->execute()->fetchAll();
-		$res[''] = 'Select Department';
+		$res[' '] = 'Select Department';
 		foreach($result AS $val)
 		{
 			$res[$val->codename] = $val->codevalues;
 		}
-    
+		
 		return $res;
 	}
   

@@ -85,6 +85,14 @@ company.departmentview:
  options:
     no_cache: 'TRUE'
     
+company.departmentmodal:
+ path: '/department/modal'
+ defaults:
+   _title: 'Department List'
+   _controller: '\Drupal\company\Controller\DepartmentController::openDeptModal'
+ requirements:
+   _permission: 'access content'
+    
 company.designationadd:
  path: '/designation/add'
  defaults:

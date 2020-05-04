@@ -66,7 +66,7 @@ public function buildForm(array $form, FormStateInterface $form_state) {
 	  //'#prefix' => '<div class="col-md-6">',
 	 '#suffix' => '</div>',
 	 '#default_value' => isset($data)? $data->companytype : '',
-   '#field_suffix' => '<i class="mdi mdi-help-circle" title="Category which your organisation belongs to" data-toggle="tooltip"></i>',
+   '#field_suffix' => '<i class="fadehide mdi mdi-help-circle" title="Category which your organisation belongs to" data-toggle="tooltip"></i>',
     );
 	$form['company']['cemail'] = array(
       '#type' => 'email',
