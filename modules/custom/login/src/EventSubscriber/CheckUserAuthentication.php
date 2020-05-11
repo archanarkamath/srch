@@ -16,7 +16,7 @@ class CheckUserAuthentication implements EventSubscriberInterface {
   }
 
   public function checkAuthStatus(GetResponseEvent $event) {
-
+	global $base_url;
     if ($this->account->isAnonymous() && \Drupal::routeMatch()->getRouteName() != 'user.login') {
 
       // add logic to check other routes you want available to anonymous users,
@@ -26,7 +26,7 @@ class CheckUserAuthentication implements EventSubscriberInterface {
         return;
       }
 
-      $response = new RedirectResponse('/clean/user/login', 301);
+      $response = new RedirectResponse($base_url . '/user/login', 301);
      // $response = new RedirectResponse('/portal/dashboard', 301);
 	  $response->send();
 	 

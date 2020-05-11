@@ -20,12 +20,12 @@ class CompanyController extends ControllerBase {
 	 return array(
       '#theme' => 'companyview',
       '#data' => array(
-						'name' => $data->companyname,
-						'type' => $data->codevalues,
-						'email' => $data->email,
-						'phone' => $data->phone,
-						'address'=> $data->address1,
-						'id'     => $encrypt->encode($data->companypk)
+						'name' => @$data->companyname,
+						'type' => @$data->codevalues,
+						'email' => @$data->email,
+						'phone' => @$data->phone,
+						'address'=> @$data->address1,
+						'id'     => $encrypt->encode(@$data->companypk)
 	                  ),
     );
 	

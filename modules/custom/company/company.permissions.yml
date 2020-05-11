@@ -1,3 +1,7 @@
+company add:
+    title: 'Organisation View'
+    description: 'Provide access for adding new organisation details'
+    restrict access: false
 company view:
     title: 'Organisation View'
     description: 'Provide access for viewing organisation details'

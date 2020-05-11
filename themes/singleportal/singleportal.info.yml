@@ -9,5 +9,7 @@ regions:
   mainmenu: 'Main Navigation'
   breadcrumb: 'Breadcrumb'
   message: 'Status Message'
+  dashleft: 'Dashboard Left Column'
+  dashright: 'Dashboard Right Column'
   content: 'Content'
   footer: 'Footer'

@@ -25,6 +25,7 @@ class BranchController extends ControllerBase {
     global $base_url;
     $asset_url = $base_url.'/'.\Drupal::theme()->getActiveTheme()->getPath();
     $sl = 0;
+	$rows = [];
     foreach ($result as $row => $content) {
       $sl++;
 	  $codepk_encoded = $encrypt->encode($content->codepk);
@@ -56,6 +57,7 @@ class BranchController extends ControllerBase {
                         <div class="row"  id="headingtxt"><div class="col-sm-6 "><a href ="add"><span type="button" class="btn btn-info" style="background-color: #4c5667">
                         <i class="mdi mdi-plus"></i> Add </span></a></div> <br><br><br></div></div><div class="row"><div class="col-sm-12" id="printable">',
       '#suffix'     => '</div></div></div></div></div></div>',
+	  '#empty'		=>	'No Branch has been created yet.'
     );
     return $element;
   }

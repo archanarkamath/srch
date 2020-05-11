@@ -17,29 +17,31 @@ class DesignationForm extends FormBase {
     $depobj = new \Drupal\company\Model\DepartmentModel;
 
     $mode = $libobj->getActionMode();
-    
+    $form_title = 'Add Designation Details';
     if($mode == 'edit'){
       $pk = $libobj->getIdFromUrl();	
       $data = $desobj->getDesignationDetailsById($pk);
+	  $form_title = 'Edit Designation Details';
     }
-
+	
+	$form['#attached']['library'][] = 'singleportal/master-validation';
+	$form['#attributes']['class'] = 'form-horizontal';
+	$form['#attributes']['autocomplete'] = 'off';
     $form['designation']['#prefix'] = '<div class="row"> <div class="panel panel-inverse">
-                                      <div class="panel-heading"> Designation details</div><div class="panel-body">';
+                                      <div class="panel-heading"> ' .$form_title. '</div><div class="panel-body">';
     $form['designation']['name'] = array(
       '#type'          => 'textfield',
       '#title'         => t('Designation Name:'),
-      '#required'      => TRUE,
-      '#attributes'    => ['class' => ['form-control']],
-      '#prefix'        => '<div class="row"><div class="col-md-3"></div><div class="col-md-6">',
+      '#attributes'    => ['class' => ['form-control', 'validate[required,custom[onlyLetterSp]]']],
+      '#prefix'        => '<div class="row"><div class="col-md-12">',
       '#suffix'        => '</div></div>',
       '#default_value' => isset($data)? $data->codevalues : '',
     );
     $form['designation']['code'] = array(
       '#type'          => 'textfield',
       '#title'         => t('Designation Code:'),
-      '#required'      => TRUE,
-      '#attributes'    => ['class' => ['form-control']],
-      '#prefix'        => '<div class="row"><div class="col-md-3"></div><div class="col-md-6">',
+      '#attributes'    => ['class' => ['form-control', 'validate[required,custom[onlyLetterSp]]']],
+      '#prefix'        => '<div class="row"><div class="col-md-12">',
       '#suffix'        => '</div></div>',
       '#default_value' => isset($data)? $data->codename : '',
       '#disabled'      =>  isset($data)? "disabled" : '',
@@ -63,32 +65,31 @@ class DesignationForm extends FormBase {
     $form['designation']['departmentlist'] = array(
       '#type'          => 'select',
       '#title'         => t('Department :'),
-      '#required'      => TRUE,
       '#options'       => $dept_option,
-      '#attributes'    => ['class' => ['form-control']],
-      '#prefix'        => '<div class="row"><div class="col-md-3"></div><div class="col-md-6">',
+      '#attributes'    => ['class' => ['form-control', 'validate[required]']],
+      '#prefix'        => '<div class="row"><div class="col-md-12">',
       '#suffix'        => '</div></div>',
       '#default_value' => isset($data)? $dept : '',
       '#field_suffix' => '<i class="mdi mdi-help-circle" title="Select Department name in which this Designation belongs" data-toggle="tooltip"></i>',
 
     );
-    $form['designation']['#type'] = 'actions';
+   // $form['designation']['#type'] = 'actions';
     $form['designation']['submit'] = array(
       '#type'          => 'submit',
       '#default_value' => ($mode == 'add') ? $this->t('Submit') : $this->t('Update'),
       '#button_type'   => 'primary',
       '#attributes'    => ['class' => ['btn btn-info']],
-      '#prefix'        => '<div class="row"><div class="col-md-5"></div><div class="col-md-4">',
+      '#prefix'        => '<br/><div class="row"><div class="col-md-2"></div><div class="col-md-6">',
       '#suffix'        => '',
     );
 
     $form['designation']['cancel'] = array(
-      '#type'                     => 'submit',
-      '#value'                    => t('Cancel'),
-      '#attributes'               => ['class'   => ['btn btn-default']],
-      '#limit_validation_errors'  => array(),
-      '#prefix'                   => '',
-      '#suffix'                   => '</div></div>',
+      '#type' => 'link',
+	  '#title' => t('Cancel'),
+      '#attributes' => ['class'   => ['btn btn-default']],
+      '#prefix'    => '',
+      '#suffix'    => '</div></div>',	  
+      '#url' => \Drupal\Core\Url::fromRoute('company.Designationview'),
     );
     $form['designation']['cancel']['#submit'][] = '::ActionCancel';
     $form['company']['#suffix'] = '</div></div>';
@@ -127,13 +128,13 @@ class DesignationForm extends FormBase {
     if($mode == 'add' )
     { 
       $desobj->setDesignation($field);
-      drupal_set_message("succesfully saved.");
+      drupal_set_message($field['codevalues'] . " has been succesfully created.");
     }
     if($mode == 'edit' )
     {
       $pk = $libobj->getIdFromUrl();
       $desobj->updateDesignation($field,$pk);
-      drupal_set_message("succesfully Updated.");
+      drupal_set_message($field['codevalues'] . " has succesfully Updated.");
     }
    
    $form_state->setRedirect('company.Designationview');

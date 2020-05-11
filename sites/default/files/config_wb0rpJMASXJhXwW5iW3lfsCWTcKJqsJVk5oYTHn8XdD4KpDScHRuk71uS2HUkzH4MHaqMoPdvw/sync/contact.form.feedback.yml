@@ -1,0 +1,14 @@
+uuid: c70dd01a-4d9e-40fd-ad6d-4c07e6ad7ba8
+langcode: en
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: vymHlgJy26BuI5GGj9-IXjwR3dRC5C0tij4BpWJnoqw
+id: feedback
+label: 'Website feedback'
+recipients:
+  - biswal.sumeet@gmail.com
+reply: ''
+weight: 0
+message: 'Your message has been sent.'
+redirect: ''
