@@ -27,7 +27,7 @@ class DepartmentController extends ControllerBase {
       '#type'       => 'table',
       '#header'     =>  array(t('Sl No.'), t('Department Name'), t('Department Code'), t('Action')),      
       '#rows'       =>  $rows,
-      '#attributes' => ['class' => ['text-center table table-hover table-striped table-bordered dataTable']],
+      '#attributes' => ['class' => ['text-center table table-hover table-striped table-bordered dataTable'], 'border' => '1', 'rules' => 'all', 'style'=>['text-align-last: center;']],
       '#prefix'     => '<div class="panel panel-info">
                         <h3 class="box-title">Department Details</h3><hr>
                         <div class="panel-wrapper collapse in" aria-expanded="true">
@@ -36,6 +36,7 @@ class DepartmentController extends ControllerBase {
                         <div class="row"><div class="col-sm-6"><a href ="add"><span  type="button" class="btn btn-info">
                         <i class="mdi mdi-plus"></i> Add </span></a></div> <br><br><br></div></div><div class="row"><div class="col-sm-12">',
       '#suffix'     => '</div></div></div></div></div></div>',
+	  '#empty'		=>	'No Department has been created yet.'
     );
     return $element;
   }

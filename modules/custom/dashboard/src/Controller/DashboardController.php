@@ -11,7 +11,6 @@ class DashboardController extends ControllerBase {
 public function display() {
     global $base_url;
 
-
 return array(
       '#markup' => $this->t(''),
 	  /*  <div class="row">
