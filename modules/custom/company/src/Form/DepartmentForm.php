@@ -43,7 +43,7 @@ class DepartmentForm extends FormBase {
       '#suffix'        => '</div>',
       '#default_value' => isset($data)? $data->codename : '',
       '#disabled'      =>  isset($data)? "disabled" : '',
-      '#field_suffix' => '<i class="mdi mdi-help-circle" title="Unique Code for this department used for internal backend purpose. Cannot be changed once added" data-toggle="tooltip"></i>',
+      '#field_suffix' => '<i class="fadehide mdi mdi-help-circle" title="Unique Code for this department used for internal backend purpose. Cannot be changed once added" data-toggle="tooltip"></i>',
 
     );
     
@@ -68,7 +68,7 @@ class DepartmentForm extends FormBase {
 	//$form['department']['#type'] = 'actions';
     //$form['department']['cancel']['#submit'][] = '::ActionCancel';
     $form['company']['#suffix'] = '</div></div>';
-        return $form;
+    return $form;
 
     }
  
