@@ -180,7 +180,7 @@ public function buildForm(array $form, FormStateInterface $form_state) {
 	 '#description' 	=> t('Upload your company Logo png only <br/> Reslution should be 140 X 25'),
 	 '#upload_location' => 'public://temp-img',
 	 '#attributes' => ['class' => ['form-control']],
-	 '#upload_validators'=> array('file_validate_extensions' => array('png'),  'file_validate_image_resolution' => array('140x25', '100x100')),
+	 '#upload_validators'=> array('file_validate_extensions' => array('png'),  'file_validate_image_resolution' => array('140x25', '100x25')),
 	 '#suffix' => '</div>',
 	 '#prefix' => '<div class="row">',
     );
