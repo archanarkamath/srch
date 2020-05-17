@@ -25,11 +25,12 @@ public function buildForm(array $form, FormStateInterface $form_state) {
 	$encrypt = new \Drupal\library\Controller\Encrypt;
 	
 	$mode = $libobj->getActionMode();
-	
+	$title = 'Add Company Details';
    if($mode == 'edit'){
 		$pk = $libobj->getIdFromUrl();
 		$pk = $encrypt->decode($pk);
 		$data = $compobj->getCompanyDetailsById($pk);
+		$title = 'Edit Company Details';
    }
   $form['#attributes']['class'] = 'form-horizontal';
   $form['#attributes']['autocomplete'] = 'off';
@@ -37,7 +38,7 @@ public function buildForm(array $form, FormStateInterface $form_state) {
   $form['company']['#attributes']['enctype'] = "multipart/form-data";
 
 	$form['company']['#prefix'] = '<div class="row"> <div class="panel panel-inverse">
-                            <div class="panel-heading"> Company details</div><div class="panel-body">';
+                            <div class="panel-heading"> '.$title.'</div><div class="panel-body">';
 	
 	$form['company']['cname'] = array(
       '#type' => 'textfield',
@@ -179,7 +180,7 @@ public function buildForm(array $form, FormStateInterface $form_state) {
 	 '#description' 	=> t('Upload your company Logo png only <br/> Reslution should be 140 X 25'),
 	 '#upload_location' => 'public://temp-img',
 	 '#attributes' => ['class' => ['form-control']],
-	 '#upload_validators'=> array('file_validate_extensions' => array('png'),  'file_validate_image_resolution' => array('140x25', '100x100')),
+	 '#upload_validators'=> array('file_validate_extensions' => array('png'),  'file_validate_image_resolution' => array('140x25', '100x25')),
 	 '#suffix' => '</div>',
 	 '#prefix' => '<div class="row">',
     );
