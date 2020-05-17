@@ -38,6 +38,13 @@ function singleportal_preprocess_page(&$variables) {
 	$variables['site_logo'] = file_create_url("public://logo-title.png");
 	$variables['year'] = date('Y');
 	$variables['base_path'] = base_path();
+	
+	$variables['white_box_exclud'] = FALSE;
+	$white_box_exception = ['/profile'];
+	if(in_array(\Drupal::service('path.current')->getPath(), $white_box_exception))
+	{
+		$variables['white_box_exclud'] = TRUE;;
+	}
     
 }
 
@@ -93,6 +100,12 @@ function singleportal_preprocess_html(&$variables) {
   
     $variables['attributes']['class'][] = 'fix-header';
   
+}
+
+function singleportal_preprocess_block(&$variables) {
+  if ($variables['plugin_id'] === 'system_powered_by_block') {
+    $variables['year'] = date('Y');
+  }
 }
 
 function singleportal_preprocess_breadcrumb(&$variables) {
