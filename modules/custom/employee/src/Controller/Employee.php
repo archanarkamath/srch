@@ -48,4 +48,13 @@ class Employee extends ControllerBase {
     return $element;
   }
   
+  public function profile() {
+	  
+	return array(
+      '#theme' => 'digital-profile',
+      '#data' => array(),
+    );
+	
+  }
+  
 }

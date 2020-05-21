@@ -56,12 +56,15 @@
                         </div>
                     </div>
 						</div>
-                      {% else %}
-                        <div class="white-box">
-                      {% endif %}
-                      {{ page.message }}
-                      {{ page.content }}
+                      {% elseif  white_box_exclud %}
+						  {{ page.message }}
+						  {{ page.content }}
+					  {% else %}
+                        <div class="white-box">                      
+						  {{ page.message }}
+						  {{ page.content }}
                         </div>
+					 {% endif %}
                     </div>
                 </div>
                 <!-- .row -->

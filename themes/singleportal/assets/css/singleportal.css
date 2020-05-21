@@ -24,7 +24,7 @@ div::before {
     display: inline-block;
     width: 90%;
 }
-main
+main blockquote
 {
 	font-size: 1.2rem;
 }
@@ -55,4 +55,12 @@ main
 .ui-dialog-titlebar-close
 {
 	background-image: url(../../assets/images/icon/closed.png) !important;
+}
+.box
+{
+	box-shadow: 0 4px 8px 0 grey;
+}
+.fix-width
+{
+	height: 257px;
 }
