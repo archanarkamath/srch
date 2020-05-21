@@ -47,3 +47,11 @@ employee.preview:
    _form: '\Drupal\employee\Form\Multistep\EmployeePreview'
  requirements:
    _permission: 'access content'
+   
+employee.profile:
+ path: '/profile'
+ defaults:
+   _title: 'Digital Profile'
+   _controller: '\Drupal\employee\Controller\Employee::profile'
+ requirements:
+   _permission: 'access content'
