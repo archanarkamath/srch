@@ -20,6 +20,7 @@ class CompanyController extends ControllerBase {
 	 return array(
       '#theme' => 'companyview',
       '#data' => array(
+						'logo' => file_create_url("public://logo.png"),
 						'name' => $data->companyname,
 						'type' => $data->codevalues,
 						'email' => $data->email,
