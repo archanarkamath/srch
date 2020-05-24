@@ -53,58 +53,62 @@ class EmployeeContactForm extends EmployeeFormBase {
 	$form['employee']['phoneno'] = array(
       '#type'          => 'textfield',
       '#title'         => t('Phone number:'),
-	 '#attributes'    => ['class' => ['form-control', 'validate[required][custom[phone]]']],
-   '#default_value' => $this->store->get('phoneno') ? $this->store->get('phoneno') : '',
+	  '#attributes'    => ['class' => ['form-control', 'validate[required][custom[phone]]']],
+	  '#default_value' => $this->store->get('phoneno') ? $this->store->get('phoneno') : '',
+	  '#prefix'        => '<div class="row">',
     );    
   $form['employee']['altphoneno'] = array(
     '#type'          => 'textfield',
     '#title'         => t('Alternative phone number'),
-	  '#attributes'    => ['class' => ['form-control', 'validate[required][custom[phone]]']],
-   '#default_value' => $this->store->get('altphoneno') ? $this->store->get('altphoneno') : '',
+	'#attributes'    => ['class' => ['form-control', 'validate[required][custom[phone]]']],
+    '#default_value' => $this->store->get('altphoneno') ? $this->store->get('altphoneno') : '',
+	'#suffix'        => '</div>',
   ); 
   $form['employee']['emergencyno'] = array(
       '#type'          => 'textfield',
       '#title'         => t('Emergency Contact:'),
 	  '#attributes'    => ['class' => ['form-control', 'validate[required][custom[phone]]']],
    '#default_value' => $this->store->get('emergencyno') ? $this->store->get('emergencyno') : '',
+   '#prefix'        => '<div class="row">',
     );    
   $form['employee']['relationship'] = array(
     '#type'          => 'select',
     '#title'         => t('Relationship'),
     '#options'       => [
-      'Father' => $this->t('Father'),
-      'Mother'       => $this->t('Mother'),
-      'Husband'       => $this->t('Husband'),
-      'Wife'       => $this->t('Wife'),
-      'Sibling'       => $this->t('Sibling'),
-],
+						  'Father' => $this->t('Father'),
+						  'Mother'       => $this->t('Mother'),
+						  'Husband'       => $this->t('Husband'),
+						  'Wife'       => $this->t('Wife'),
+						  'Sibling'       => $this->t('Sibling'),
+						],
    '#attributes'    => ['class' => ['form-control', 'validate[required]']],
    '#default_value' => $this->store->get('relationship') ? $this->store->get('relationship') : '',
-   '#field_suffix' => '<i class="mdi mdi-help-circle" title="Relationship with emergency contact person" data-toggle="tooltip"></i>',
-
+   '#field_suffix' => '<i class="mdi mdi-help-circle fadehide" title="Relationship with emergency contact person" data-toggle="tooltip"></i>',
+   '#suffix'        => '</div>',
   );  
   $form['employee']['email'] = array(
     '#type'          => 'textfield',
     '#title'         => $this->t('Email'),
     '#default_value' => $this->store->get('email') ? $this->store->get('email') : '',	
     '#attributes'    => ['class' => ['form-control', 'validate[required,custom[email]]']],
-    '#field_suffix' => '<i class="mdi mdi-help-circle" title="Your Personal Email ID" data-toggle="tooltip"></i>',
-
+    '#field_suffix' => '<i class="mdi mdi-help-circle fadehide" title="Your Personal Email ID" data-toggle="tooltip"></i>',
+    '#prefix'        => '<div class="row">',  
   );
   	$form['employee']['image'] = array(
     '#type' 		=> 'managed_file',
 	'#name' 		=> 'avatar',
     '#title' 		=> t('Profile Picture:'),
 	'#description' 	=> t('Upload your profile picture jpg/jpeg/png only'),
-'#upload_validators'=> array('jpg', 'jpeg', 'png'),
- '#upload_location' => 'public://avatar/',
+	'#upload_validators'=> array('jpg', 'jpeg', 'png'),
+	'#upload_location' => 'public://avatar/',
 	'#attributes' 	=> ['class' => ['form-control']],
     '#default_value'=> $this->store->get('image') ? $this->store->get('image') : '',
+	'#suffix'        => '</div>',
     );
   $form['employee']['label'] = array(
     '#type'          => 'title',
     '#title'         => t('Present Address'),
-    '#prefix'        => '<hr><div class="panel-body"><h3 class="box-title m-t-40">Present Address<hr>',
+    '#prefix'        => '<hr><div class="panel-body"><h3 class="box-title m-t-40">Present Address<hr><div class="row">',
     '#suffix'        =>  '</h3></div>',
   );      
   $form['employee']['address1'] = array(
@@ -112,7 +116,7 @@ class EmployeeContactForm extends EmployeeFormBase {
     '#title'         => t('Address Line 1'),
     '#attributes'    => ['class' => ['form-control', 'validate[required]']],
     '#default_value' => $this->store->get('address1') ? $this->store->get('address1') : '',
-
+	'#suffix'        => '</div>',
   );    
   
   $form['employee']['address2'] = array(
@@ -120,6 +124,7 @@ class EmployeeContactForm extends EmployeeFormBase {
     '#title'         => t('Address Line 2:'),
     '#attributes'    => ['class' => ['form-control', 'validate[required]']],
     '#default_value' => $this->store->get('address2') ? $this->store->get('address2') : '',
+	'#prefix'        => '<div class="row">', 
   );    
     
   $statelist = $libobj->getStateList();
@@ -128,7 +133,7 @@ class EmployeeContactForm extends EmployeeFormBase {
 		'#type'          => 'select',
 		'#title'         => t('State:'),
 		'#options' => $statelist,
-    '#attributes'    => ['class' => ['form-control', 'validate[required]']],
+        '#attributes'    => ['class' => ['form-control', 'validate[required]']],
 		'#suffix'        => '</div>',
 		'#default_value' => $this->store->get('state') ? $this->store->get('state') : '',
 		'#ajax' => [
