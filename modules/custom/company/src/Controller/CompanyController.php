@@ -25,7 +25,7 @@ class CompanyController extends ControllerBase {
 						'type' => $data->codevalues,
 						'email' => $data->email,
 						'phone' => $data->phone,
-						'address'=> $data->address1 . ', ' . $data->address2 .', '. $data->city .', '. $data->state .', '. $data->country .', '. $data->pincode,
+						'address'=> $data->address1 . ', ' . $data->address2 .', '. $data->cityname .', '. $data->statename .', '. $data->countryname .', '. $data->pincode,
 						'id'     => $encrypt->encode($data->companypk)
 	                  ),
     );
