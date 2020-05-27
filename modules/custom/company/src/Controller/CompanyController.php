@@ -20,11 +20,12 @@ class CompanyController extends ControllerBase {
 	 return array(
       '#theme' => 'companyview',
       '#data' => array(
+						'logo' => file_create_url("public://logo.png"),
 						'name' => $data->companyname,
 						'type' => $data->codevalues,
 						'email' => $data->email,
 						'phone' => $data->phone,
-						'address'=> $data->address1,
+						'address'=> $data->address1 . ', ' . $data->address2 .', '. $data->cityname .', '. $data->statename .', '. $data->countryname .', '. $data->pincode,
 						'id'     => $encrypt->encode($data->companypk)
 	                  ),
     );

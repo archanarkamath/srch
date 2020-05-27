@@ -52,9 +52,7 @@ class EmployeePersonalForm extends EmployeeFormBase {
       '#type' 		   => 'textfield',
       '#title' 		   => $this->t('First Name'),
       '#default_value' => $this->store->get('firstname') ? $this->store->get('firstname') : '',
-      //'#required'      	=> TRUE,
 	  '#attributes'    => ['class' => ['form-control', 'validate[required,custom[onlyLetterSp]]']],
-	//  '#attributes'    => ['class' => ['form-control']],
 	  '#prefix'        => '<div class="row">',
       '#suffix'        => '',
     );
@@ -63,7 +61,6 @@ class EmployeePersonalForm extends EmployeeFormBase {
       '#type' 			=> 'textfield',
       '#title' 			=> $this->t('Last Name'),
       '#default_value' 	=> $this->store->get('lastname') ? $this->store->get('lastname') : '',
-      //'#required'      	=> TRUE,
 	  '#attributes'    => ['class' => ['form-control', 'validate[required,custom[onlyLetterSp]]']],
       '#suffix'        => '</div>',
     );
@@ -72,7 +69,6 @@ class EmployeePersonalForm extends EmployeeFormBase {
       '#type' 		   => 'textfield',
       '#title' 		   => $this->t('Father Name'),
       '#default_value' => $this->store->get('fname') ? $this->store->get('fname') : '',
-      //'#required'      	=> TRUE,
 	  '#attributes'    => ['class' => ['form-control', 'validate[required,custom[onlyLetterSp]]']],
 	  '#prefix'        => '<div class="row">',
       '#suffix'        => '',
@@ -82,7 +78,6 @@ class EmployeePersonalForm extends EmployeeFormBase {
       '#type' 			=> 'textfield',
       '#title' 			=> $this->t('Mother Name'),
       '#default_value' 	=> $this->store->get('mname') ? $this->store->get('mname') : '',
-      //'#required'      	=> TRUE,
 	  '#attributes'    => ['class' => ['form-control']],
       '#suffix'        => '</div>',
     );
@@ -90,7 +85,6 @@ class EmployeePersonalForm extends EmployeeFormBase {
 	$form['employee']['gender'] = array(
       '#type'          => 'select',
       '#title'         => t('Gender'),
-      //'#required'      	=> TRUE,
       '#options'       => ['M' => 'Male', 'F' => 'Female', 'O' => 'Other'],
       '#attributes'    => ['class' => ['form-control', 'validate[required]']],
       '#prefix'        => '<div class="row">',
@@ -102,7 +96,6 @@ class EmployeePersonalForm extends EmployeeFormBase {
       '#type' 			=> 'textfield',
       '#title' 			=> $this->t('Date of Birth'),
       '#default_value' 	=> $this->store->get('dob') ? $this->store->get('dob') : '',
-      //'#required'      	=> TRUE,
       '#attributes'    => ['id' => ['datetimepicker'],'class' => ['form-control' , 'validate[required]'],'readonly' => 'readonly'],
       '#suffix'        => '</div>',
     );
@@ -110,7 +103,6 @@ class EmployeePersonalForm extends EmployeeFormBase {
 	$form['employee']['marital'] = array(
       '#type'          => 'select',
       '#title'         => t('Marital'),
-      //'#required'      	=> TRUE,
       '#options'       => ['M' => 'Married', 'U' => 'Unmarried'],
       '#attributes'    => ['class' => ['form-control', 'validate[required]']],
       '#prefix'        => '<div class="row">',
@@ -134,7 +126,6 @@ class EmployeePersonalForm extends EmployeeFormBase {
     '#title' 			=> $this->t('Blood Group'),
 	  '#options'       => $blood,
     '#default_value' 	=> $this->store->get('blood') ? $this->store->get('blood') : '',
-   //'#required'      	=> TRUE,
 	  '#attributes'    => ['class' => ['form-control', 'validate[required]']],
     '#suffix'        => '</div>',
     );
