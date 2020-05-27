@@ -24,9 +24,9 @@ div::before {
     display: inline-block;
     width: 90%;
 }
-main blockquote
+main, blockquote
 {
-	font-size: 1.2rem;
+	font-size: 1.35rem;
 }
 .addmore
 {
@@ -51,6 +51,7 @@ main blockquote
 .fadehide:hover
 {
 	opacity: 1;
+	cursor: pointer; 
 }
 .ui-dialog-titlebar-close
 {
@@ -63,4 +64,8 @@ main blockquote
 .fix-width
 {
 	height: 257px;
+}
+.fonticon
+{
+	font-size: x-large;
 }
