@@ -424,7 +424,7 @@ class EmployeeContactForm extends EmployeeFormBase {
 		$this->store->set('permanentpincode', $form_state->getValue('pincode'));
 	}
   	$this->store->set('contact_bypass', TRUE);
-
+	
     $form_state->setRedirect('employee.empaddacademic');
    
   }
