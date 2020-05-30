@@ -13,7 +13,7 @@ class Employee extends ControllerBase {
  public function emplist() {
  	
   $empobj = new EmployeeModel;    
-  $result = $empobj->getEmployeeDetails();
+  $result = $empobj->getEmployeeList();
   $encrypt = new Encrypt;
 
     global $base_url;
@@ -48,11 +48,24 @@ class Employee extends ControllerBase {
     return $element;
   }
   
+/*
+* Display Employee Profile 
+* @parameter Logged in User
+* @output passing data variable to template file
+*/
+  
   public function profile() {
-	  
+	$empobj = new EmployeeModel; 
+	$avatar = $empobj->getUserPic();
+	$personal_details = $libobj->getPersonalDetailsById($username->id());
+	$official_details = $libobj->getOfficialDetailsById($username->id());
+	
 	return array(
-      '#theme' => 'digital-profile',
-      '#data' => array(),
+      '#theme' => 'employee-profile',
+      '#data' => array(
+						'profpic'	=>	$avatar,
+						'name'		=>	$personal_details->firstname . ' ' . $personal_details->lastname,
+				),
     );
 	
   }

@@ -118,15 +118,53 @@ class EmployeeModel extends ControllerBase  {
 		return $res;
 	}
 	
-  public function getPersonalDetailsById($id)
+	public function getPersonalDetailsById($id)
 	{
 		$query = db_select(DataModel::EMPPERSONAL, 'n');
 		$query->fields('n');	
 		$query->condition('userpk', $id ,"=");
-    $result = $query->execute()->fetchAll();
+		$result = $query->execute()->fetch();
 		return $result;
 	}
-  public function getEmployeeDetails()
+	/*
+	* @parameter user id
+	* get official details
+	*/
+	public function getOfficialDetailsById($id)
+	{
+		/*
+		
+		SELECT 
+    oi.empid AS employeeid,
+    cv1.codevalues AS branch,
+    cv2.codevalues AS department,
+    cv3.codevalues AS designation,
+    cv4.codevalues AS jobtype,
+    cv5.codevalues AS jobnature,
+    oi.email AS eamil,
+    oi.doj AS joining,
+    cv6.codevalues AS jobshift
+FROM
+    srch_officialinfo oi
+	LEFT JOIN srch_codevalues cv1 ON cv1.codename = oi.branch AND cv1.codetype = 'branch'
+    LEFT JOIN srch_codevalues cv2 ON cv2.codename = oi.department AND cv2.codetype = 'department'
+    LEFT JOIN srch_codevalues cv3 ON cv3.codename = oi.designation AND cv3.codetype = 'designation'
+    LEFT JOIN srch_codevalues cv4 ON cv4.codename = oi.jobtype AND cv4.codetype = 'jobtype'
+    LEFT JOIN srch_codevalues cv5 ON cv5.codename = oi.jobnature AND cv5.codetype = 'jobnature'
+    LEFT JOIN srch_codevalues cv6 ON cv6.codename = oi.shifttime AND cv6.codetype = 'jobshift'
+WHERE
+	oi.userpk = 4
+    ;
+	
+	*/
+		$query = db_select(DataModel::EMPOFFICIAL, 'n');
+		$query->fields('n');	
+		$query->condition('userpk', $id ,"=");
+		$result = $query->execute()->fetch();
+		return $result;
+	}
+	
+	public function getEmployeeList()
 	{
 		$query = db_select(DataModel::EMPPERSONAL, 'n');
 		$query -> innerJoin(DataModel::EMPOFFICIAL, 'nf','n.userpk = nf.userpk');
@@ -147,4 +185,26 @@ class EmployeeModel extends ControllerBase  {
 		return count($result);
 	}
 	
+	/*
+	* get user pic from Drupal user object
+	* Set default Pic if user has not uploaded pic
+	*/
+	public function getUserPic()
+	{
+		$user = \Drupal::currentUser();
+		$personal_details = $this->getPersonalDetailsById($user->id());
+		
+		$userobj = \Drupal::service('entity.manager')->getStorage('user')->load($user->id());
+		$avatar = 'male.jpg';
+		if($userobj->user_picture->entity != NULL)
+		{
+		  $avatar = $userobj->user_picture->entity->getFileName();     
+		}
+		else
+		{
+		  $avatar = ( $personal_details->gender == 'M' ) ? 'male.jpg' : 'female.jpg';	  
+		}
+		
+		return  $avatar;
+	}
 }
