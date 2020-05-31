@@ -9,7 +9,7 @@
 						<p>{{ data.name }}</p>
 					</div>
 					<div class="col-md-6"><strong>Designation</strong>
-						<p>ITA</p>
+						<p>{{ data.designation }}<p>
 					</div>
 				</div>
 				<!-- /.row -->
@@ -17,10 +17,10 @@
 				<!-- .row -->
 				<div class="row text-center m-t-10">
 					<div class="col-md-6 b-r"><strong>Email ID</strong>
-						<p>sumeet.biswal@preqube.com</p>
+						<p>{{ data.email }}</p>
 					</div>
 					<div class="col-md-6"><strong>EMPID</strong>
-						<p>1364945</p>
+						<p>{{ data.empid }}</p>
 					</div>
 				</div>
 				<!-- /.row -->
@@ -49,7 +49,7 @@
                                                     <div class="form-group">
                                                         <label class="control-label col-md-4">Father:</label>
                                                         <div class="col-md-8">
-                                                            <span class="form-control-static">Pratap Kumar Biswal</span>
+                                                            <span class="form-control-static">{{ data.fathername }}</span>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -59,7 +59,7 @@
                                                     <div class="form-group">
                                                         <label class="control-label col-md-4">Mother:</label>
                                                         <div class="col-md-8">
-                                                            <span class="form-control-static"> Puspalata Biswal </span>
+                                                            <span class="form-control-static"> {{ data.mothername }} </span>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -79,7 +79,7 @@
                                                     <div class="form-group">
                                                         <label class="control-label col-md-4">Birth Date:</label>
                                                         <div class="col-md-8">
-                                                            <span class="form-control-static"> 25-06-1989 </span>
+                                                            <span class="form-control-static"> {{ data.dob }} </span>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -89,7 +89,7 @@
                                                     <div class="form-group">
                                                         <label class="control-label col-md-4">Marital:</label>
                                                         <div class="col-md-8">
-                                                            <span class="form-control-static"> Single </span>
+                                                            <span class="form-control-static"> {{ data.marital }} </span>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -99,7 +99,7 @@
                                                     <div class="form-group">
                                                         <label class="control-label col-md-4">Blood Group:</label>
                                                         <div class="col-md-8">
-                                                            <span class="form-control-static"> O+ </span>
+                                                            <span class="form-control-static"> {{ data.bloodgroup }} </span>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -109,7 +109,7 @@
                                                     <div class="form-group">
                                                         <label class="control-label col-md-4">Religion:</label>
                                                         <div class="col-md-8">
-                                                            <span class="form-control-static"> Hindu </span>
+                                                            <span class="form-control-static"> {{ data.religion }} </span>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -210,7 +210,7 @@
                                                     <div class="form-group">
                                                         <label class="control-label col-md-4">Employee Type:</label>
                                                         <div class="col-md-8">
-                                                            <span class="form-control-static"> Permanent </span>
+                                                            <span class="form-control-static"> {{ data.jobnature }} </span>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -220,7 +220,7 @@
                                                     <div class="form-group">
                                                         <label class="control-label col-md-4">Job Type:</label>
                                                         <div class="col-md-8">
-                                                            <span class="form-control-static"> Full Time </span>
+                                                            <span class="form-control-static"> {{ data.jobtype }} </span>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -230,7 +230,7 @@
                                                     <div class="form-group">
                                                         <label class="control-label col-md-4">Joined On:</label>
                                                         <div class="col-md-8">
-                                                            <span class="form-control-static"> 22-02-2017 </span>
+                                                            <span class="form-control-static"> {{ data.joining }} </span>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -240,7 +240,7 @@
                                                     <div class="form-group">
                                                         <label class="control-label col-md-4">Shift:</label>
                                                         <div class="col-md-8">
-                                                            <span class="form-control-static"> Day Shift </span>
+                                                            <span class="form-control-static"> {{ data.jobshift }} </span>
                                                         </div>
                                                     </div>
                                                 </div>
