@@ -69,16 +69,15 @@ function singleportal_preprocess_menu__account(&$variables) {
   {
     $username = \Drupal\user\Entity\User::load($user->id());  
     $personal_details = $libobj->getPersonalDetailsById($username->id());
-    foreach ($personal_details as $row => $content) {
-      $gender = $content->gender;
-      $firstname = $content->firstname;
-    }    
-    if(@$firstname == NULL)
-      $variables['username'] = $username->getUsername();
-    else
-      $variables['username'] = $firstname;
+	
+    $gender = $personal_details->gender;
+    $firstname = $personal_details->firstname;
+    
+    $variables['username'] = (@$firstname == NULL) ? $username->getUsername() : $firstname;
+   
     $variables['emailid'] = $username->getEmail();
-    $user_pic = \Drupal::service('entity.manager')->getStorage('user')->load($user->id());
+    
+	$user_pic = \Drupal::service('entity.manager')->getStorage('user')->load($user->id());
     if($user_pic->user_picture->entity != NULL)
     {
       $variables['propic'] = $user_pic->user_picture->entity->getFileName();     
