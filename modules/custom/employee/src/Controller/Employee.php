@@ -60,6 +60,7 @@ class Employee extends ControllerBase {
 	$user = \Drupal::currentUser();
 	$prsnl_details = $empobj->getPersonalDetailsById($user->id());
 	$ofc_details = $empobj->getOfficialDetailsById($user->id());
+	$cont_details = $empobj->getContactDetailsById($user->id());
 	
 	switch($prsnl_details->gender)
 	{
@@ -88,6 +89,23 @@ class Employee extends ControllerBase {
 						'nationality'	=> 	$prsnl_details->nationality,
 						'gender'		=> 	$gender,
 						
+						'phoneno'		=>	$cont_details->phoneno,
+						'altphone'		=>	$cont_details->altphone,
+						'emrgphone'		=>	$cont_details->emrgphone,
+						'relationship'	=>	$cont_details->relationship,
+						'pers_email'	=>	$cont_details->email,
+						'res_address1'	=>	$cont_details->res_address1,
+						'res_address2'	=>	$cont_details->res_address2,
+						'res_state'		=>	$cont_details->res_state,
+						'res_city'		=>	$cont_details->res_city,
+						'res_country'	=>	$cont_details->res_country,
+						'res_pincode'	=>	$cont_details->res_pincode,
+						'perm_address1'	=>	$cont_details->perm_address1,
+						'perm_address2'	=>	$cont_details->perm_address2,
+						'perm_state'	=>	$cont_details->perm_state,
+						'perm_city'		=>	$cont_details->perm_city,
+						'perm_country'	=>	$cont_details->perm_country,
+						'perm_pincode'	=>	$cont_details->perm_pincode,
 						
 						'empid'			=> 	$ofc_details->empid,
 						'designation' 	=> 	$ofc_details->designation,
