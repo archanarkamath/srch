@@ -236,12 +236,29 @@ class EmployeeModel extends ControllerBase  {
 		$query->addField('pcntry', 'name', 'perm_country');
 		$query->addField('cnt', 'perm_pincode', 'perm_pincode');
 		
-		$query->condition('userpk', $id ,"=");
+		$query->condition('cnt.userpk', $id ,"=");
 		$result = $query->execute()->fetch();
 		return $result;
 		
 	}
 	
+	public function getAcademicDetailsById($id)
+	{
+		$query = db_select(DataModel::EMPACADEMIC, 'n');
+		$query->fields('n');	
+		$query->condition('userpk', $id ,"=");
+		$result = $query->execute()->fetchAll();
+		return $result;
+	}
+	
+	public function getPrevEmployeementDetailsById($id)
+	{
+		$query = db_select(DataModel::EMPEXPRNC, 'n');
+		$query->fields('n');	
+		$query->condition('userpk', $id ,"=");
+		$result = $query->execute()->fetchAll();
+		return $result;
+	}
 	
 	public function getEmployeeList()
 	{

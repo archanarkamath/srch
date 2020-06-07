@@ -61,6 +61,25 @@ class Employee extends ControllerBase {
 	$prsnl_details = $empobj->getPersonalDetailsById($user->id());
 	$ofc_details = $empobj->getOfficialDetailsById($user->id());
 	$cont_details = $empobj->getContactDetailsById($user->id());
+	$academic_details = $empobj->getAcademicDetailsById($user->id());
+	$academic = [];
+	foreach($academic_details AS $val)
+	{
+		$academic[$val->class] = $val->board . ' ('. date("Y", strtotime($val->yearofpassing)) . ')';
+	}
+	
+	$prevEmp_details = $empobj->getPrevEmployeementDetailsById($user->id());
+	
+	$expr = [];
+	foreach($prevEmp_details AS $item)
+	{
+		$expr[] = [
+					'organisation'	=>	$item->organisation,
+					'designation'	=>	$item->designation,
+					'fromdate'		=>	date("j F Y", strtotime($item->fromdate)),
+					'todate'		=>	date("j F Y", strtotime($item->todate)),
+				  ];
+	}
 	
 	switch($prsnl_details->gender)
 	{
@@ -108,12 +127,17 @@ class Employee extends ControllerBase {
 						'perm_pincode'	=>	$cont_details->perm_pincode,
 						
 						'empid'			=> 	$ofc_details->empid,
+						'branch'		=>	$ofc_details->branch,
+						'department'	=>	$ofc_details->department,
 						'designation' 	=> 	$ofc_details->designation,
 						'jobtype' 		=> 	$ofc_details->jobtype,
 						'jobnature' 	=> 	$ofc_details->jobnature,
 						'email' 		=> 	$ofc_details->email,
 						'joining' 		=> 	date("j F Y", strtotime($ofc_details->joining)),
 						'jobshift' 		=> 	$ofc_details->jobshift ,
+						
+						'qual'			=>	$academic,
+						'expr'			=>	$expr
 				),
     );
 	
