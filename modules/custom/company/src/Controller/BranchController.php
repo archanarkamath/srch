@@ -43,12 +43,11 @@ class BranchController extends ControllerBase {
       '#attributes' => ['class' => ['table text-center table-hover table-striped table-bordered dataTable'], 'border' => '1', 'rules' => 'all', 'style'=>['text-align-last: center;']],
       '#prefix'     => '<div class="panel panel-info">
                         <h3 class="box-title col-md-10">Branch List</h3>
-                        <div class=" col-md-2">
+                    <div class=" col-md-2">
                         <a href="#" id="exportit" data-toggle="tooltip" data-original-title="Word Document"><img src="'.$asset_url.'/assets/images/icon/word.png" /></a> &nbsp;
 						<a href="'.$base_url.'/branch/export/excel" data-toggle="tooltip" data-original-title="Excel"><img src="'.$asset_url.'/assets/images/icon/excel.png" /></a> &nbsp;
 						<a id="" data-toggle="tooltip" data-original-title="PDF"><img src="'.$asset_url.'/assets/images/icon/pdf.png" /></a> &nbsp;
-						<a id="printit" data-toggle="tooltip" data-original-title="Print"><img src="'.$asset_url.'/assets/images/icon/print.png" /></a> &nbsp;
-						<a id="" data-toggle="tooltip" data-original-title="Download"><img src="'.$asset_url.'/assets/images/icon/download.png" /></a> 
+						<a id="printit" data-toggle="tooltip" data-original-title="Print"><img src="'.$asset_url.'/assets/images/icon/print.png" /></a> 
 						</div>
                         <div class="panel-wrapper collapse in" aria-expanded="true">
                         <div class="panel-body">	
