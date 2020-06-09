@@ -102,7 +102,7 @@ class EmployeeContactForm extends EmployeeFormBase {
 	'#upload_validators'=> array('jpg', 'jpeg', 'png'),
 	'#upload_location' => 'public://avatar/',
 	'#attributes' 	=> ['class' => ['form-control']],
-    '#default_value'=> $this->store->get('image') ? array($this->store->get('image')) : '',
+    '#default_value'=> $this->store->get('image') ? $this->store->get('image') : '',
 	'#suffix'        => '</div>',
     );
   $form['employee']['label'] = array(
@@ -164,12 +164,11 @@ class EmployeeContactForm extends EmployeeFormBase {
     '#attributes'    => ['class' => ['form-control']],
     '#prefix'        => '<div id="citylist">',
     '#suffix'        => '</div>',
+  //'#attributes'    => ['class' => ['form-control'], 'id' => ['city']],
     '#attributes'    => ['class' => ['form-control', 'validate[required]']],
     '#default_value' => $this->store->get('city') ? $this->store->get('city') : '',
-	'#validated' => TRUE
+ 
   );
-   
-	
 	  $form['employee']['country'] = array(
 		'#type'          => 'select',
 		'#title'         => t('Country:'),
@@ -424,7 +423,7 @@ class EmployeeContactForm extends EmployeeFormBase {
 		$this->store->set('permanentpincode', $form_state->getValue('pincode'));
 	}
   	$this->store->set('contact_bypass', TRUE);
-	
+
     $form_state->setRedirect('employee.empaddacademic');
    
   }
