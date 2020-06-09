@@ -181,7 +181,6 @@ public function buildForm(array $form, FormStateInterface $form_state) {
 	 '#upload_location' => 'public://temp-img',
 	 '#attributes' => ['class' => ['form-control']],
 	 '#upload_validators'=> array('file_validate_extensions' => array('png'),),//  'file_validate_image_resolution' => array('140x25', '100x25')),
-	 //'#default_value'=> isset($data) ? array($data->clogo) : '',
 	 '#theme' => 'image_widget',
 	 '#preview_image_style' => 'medium',
 	 '#suffix' => '</div>',

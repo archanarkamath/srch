@@ -42,7 +42,7 @@ class LibController extends ControllerBase {
 		return $res;
 	}
 	
-	public function getStateNameById($id)
+  public function getStateNameById($id)
 	{
 		$query = db_select(DataModel::STATE, 'n');
 				$query->fields('n');	

@@ -39,15 +39,15 @@ class DepartmentModel extends ControllerBase {
 	}
 
  	public function getAllDepartmentDetails() {
-		$query = db_select('srch_codevalues', 'n');
-		$query->fields('n');    
-		$query->orderBy('createdon', 'DESC');
-		$query->condition('status', 1, "=");
-		$query->condition('codetype', 'department', "=");
-		$result = $query->execute()->fetchAll();
-		return $result;
-	  }
-	public function getDepartmentId($codename)
+    $query = db_select('srch_codevalues', 'n');
+    $query->fields('n');    
+    $query->orderBy('createdon', 'DESC');
+    $query->condition('status', 1, "=");
+    $query->condition('codetype', 'department', "=");
+    $result = $query->execute()->fetchAll();
+    return $result;
+  }
+public function getDepartmentId($codename)
 	{
 		$query = db_select('srch_codevalues', 'codepk');
 				$query->fields('codepk');	
@@ -71,18 +71,6 @@ class DepartmentModel extends ControllerBase {
 			$res[$val->codename] = $val->codevalues;
 		}
 		
-		return $res;
-	}
-	
-	public function deptIsExist($dept_name)
-	{
-		$query = db_select('srch_codevalues', 'codepk');
-				$query->fields('codepk');	
-				$query->condition('codevalues', $dept_name, "=");
-				$query->condition('codetype', 'department' , "=");
-				$result = $query->execute()->fetch();
-		
-		$res = (empty($result)) ? FALSE : TRUE;
 		return $res;
 	}
   

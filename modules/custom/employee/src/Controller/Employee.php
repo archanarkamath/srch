@@ -13,7 +13,7 @@ class Employee extends ControllerBase {
  public function emplist() {
  	
   $empobj = new EmployeeModel;    
-  $result = $empobj->getEmployeeList();
+  $result = $empobj->getEmployeeDetails();
   $encrypt = new Encrypt;
 
     global $base_url;
@@ -48,55 +48,11 @@ class Employee extends ControllerBase {
     return $element;
   }
   
-/*
-* Display Employee Profile 
-* @parameter Logged in User
-* @output passing data variable to template file
-*/
-  
   public function profile() {
-	$empobj = new EmployeeModel; 
-	$avatar = $empobj->getUserPic();
-	$user = \Drupal::currentUser();
-	$prsnl_details = $empobj->getPersonalDetailsById($user->id());
-	$ofc_details = $empobj->getOfficialDetailsById($user->id());
-	
-	switch($prsnl_details->gender)
-	{
-		CASE 'M':
-			$gender = 'Male';
-			break;
-		CASE 'F':
-			$gender = 'Female';
-			break;
-		default:
-			$gender = 'Other';
-			break;
-	}
-	
+	  
 	return array(
-      '#theme' => 'employee-profile',
-      '#data' => array(
-						'profpic'		=>	$avatar,
-						'name'			=> 	$prsnl_details->firstname . ' ' . $prsnl_details->lastname,
-						'fathername'	=> 	$prsnl_details->fathername,
-						'mothername'	=> 	$prsnl_details->mothername,
-						'dob'			=> 	date("j F Y", strtotime($prsnl_details->dob)),
-						'marital'		=> 	($prsnl_details->marital == 'M') ? 'Married' : 'Unmarried',
-						'bloodgroup'	=> 	$prsnl_details->bloodgroup,
-						'religion'		=> 	$prsnl_details->religion,
-						'nationality'	=> 	$prsnl_details->nationality,
-						'gender'		=> 	$gender,
-						
-						
-						'empid'			=> 	$ofc_details->empid,
-						'designation' 	=> 	$ofc_details->designation,
-						'jobtype' 		=> 	$ofc_details->jobtype,
-						'jobnature' 	=> 	$ofc_details->jobnature,
-						'email' 		=> 	$ofc_details->email,
-						'joining' 		=> 	date("j F Y", strtotime($ofc_details->joining)),
-						'jobshift' 		=> 	$ofc_details->jobshift ,
-				),
+      '#theme' => 'digital-profile',
+      '#data' => array(),
     );
 	
   }

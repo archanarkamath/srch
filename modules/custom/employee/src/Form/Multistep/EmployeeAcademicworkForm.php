@@ -427,9 +427,6 @@ class EmployeeAcademicworkForm extends EmployeeFormBase {
 				if (trim($val['todate']) == '' ) {
 					$form_state->setErrorByName('employee][exp]['.$key.'][todate', $this->t('Employement Details  Line no: '.($key+1).' &nbsp; Enter Todate'));
 				}
-				if(trim($val['fromdate'])  > trim($val['todate'])){
-					$form_state->setErrorByName('employee][exp]['.$key.'][fromdate', $this->t('Employement Details  Line no: '.($key+1).' &nbsp; From date is  greater than To Date'));
-				}
 		   }
 			
 	   }
