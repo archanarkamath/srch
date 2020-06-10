@@ -13,7 +13,7 @@ class Employee extends ControllerBase {
  public function emplist() {
  	
   $empobj = new EmployeeModel;    
-  $result = $empobj->getEmployeeDetails();
+  $result = $empobj->getEmployeeList();
   $encrypt = new Encrypt;
 
     global $base_url;
@@ -48,11 +48,97 @@ class Employee extends ControllerBase {
     return $element;
   }
   
+/*
+* Display Employee Profile 
+* @parameter Logged in User
+* @output passing data variable to template file
+*/
+  
   public function profile() {
-	  
+	$empobj = new EmployeeModel; 
+	$avatar = $empobj->getUserPic();
+	$user = \Drupal::currentUser();
+	$prsnl_details = $empobj->getPersonalDetailsById($user->id());
+	$ofc_details = $empobj->getOfficialDetailsById($user->id());
+	$cont_details = $empobj->getContactDetailsById($user->id());
+	$academic_details = $empobj->getAcademicDetailsById($user->id());
+	$academic = [];
+	foreach($academic_details AS $val)
+	{
+		$academic[$val->class] = $val->board . ' ('. date("Y", strtotime($val->yearofpassing)) . ')';
+	}
+	
+	$prevEmp_details = $empobj->getPrevEmployeementDetailsById($user->id());
+	
+	$expr = [];
+	foreach($prevEmp_details AS $item)
+	{
+		$expr[] = [
+					'organisation'	=>	$item->organisation,
+					'designation'	=>	$item->designation,
+					'fromdate'		=>	date("j F Y", strtotime($item->fromdate)),
+					'todate'		=>	date("j F Y", strtotime($item->todate)),
+				  ];
+	}
+	
+	switch($prsnl_details->gender)
+	{
+		CASE 'M':
+			$gender = 'Male';
+			break;
+		CASE 'F':
+			$gender = 'Female';
+			break;
+		default:
+			$gender = 'Other';
+			break;
+	}
+	
 	return array(
-      '#theme' => 'digital-profile',
-      '#data' => array(),
+      '#theme' => 'employee-profile',
+      '#data' => array(
+						'profpic'		=>	$avatar,
+						'name'			=> 	$prsnl_details->firstname . ' ' . $prsnl_details->lastname,
+						'fathername'	=> 	$prsnl_details->fathername,
+						'mothername'	=> 	$prsnl_details->mothername,
+						'dob'			=> 	date("j F Y", strtotime($prsnl_details->dob)),
+						'marital'		=> 	($prsnl_details->marital == 'M') ? 'Married' : 'Unmarried',
+						'bloodgroup'	=> 	$prsnl_details->bloodgroup,
+						'religion'		=> 	$prsnl_details->religion,
+						'nationality'	=> 	$prsnl_details->nationality,
+						'gender'		=> 	$gender,
+						
+						'phoneno'		=>	$cont_details->phoneno,
+						'altphone'		=>	$cont_details->altphone,
+						'emrgphone'		=>	$cont_details->emrgphone,
+						'relationship'	=>	$cont_details->relationship,
+						'pers_email'	=>	$cont_details->email,
+						'res_address1'	=>	$cont_details->res_address1,
+						'res_address2'	=>	$cont_details->res_address2,
+						'res_state'		=>	$cont_details->res_state,
+						'res_city'		=>	$cont_details->res_city,
+						'res_country'	=>	$cont_details->res_country,
+						'res_pincode'	=>	$cont_details->res_pincode,
+						'perm_address1'	=>	$cont_details->perm_address1,
+						'perm_address2'	=>	$cont_details->perm_address2,
+						'perm_state'	=>	$cont_details->perm_state,
+						'perm_city'		=>	$cont_details->perm_city,
+						'perm_country'	=>	$cont_details->perm_country,
+						'perm_pincode'	=>	$cont_details->perm_pincode,
+						
+						'empid'			=> 	$ofc_details->empid,
+						'branch'		=>	$ofc_details->branch,
+						'department'	=>	$ofc_details->department,
+						'designation' 	=> 	$ofc_details->designation,
+						'jobtype' 		=> 	$ofc_details->jobtype,
+						'jobnature' 	=> 	$ofc_details->jobnature,
+						'email' 		=> 	$ofc_details->email,
+						'joining' 		=> 	date("j F Y", strtotime($ofc_details->joining)),
+						'jobshift' 		=> 	$ofc_details->jobshift ,
+						
+						'qual'			=>	$academic,
+						'expr'			=>	$expr
+				),
     );
 	
   }

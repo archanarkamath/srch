@@ -1,15 +1,15 @@
  <div class="row">
 	<div class="col-md-4 col-xs-12">
 		<div class="white-box">
-			<div class=""> <img width="100%" alt="user" src="{{url('<front>')}}sites/default/files/avatar/male.jpg"> </div>
+			<div class=""> <img width="100%" alt="user" src="{{url('<front>')}}sites/default/files/avatar/{{ data.profpic }}"> </div>
 			<div class="user-btm-box">
 				<!-- .row -->
 				<div class="row text-center m-t-10">
 					<div class="col-md-6 b-r"><strong>Name</strong>
-						<p>Sumeet Biswal</p>
+						<p>{{ data.name }}</p>
 					</div>
 					<div class="col-md-6"><strong>Designation</strong>
-						<p>ITA</p>
+						<p>{{ data.designation }}<p>
 					</div>
 				</div>
 				<!-- /.row -->
@@ -17,10 +17,10 @@
 				<!-- .row -->
 				<div class="row text-center m-t-10">
 					<div class="col-md-6 b-r"><strong>Email ID</strong>
-						<p>sumeet.biswal@preqube.com</p>
+						<p>{{ data.email }}</p>
 					</div>
 					<div class="col-md-6"><strong>EMPID</strong>
-						<p>1364945</p>
+						<p>{{ data.empid }}</p>
 					</div>
 				</div>
 				<!-- /.row -->
@@ -28,8 +28,8 @@
 				<!-- .row -->
 				<div class="row text-center m-t-10">
 					<div class="col-md-12"><strong>Address</strong>
-						<p>Jagannath Nagar,Rasulgarh, Bhubaneswar
-							<br/> Odisha, India.</p>
+						<p> {{ data.res_address1 }}, {{ data.res_address2 }}, {{ data.res_city }},
+							<br/> {{ data.res_state }}, {{ data.res_country }}. {{ data.res_pincode }}</p>
 					</div>
 				</div>
 				<hr>
@@ -49,7 +49,7 @@
                                                     <div class="form-group">
                                                         <label class="control-label col-md-4">Father:</label>
                                                         <div class="col-md-8">
-                                                            <span class="form-control-static">Pratap Kumar Biswal</span>
+                                                            <span class="form-control-static">{{ data.fathername }}</span>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -59,7 +59,7 @@
                                                     <div class="form-group">
                                                         <label class="control-label col-md-4">Mother:</label>
                                                         <div class="col-md-8">
-                                                            <span class="form-control-static"> Puspalata Biswal </span>
+                                                            <span class="form-control-static"> {{ data.mothername }} </span>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -79,7 +79,7 @@
                                                     <div class="form-group">
                                                         <label class="control-label col-md-4">Birth Date:</label>
                                                         <div class="col-md-8">
-                                                            <span class="form-control-static"> 25-06-1989 </span>
+                                                            <span class="form-control-static"> {{ data.dob }} </span>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -87,9 +87,9 @@
 											<div class="row">
 												<div class="col-md-12">
                                                     <div class="form-group">
-                                                        <label class="control-label col-md-4">Marital Status:</label>
+                                                        <label class="control-label col-md-4">Marital:</label>
                                                         <div class="col-md-8">
-                                                            <span class="form-control-static"> Single </span>
+                                                            <span class="form-control-static"> {{ data.marital }} </span>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -99,7 +99,7 @@
                                                     <div class="form-group">
                                                         <label class="control-label col-md-4">Blood Group:</label>
                                                         <div class="col-md-8">
-                                                            <span class="form-control-static"> O+ </span>
+                                                            <span class="form-control-static"> {{ data.bloodgroup }} </span>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -109,7 +109,7 @@
                                                     <div class="form-group">
                                                         <label class="control-label col-md-4">Religion:</label>
                                                         <div class="col-md-8">
-                                                            <span class="form-control-static"> Hindu </span>
+                                                            <span class="form-control-static"> {{ data.religion }} </span>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -128,7 +128,7 @@
                                                     <div class="form-group">
                                                         <label class="control-label col-md-4">Mobile No:</label>
                                                         <div class="col-md-8">
-                                                            <span class="form-control-static">+91 8971660052</span>
+                                                            <span class="form-control-static">{{ data.phoneno }}</span>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -138,7 +138,7 @@
                                                     <div class="form-group">
                                                         <label class="control-label col-md-4">Alt. Tel No:</label>
                                                         <div class="col-md-8">
-                                                            <span class="form-control-static"> +91 7204822713 </span>
+                                                            <span class="form-control-static"> {{ data.altphone }} </span>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -148,7 +148,7 @@
                                                     <div class="form-group">
                                                         <label class="control-label col-md-4">Emergency:</label>
                                                         <div class="col-md-8">
-                                                            <span class="form-control-static"> +91 9437303619 (Father) </span>
+                                                            <span class="form-control-static"> {{ data.emrgphone }} ({{ data.relationship }}) </span>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -156,9 +156,9 @@
 											<div class="row">
 												<div class="col-md-12">
                                                     <div class="form-group">
-                                                        <label class="control-label col-md-4">Personal Email:</label>
+                                                        <label class="control-label col-md-4"> Email ID:</label>
                                                         <div class="col-md-8">
-                                                            <span class="form-control-static"> biswal.sumeet@gmail.com </span>
+                                                            <span class="form-control-static"> {{ data.pers_email }} </span>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -168,7 +168,7 @@
                                                     <div class="form-group">
                                                         <label class="control-label col-md-4">Permanent Address:</label>
                                                         <div class="col-md-8">
-                                                            <span class="form-control-static"> PLot No - 62/897, Lane-12, Road -8, Jagannath Nagar, Rasulgarh, Bhubaneswar, Post-G.G.P </span>
+                                                            <span class="form-control-static"> {{ data.perm_address1 }}, {{ data.perm_address2 }}, {{ data.perm_city }}, {{ data.perm_state }}, {{ data.perm_country }}, {{ data.perm_pincode }} </span>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -190,7 +190,7 @@
                                                     <div class="form-group">
                                                         <label class="control-label col-md-4">Branch:</label>
                                                         <div class="col-md-8">
-                                                            <span class="form-control-static">Bhubaneswar Branch</span>
+                                                            <span class="form-control-static">{{ data.branch }}</span>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -200,7 +200,7 @@
                                                     <div class="form-group">
                                                         <label class="control-label col-md-4">Department:</label>
                                                         <div class="col-md-8">
-                                                            <span class="form-control-static"> Financial </span>
+                                                            <span class="form-control-static"> {{ data.department }} </span>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -210,7 +210,7 @@
                                                     <div class="form-group">
                                                         <label class="control-label col-md-4">Employee Type:</label>
                                                         <div class="col-md-8">
-                                                            <span class="form-control-static"> Permanent </span>
+                                                            <span class="form-control-static"> {{ data.jobnature }} </span>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -220,7 +220,7 @@
                                                     <div class="form-group">
                                                         <label class="control-label col-md-4">Job Type:</label>
                                                         <div class="col-md-8">
-                                                            <span class="form-control-static"> Full Time </span>
+                                                            <span class="form-control-static"> {{ data.jobtype }} </span>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -230,7 +230,7 @@
                                                     <div class="form-group">
                                                         <label class="control-label col-md-4">Joined On:</label>
                                                         <div class="col-md-8">
-                                                            <span class="form-control-static"> 22-02-2017 </span>
+                                                            <span class="form-control-static"> {{ data.joining }} </span>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -240,7 +240,7 @@
                                                     <div class="form-group">
                                                         <label class="control-label col-md-4">Shift:</label>
                                                         <div class="col-md-8">
-                                                            <span class="form-control-static"> Day Shift </span>
+                                                            <span class="form-control-static"> {{ data.jobshift }} </span>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -262,7 +262,7 @@
                                                     <div class="form-group">
                                                         <label class="control-label col-md-4">Matriculation:</label>
                                                         <div class="col-md-8">
-                                                            <span class="form-control-static">HSC Board (2004)</span>
+                                                            <span class="form-control-static">{{ data.qual.matric }}</span>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -272,7 +272,12 @@
                                                     <div class="form-group">
                                                         <label class="control-label col-md-4">12th stand:</label>
                                                         <div class="col-md-8">
-                                                            <span class="form-control-static"> ABCD college (2006) </span>
+                                                            <span class="form-control-static"> {% if data.qual.twelveth is not empty %}
+																									{{ data.qual.twelveth }} 
+																								{% else %}
+																									Not Available
+																								{% endif %}
+															</span>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -282,7 +287,13 @@
                                                     <div class="form-group">
                                                         <label class="control-label col-md-4">Graduation:</label>
                                                         <div class="col-md-8">
-                                                            <span class="form-control-static"> B.tech (2011) </span>
+                                                            <span class="form-control-static"> {% if  data.qual.graduation is not empty %}
+																									{{ data.qual.graduation }} 
+																								{% else %}
+																									Not Available
+																								{% endif %}
+															
+															</span>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -292,7 +303,12 @@
                                                     <div class="form-group">
                                                         <label class="control-label col-md-4">Post Graduate:</label>
                                                         <div class="col-md-8">
-                                                            <span class="form-control-static"> Not Available </span>
+                                                            <span class="form-control-static"> {% if  data.qual.postgraduation is not empty %}
+																									{{ data.qual.postgraduation }} 
+																								{% else %}
+																									Not Available
+																								{% endif %}
+															</span>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -319,24 +335,19 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td class="title tablesaw-cell-persist"><a href="javascript:void(0)">Infosys</a></td>
-                                        <td>Developer</td>
-                                        <td>2011</td>
-                                        <td>2014</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="title tablesaw-cell-persist"><a href="javascript:void(0)">Wipro</a></td>
-                                        <td>Tester</td>
-                                        <td>2014</td>
-                                        <td>2017</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="title tablesaw-cell-persist"><a href="javascript:void(0)">TCS</a></td>
-                                        <td>Senior Developer</td>
-                                        <td>2017</td>
-                                        <td>2020</td>
-                                    </tr>
+									{% if data.expr is not empty %}
+									
+										{% for item in data.expr %}
+											<tr>
+												<td class="title tablesaw-cell-persist"><a href="javascript:void(0)">{{ item.organisation }}</a></td>
+												<td>{{ item.designation }}</td>
+												<td>{{ item.fromdate }}</td>
+												<td>{{ item.todate }}</td>
+											</tr>
+										{% endfor %}
+									
+									
+									{% endif %}
                                 </tbody>
                             </table>
 											

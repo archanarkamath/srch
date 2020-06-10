@@ -110,7 +110,7 @@ class EmployeeAcademicworkForm extends EmployeeFormBase {
 	  
     ];
 
-    $option = ['matric' => '10th / Matriculation', '+2' => '12th / +2', 'graduation' => 'Graduation', 'diploma' => 'Diploma', 'postgraduation' => 'Post Graduation'];
+    $option = ['matric' => '10th / Matriculation', 'twelveth' => '12th / +2', 'graduation' => 'Graduation', 'diploma' => 'Diploma', 'postgraduation' => 'Post Graduation'];
 	$form['qualification']['academics'][$i]['class'] = [
       '#type' 		   => 'select',
 	  '#options'       => $option,
@@ -426,6 +426,9 @@ class EmployeeAcademicworkForm extends EmployeeFormBase {
 				}
 				if (trim($val['todate']) == '' ) {
 					$form_state->setErrorByName('employee][exp]['.$key.'][todate', $this->t('Employement Details  Line no: '.($key+1).' &nbsp; Enter Todate'));
+				}
+				if(trim($val['fromdate'])  > trim($val['todate'])){
+					$form_state->setErrorByName('employee][exp]['.$key.'][fromdate', $this->t('Employement Details  Line no: '.($key+1).' &nbsp; From date is  greater than To Date'));
 				}
 		   }
 			
