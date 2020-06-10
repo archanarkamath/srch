@@ -110,7 +110,7 @@ class EmployeeAcademicworkForm extends EmployeeFormBase {
 	  
     ];
 
-    $option = ['matric' => '10th / Matriculation', '+2' => '12th / +2', 'graduation' => 'Graduation', 'diploma' => 'Diploma', 'postgraduation' => 'Post Graduation'];
+    $option = ['matric' => '10th / Matriculation', 'twelveth' => '12th / +2', 'graduation' => 'Graduation', 'diploma' => 'Diploma', 'postgraduation' => 'Post Graduation'];
 	$form['qualification']['academics'][$i]['class'] = [
       '#type' 		   => 'select',
 	  '#options'       => $option,

@@ -129,7 +129,10 @@ class EmployeeModel extends ControllerBase  {
 	/*
 	* @parameter user id
 	* get official details
-	*SELECT 
+	*/
+	public function getOfficialDetailsById($id)
+	{
+		/*SELECT 
 			oi.empid AS employeeid,
 			cv1.codevalues AS branch,
 			cv2.codevalues AS department,
@@ -149,10 +152,7 @@ class EmployeeModel extends ControllerBase  {
 			LEFT JOIN srch_codevalues cv6 ON cv6.codename = oi.shifttime AND cv6.codetype = 'jobshift'
 		WHERE
 			oi.userpk = 4
-			;
-	*/
-	public function getOfficialDetailsById($id)
-	{
+			;*/
 		$query = db_select(DataModel::EMPOFFICIAL, 'oi');
 		$query->leftjoin(DataModel::CODEVAL, 'cv1', 'cv1.codename = oi.branch AND cv1.codetype = :brnc', array('brnc'=>'branch'));
 		$query->leftjoin(DataModel::CODEVAL, 'cv2', 'cv2.codename = oi.department AND cv2.codetype = :dept', array('dept'=>'department'));
@@ -172,6 +172,91 @@ class EmployeeModel extends ControllerBase  {
 		$query->condition('oi.userpk', $id ,"=");
 		
 		$result = $query->execute()->fetch();
+		return $result;
+	}
+	
+	/*
+	* @parameter user id
+	* get contact details 
+	*/
+	public function getContactDetailsById($id)
+	{
+		/*
+		SELECT 
+			cnt.phoneno AS 'phone',
+			cnt.altphoneno AS 'altphone',
+			cnt.emrgphoneno AS 'emrgphone',
+			cnt.relationship AS 'relationship',
+			cnt.email AS 'email',
+			cnt.res_address1 AS 'res_address1',
+			cnt.res_address2 AS 'res_address2',
+			st.name AS 'res_state',
+			ct.name AS 'res_city',
+			cntry.name AS 'res_country',
+			cnt.res_pincode AS 'res_pincode',
+			cnt.perm_address1 AS 'perm_address1',
+			cnt.perm_address2 AS 'perm_address2',
+			pst.name AS 'perm_state',
+			pct.name AS 'perm_city',
+			pcntry.name AS 'perm_country',
+			cnt.perm_pincode AS 'perm_pincode'
+		FROM
+			srch_contactinfo cnt
+			LEFT JOIN srch_states st ON st.id = cnt.res_state
+			LEFT JOIN srch_cities ct ON ct.id = cnt.res_city
+			LEFT JOIN srch_countries cntry ON cntry.id = cnt.res_country
+			LEFT JOIN srch_states pst ON pst.id = cnt.perm_state
+			LEFT JOIN srch_cities pct ON pct.id = cnt.perm_city
+			LEFT JOIN srch_countries pcntry ON pcntry.id = cnt.perm_country
+		WHERE
+			cnt.userpk = 4;*/
+		$query = db_select(DataModel::EMPCONTACT, 'cnt');
+		$query->leftjoin(DataModel::STATE, 'st', 'st.id = cnt.res_state');
+		$query->leftjoin(DataModel::CITY, 'ct', 'ct.id = cnt.res_city');
+		$query->leftjoin(DataModel::COUNTRY, 'cntry', 'cntry.id = cnt.res_country');
+		$query->leftjoin(DataModel::STATE, 'pst', 'pst.id = cnt.perm_state');
+		$query->leftjoin(DataModel::CITY, 'pct', 'pct.id = cnt.perm_city');
+		$query->leftjoin(DataModel::COUNTRY, 'pcntry', 'pcntry.id = cnt.perm_country');
+		
+		$query->fields('cnt', array('phoneno'));		
+		$query->addField('cnt', 'altphoneno', 'altphone');
+		$query->addField('cnt', 'emrgphoneno', 'emrgphone');
+		$query->addField('cnt', 'relationship', 'relationship');
+		$query->addField('cnt', 'email', 'email');
+		$query->addField('cnt', 'res_address1', 'res_address1');
+		$query->addField('cnt', 'res_address2', 'res_address2');
+		$query->addField('st', 'name', 'res_state');
+		$query->addField('ct', 'name', 'res_city');
+		$query->addField('cntry', 'name', 'res_country');
+		$query->addField('cnt', 'res_pincode', 'res_pincode');
+		$query->addField('cnt', 'perm_address1', 'perm_address1');
+		$query->addField('cnt', 'perm_address2', 'perm_address2');
+		$query->addField('pst', 'name', 'perm_state');
+		$query->addField('pct', 'name', 'perm_city');
+		$query->addField('pcntry', 'name', 'perm_country');
+		$query->addField('cnt', 'perm_pincode', 'perm_pincode');
+		
+		$query->condition('cnt.userpk', $id ,"=");
+		$result = $query->execute()->fetch();
+		return $result;
+		
+	}
+	
+	public function getAcademicDetailsById($id)
+	{
+		$query = db_select(DataModel::EMPACADEMIC, 'n');
+		$query->fields('n');	
+		$query->condition('userpk', $id ,"=");
+		$result = $query->execute()->fetchAll();
+		return $result;
+	}
+	
+	public function getPrevEmployeementDetailsById($id)
+	{
+		$query = db_select(DataModel::EMPEXPRNC, 'n');
+		$query->fields('n');	
+		$query->condition('userpk', $id ,"=");
+		$result = $query->execute()->fetchAll();
 		return $result;
 	}
 	
