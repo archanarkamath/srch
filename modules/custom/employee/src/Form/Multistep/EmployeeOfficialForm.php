@@ -50,15 +50,19 @@ class EmployeeOfficialForm extends EmployeeFormBase {
                                     </ul><div class="row"><div class="panel-body"><h3 class="box-title">Official</h3>
                                     <hr class="m-t-0 m-b-40">';
 	$form['employee']['#suffix'] = '</div></div>';
-  $form['#attached']['library'][] = 'singleportal/master-validation';
+	$form['#attached']['library'][] = 'singleportal/master-validation';
  	$form['#attached']['library'][] = 'singleportal/datetimepicker';
-
+  
+  $empid_config = $conobj->getEmployeeIdConfig();
+  
   $form['employee']['id'] = array(
     '#type'          => 'textfield',
     '#title'         => $this->t('Employee ID'),
     '#default_value' => $this->store->get('id') ? $this->store->get('id') : '',
     '#attributes'    => ['class' => ['form-control', 'validate[required]']],
-    '#field_suffix' => '<i class="fadehide mdi mdi-help-circle" title="Employee id of the person" data-toggle="tooltip"></i>',
+	'#disabled'      => $empid_config['disabled'],
+	'#value'		=>	$empid_config['empid'],
+    '#field_suffix' => '<i class="fadehide mdi mdi-help-circle" title="'.$empid_config['helpmsg'].'" data-toggle="tooltip"></i>',
 
   );
     
