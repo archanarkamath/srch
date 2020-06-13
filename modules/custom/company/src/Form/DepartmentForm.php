@@ -73,6 +73,14 @@ class DepartmentForm extends FormBase {
     }
  
   public function validateForm(array &$form, FormStateInterface $form_state) { 
+    $brnobj = new \Drupal\company\Model\DepartmentModel;
+	$deptname = trim($form_state->getValue('name'));
+	$dept_exist = $brnobj->deptIsExist($deptname);
+	
+	if($dept_exist)
+	{
+		$form_state->setErrorByName('name', $this->t('Department has already Exist. Duplicate is not allowed.'));
+	}
   }
   
 	public function ActionCancel(array &$form, FormStateInterface $form_state)
