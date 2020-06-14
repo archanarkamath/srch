@@ -85,5 +85,21 @@ class DepartmentModel extends ControllerBase {
 		$res = (empty($result)) ? FALSE : TRUE;
 		return $res;
 	}
+	/*
+	* get department name from department code
+	* @input department code
+	* @output department name
+	*/
+	public function getDepartmentNameFromCode($departmentcode)
+	{
+		$query = db_select('srch_codevalues', 'n');
+				$query->fields('n');	
+				$query->condition('codetype', 'department', "=");
+				$query->condition('codename', $departmentcode, "=");
+				$query->condition('status', 1, "=");
+				$result = $query->execute()->fetch();
+		
+		return $result;
+	}
   
 }
