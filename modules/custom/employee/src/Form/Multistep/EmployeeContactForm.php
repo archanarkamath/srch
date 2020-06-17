@@ -333,6 +333,15 @@ class EmployeeContactForm extends EmployeeFormBase {
     else if(!preg_match("/^[6-9][0-9]{9}$/", $form_state->getValue('emergencyno'))) {
         $form_state->setErrorByName('emergencyno', $this->t('Enter your valid Emergency phone number')); 
     }
+	if (trim($form_state->getValue('phoneno')) == trim($form_state->getValue('altphoneno'))) {
+		$form_state->setErrorByName('altphoneno', $this->t('Enter a different number'));
+    }
+	else if (trim($form_state->getValue('altphoneno')) == trim($form_state->getValue('emergencyno'))) {
+		$form_state->setErrorByName('emergencyno', $this->t('Enter a different number'));
+	}
+	else if (trim($form_state->getValue('phoneno')) == trim($form_state->getValue('emergencyno'))) {
+		$form_state->setErrorByName('emergencyno', $this->t('Enter a different number!'));
+    }
     if (trim($form_state->getValue('email')) == '' ) {
         $form_state->setErrorByName('email', $this->t('Enter your Email Id'));
     }
