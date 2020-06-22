@@ -61,11 +61,14 @@ class EmployeeOfficialForm extends EmployeeFormBase {
     '#default_value' => $this->store->get('id') ? $this->store->get('id') : '',
     '#attributes'    => ['class' => ['form-control', 'validate[required]']],
 	'#disabled'      => $empid_config['disabled'],
-	'#value'		=>	$empid_config['empid'],
     '#field_suffix' => '<i class="fadehide mdi mdi-help-circle" title="'.$empid_config['helpmsg'].'" data-toggle="tooltip"></i>',
 
   );
-    
+  if(!empty($empid_config['id']))
+  {
+	  $form['employee']['id']['#value'] = $empid_config['empid'];
+  }
+  
   $brnlist = $brnobj->getAllBranchDetails();
   $brn_option[''] = 'Select Branch';
   foreach($brnlist AS $item)

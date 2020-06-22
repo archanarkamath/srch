@@ -403,7 +403,7 @@ class EmployeeAcademicworkForm extends EmployeeFormBase {
 				if (trim($val['yearofpassing']) == '' ) {
 					$form_state->setErrorByName('qualification][academics]['.$key.'][yearofpassing', $this->t('Academics Details  Line no: '.($key+1).' &nbsp; Enter year of passing'));
 				}
-				if (trim($val['yearofpassing']) > date('m/d/Y') ) {
+				if (trim($val['yearofpassing']) > date('Y-m-d') ) {
 					$form_state->setErrorByName('qualification][academics]['.$key.'][yearofpassing', $this->t('Academics Details  Line no: '.($key+1).' &nbsp; Passing year can not be set as future date'));
 				}
 				if (trim($val['score']) == '' ) {
@@ -430,10 +430,10 @@ class EmployeeAcademicworkForm extends EmployeeFormBase {
 				if (trim($val['todate']) == '' ) {
 					$form_state->setErrorByName('employee][exp]['.$key.'][todate', $this->t('Employement Details  Line no: '.($key+1).' &nbsp; Enter Todate'));
 				}*/
-				if (trim($val['fromdate']) >= date('m/d/Y') ) {
+				if (trim($val['fromdate']) >= date('Y-m-d') ) {
 					$form_state->setErrorByName('employee][exp]['.$key.'][fromdate', $this->t('Employement Details  Line no: '.($key+1).' &nbsp; From date can not be set as today & future date'));
 				}
-				if (trim($val['todate']) > date('m/d/Y') ) {
+				if (trim($val['todate']) > date('Y-m-d') ) {
 					$form_state->setErrorByName('employee][exp]['.$key.'][todate', $this->t('Employement Details  Line no: '.($key+1).' &nbsp; To date can not be set as future date'));
 				}
 				if(trim($val['fromdate'])  > trim($val['todate'])){
