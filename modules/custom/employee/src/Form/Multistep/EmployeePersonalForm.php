@@ -38,12 +38,12 @@ class EmployeePersonalForm extends EmployeeFormBase {
 	$form['#attached']['library'][] = 'singleportal/master-validation';
 	
 	$form['#attributes']['autocomplete'] = 'off';
-	
+		
 	$form['employee']['#prefix'] = '<ul id="eliteregister">
 									<li class="active">Personal Details</li>
 									<li>Contact Details</li>
 									<li>Academic Details</li>
-									<li>Official Details</li>
+									<li>Official Details </li> 
 									</ul><div class="row"><div class="panel-body"><h3 class="box-title">Personal</h3>
                                             <hr class="m-t-0 m-b-40">';
 	$form['employee']['#suffix'] = '</div></div>';
@@ -96,7 +96,7 @@ class EmployeePersonalForm extends EmployeeFormBase {
       '#type' 			=> 'textfield',
       '#title' 			=> $this->t('Date of Birth'),
       '#default_value' 	=> $this->store->get('dob') ? $this->store->get('dob') : '',
-      '#attributes'    => ['id' => ['datetimepicker'],'class' => ['form-control' , 'validate[required]'],'readonly' => 'readonly'],
+	  '#attributes'    => ['id' => ['datetimepicker'],'class' => ['form-control' , 'validate[required]'],'readonly' => 'readonly'],
       '#suffix'        => '</div>',
     );
 	
@@ -170,9 +170,12 @@ class EmployeePersonalForm extends EmployeeFormBase {
 	$this->store->set('personal_bypass', 0);
     return $form;
   }
+  
   public function validateForm(array &$form, FormStateInterface $form_state) {
-
-	  if (trim($form_state->getValue('firstname')) == '' ) {
+		
+    $max_age_dob = date('d/m/Y', strtotime('-18 years'));   
+    
+	if (trim($form_state->getValue('firstname')) == '' ) {
         $form_state->setErrorByName('firstname', $this->t('Enter your firstname'));
       }
     else if(!preg_match("/^[a-zA-Z'-]+$/", $form_state->getValue('firstname'))) {
@@ -190,15 +193,21 @@ class EmployeePersonalForm extends EmployeeFormBase {
     else if(!preg_match("/^[A-Za-z]+((\s)?([A-Za-z])+)*$/", $form_state->getValue('fname'))) {
         $form_state->setErrorByName('fname', $this->t('Enter a valid Fathersname ')); 
     }
-  	if (trim($form_state->getValue('dob')) == '' ) {
+  	
+	if (trim($form_state->getValue('dob')) == '' ) {
         $form_state->setErrorByName('dob', $this->t('Enter your Date of birth'));
-    }    
+    }
+    else if (trim($form_state->getValue('dob')) >= $max_age_dob ) {
+        $form_state->setErrorByName('dob', $this->t('Date of Birth should not less than 18 years.'));
+    }   
+  	    
   	if (trim($form_state->getValue('nationality')) == '' ) {
         $form_state->setErrorByName('nationality', $this->t('Enter your nationality'));
       }
     else if(!preg_match("/^[a-zA-Z'-]+$/", $form_state->getValue('nationality'))) {
         $form_state->setErrorByName('nationality', $this->t('Enter a valid nationality ')); 
     }
+	
   }
   /**
    * {@inheritdoc}
