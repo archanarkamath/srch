@@ -63,7 +63,7 @@ class DesignationForm extends FormBase {
         $dept = $res->codename;
       }
       
-    $form['designation']['departmentlist'] = array(
+    $form['designation']['department'] = array(
       '#type'          => 'select',
       '#title'         => t('Department :'),
       '#options'       => $dept_option,
@@ -72,26 +72,6 @@ class DesignationForm extends FormBase {
       '#suffix'        => '</div></div>',
       '#default_value' => isset($data)? $dept : '',
       '#field_suffix' => '<a href="'.$base_url.'/department/modal" class="use-ajax button"><i class="fadehide mdi mdi-settings fa-fw"></i></a>',
-      '#ajax' => [
-					'callback' => '::getList',
-					'wrapper' => 'desgn_list',
-					'event' => 'change',
-					'progress' => [
-					  'type' => 'throbber',
-					  //'message' => t(''),
-					],
-				  ],
-    );
-	if (!empty($form_state->getValue('department'))) {
-      $department = $form_state->getValue('department');
-    }
-	else{
-		$department = isset($data)? $data->department : '';
-	}
-	
-	$dsgn = [];
-	$dsgn = $desobj->getDesignationList($department);
-	
    // $form['designation']['#type'] = 'actions';
     $form['designation']['submit'] = array(
       '#type'          => 'submit',
@@ -132,7 +112,7 @@ class DesignationForm extends FormBase {
     $field = $form_state->getValues();
     $name = $field['name'];
     $codename = $field['code'];
-    $parent = $field['departmentlist'];
+    $parent = $field['department'];
     
     $parent = $depobj->getDepartmentId($parent);
    
