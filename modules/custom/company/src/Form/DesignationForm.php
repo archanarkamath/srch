@@ -73,6 +73,7 @@ class DesignationForm extends FormBase {
       '#default_value' => isset($data)? $dept : '',
       '#field_suffix' => '<a href="'.$base_url.'/department/modal" class="use-ajax button"><i class="fadehide mdi mdi-settings fa-fw"></i></a>',
    // $form['designation']['#type'] = 'actions';
+    );
     $form['designation']['submit'] = array(
       '#type'          => 'submit',
       '#default_value' => ($mode == 'add') ? $this->t('Submit') : $this->t('Update'),
