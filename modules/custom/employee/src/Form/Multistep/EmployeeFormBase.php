@@ -136,7 +136,7 @@ abstract class EmployeeFormBase extends FormBase {
    * the multistep form.
    */
   protected function deletePersonalStore() {
-	 $this->store->set('personal_bypass', FALSE);
+	 //$this->store->set('personal_bypass', FALSE);
     $keys = ['firstname', 'lastname', 'fname', 'mname', 'gender', 'dob', 'marital', 'blood', 'religion', 'nationality', 'personal_bypass'];
     foreach ($keys as $key) {
       $this->store->delete($key);
@@ -155,6 +155,13 @@ abstract class EmployeeFormBase extends FormBase {
   
   protected function deleteAcademicStore() {
     $keys = ['qualification', 'experience'];
+    foreach ($keys as $key) {
+      $this->store->delete($key);
+    }
+  }
+  
+   protected function deleteOfficialStore() {
+    $keys = ['id', 'department', 'branch', 'designation', 'role', 'jobnature', 'officialemail', 'doj', 'jobtype', 'shifttime'];
     foreach ($keys as $key) {
       $this->store->delete($key);
     }

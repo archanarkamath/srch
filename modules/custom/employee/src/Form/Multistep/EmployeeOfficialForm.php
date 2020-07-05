@@ -28,12 +28,16 @@ class EmployeeOfficialForm extends EmployeeFormBase {
 	 
 	 global $base_url;
 	 
-    if(!$this->store->get('academic_bypass'))
+      if(!$this->store->get('academic_bypass'))
       {	
-        //$response = new RedirectResponse(\Drupal::url('employee.empaddacademic'));
-        //$response->send();
+        $response = new RedirectResponse(\Drupal::url('employee.empaddacademic'));
+        $response->send();
       }
-      
+      if(!$this->store->get('preview_back'))
+	  {
+		parent::deleteOfficialStore();
+	  }
+		
     $form = parent::buildForm($form, $form_state);
     $form['actions']['submit'] = array();
     $desobj = new \Drupal\company\Model\DesignationModel;
@@ -201,6 +205,7 @@ class EmployeeOfficialForm extends EmployeeFormBase {
 	$this->store->set('official_back', TRUE);	
     return $form;
   }
+ 
   public function validateForm(array &$form, FormStateInterface $form_state) {
 	  
 	  $empObj = new \Drupal\employee\Model\EmployeeModel;
