@@ -53,6 +53,21 @@ class BranchModel extends ControllerBase {
               ->condition('codepk', $id)
               ->execute();
 	}
-
-
+	
+	/*
+	* get branch name from branch code
+	* @input branch code
+	* @output Branch name
+	*/
+	public function getBranchNameFromCode($branchcode)
+	{
+		$query = db_select('srch_codevalues', 'n');
+				$query->fields('n');	
+				$query->condition('codetype', 'branch', "=");
+				$query->condition('codename', $branchcode, "=");
+				$query->condition('status', 1, "=");
+				$result = $query->execute()->fetch();
+		
+		return $result;
+	}
 }
