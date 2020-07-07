@@ -21,7 +21,7 @@ class CompanyController extends ControllerBase {
 	 return array(
       '#theme' => 'companyview',
 	  '#prefix'     => '<div class="panel panel-info">
-                        <h3 class="box-title  col-md-10">Company Details</h3><hr>
+                        <h3 class="box-title  col-md-10">Company Details</h3>
 					<div class=" col-md-2">
                         <a id="printit" data-toggle="tooltip" data-original-title="Print"><img src="'.$asset_url.'/assets/images/icon/print.png" /></a> 
 						</div></div>',
