@@ -133,6 +133,19 @@ public function buildForm(array $form, FormStateInterface $form_state) {
   
   
   public function validateForm(array &$form, FormStateInterface $form_state) {
+	 	  
+	if(trim($form_state->getValue('shiftname')) == ' ' ) {
+        $form_state->setErrorByName('shiftname', $this->t('Enter your shift Name'));
+    }
+    else if(!preg_match("/^[a-zA-Z'-]+$/", $form_state->getValue('shiftname'))) {
+        $form_state->setErrorByName('shiftname', $this->t('Enter a valid Shift Name')); 
+    }
+  	if(empty($form_state->getValue('fromtime'))) {
+        $form_state->setErrorByName('fromtime', $this->t('Enter your shift time'));
+    }
+	if(empty($form_state->getValue('totime')) == ' ' ) {
+        $form_state->setErrorByName('totime', $this->t('Enter your shift ending time'));
+    }
 	
   }
 
@@ -150,10 +163,6 @@ public function buildForm(array $form, FormStateInterface $form_state) {
 
 
 	 // $query->query('commit');
-	  
-	  
-	  
-	  
 	  
 	  
     $configobj = new \Drupal\company\Model\ConfigurationModel;	

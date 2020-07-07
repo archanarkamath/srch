@@ -59,6 +59,22 @@ company.branchexcel:
  requirements:
    _permission: 'access content'
 
+company.departmentexcel:
+ path: '/department/export/excel'
+ defaults:
+  _title: 'Department Export'
+  _controller: '\Drupal\company\Controller\DepartmentController::exportToExcel'
+ requirements:
+   _permission: 'access content'
+ 
+company.designationexcel:
+ path: '/designation/export/excel'
+ defaults:
+  _title: 'Designation Export'
+  _controller: '\Drupal\company\Controller\DesignationController::exportToExcel'
+ requirements:
+   _permission: 'access content'
+
 company.departmentadd:
  path: '/department/add'
  defaults:

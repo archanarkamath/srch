@@ -21,6 +21,8 @@ class DepartmentForm extends FormBase {
       $pk = $libobj->getIdFromUrl();	
       $data = $brnobj->getDepartmentDetailsById($pk);
     }
+
+	
 	
 	$form['#attached']['library'][] = 'singleportal/master-validation';
 	$form['#attributes']['class'] = 'form-horizontal';
