@@ -83,6 +83,20 @@ class LibController extends ControllerBase {
 			
 		return $city_name;
 	}
+	
+	public function getCountryNameById($id)
+	{
+		$query = db_select(DataModel::COUNTRY, 'n');
+				$query->fields('n');	
+				$query->condition('id', $id ,"=");
+				$result = $query->execute()->fetchAll();
+		      foreach ($result as $row => $content) {
+            $cntry_name = $content->name;
+       }
+			
+		return $cntry_name;
+	}
+	
 	public function getCodeValues($codetype, $codename)
 	{
 		$query = db_select(DataModel::CODEVAL, 'n');

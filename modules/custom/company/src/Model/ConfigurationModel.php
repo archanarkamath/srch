@@ -81,6 +81,35 @@ class ConfigurationModel extends ControllerBase {
 		return $res;
 	}
 	
+	/*
+	* This checks the Employee id type configuration
+	* setup  in Administrative --> configuration
+	*/
+	public function getEmployeeIdConfig()
+	{
+		$query = db_select(DataModel::CODEVAL, 'n'); 
+		$query->fields('n')		
+		->condition('codename', 'EMPID', "=")
+        ->condition('codetype', 'employeeid', "=");
+		$result = $query->execute()->fetch();
+		
+		$res = [];
+		if($result->codevalues == 'Automatic')
+		{
+			$res['disabled'] = 'disabled';
+			$res['empid'] = $result->description . 'XXXX';
+			$res['helpmsg'] = 'Employee ID will be auto generate';			
+		}
+		else
+		{
+			$res['disabled'] = '';
+			$res['empid'] = '';
+			$res['helpmsg'] = 'Mention Employee Id of the person';
+		}
+		
+		return $res;
+	}
+	
 	public function setShiftTiming($field)
 	{
 		$query = \Drupal::database();

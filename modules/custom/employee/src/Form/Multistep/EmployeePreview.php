@@ -49,7 +49,7 @@ class EmployeePreview extends EmployeeFormBase {
       '#title' 		   => $this->t('First Name:'),
       '#markup'      => $this->store->get('firstname'),
       '#prefix'      => '<h3 class="box-title">Personal Info <div class="pull-right">
-                          <a href="'.$base_url.'/employee/add/personal"><i class="mdi mdi-pencil-circle" title="" style="font-size: x-large;"data-toggle="tooltip" data-original-title="Edit"></i></a> 
+                          <a href="'.$base_url.'/employee/add/personal"><i class="mdi mdi-pencil-circle" title="" style="font-size: x-large;" data-toggle="tooltip" data-original-title="Edit"></i></a> 
                           </div> </h3><hr class="m-t-0 m-b-40"><div class="row">',
       '#suffix'      => '',
     );
@@ -75,24 +75,38 @@ class EmployeePreview extends EmployeeFormBase {
       '#prefix'      => ' ',
       '#suffix'      => '</div>',
     );
+	
+	switch($this->store->get('gender'))
+	{
+		CASE 'M':
+			$gender = 'Male';
+			break;
+		CASE 'F':
+			$gender = 'Female';
+			break;
+		default:
+			$gender = 'Other';
+			break;
+	}
+	
     $form['employee']['gender'] = array(
       '#type' 		   => 'item',
       '#title' 		   => $this->t('Gender:'),
-      '#markup'      => $this->store->get('gender'),
+      '#markup'      => $gender,
       '#prefix'      => '<div class="row">',
       '#suffix'      => '',
     );
     $form['employee']['dob'] = array(
       '#type' 		   => 'item',
       '#title' 		   => $this->t('Date of birth::'),
-      '#markup'      => $this->store->get('dob'),
+      '#markup'      => date("j F Y", strtotime($this->store->get('dob'))),
       '#prefix'      => ' ',
       '#suffix'      => '</div>',
     );
     $form['employee']['marital'] = array(
       '#type' 		   => 'item',
       '#title' 		   => $this->t('Marital:'),
-      '#markup'      => $this->store->get('marital'),
+      '#markup'      => ($this->store->get('marital') == 'M') ? 'Married' : 'Unmarried',
       '#prefix'      => '<div class="row">',
       '#suffix'      => '',
     );
@@ -184,6 +198,7 @@ class EmployeePreview extends EmployeeFormBase {
     
   $state_name = $libobj ->getStateNameById($this->store->get('state'));
   $city_name = $libobj ->getCityNameById($this->store->get('city'));
+  $country_name = $libobj ->getCountryNameById($this->store->get('country'));
 
     $form['employee']['state'] = array(
       '#type' 		   => 'item',
@@ -209,7 +224,7 @@ class EmployeePreview extends EmployeeFormBase {
     $form['employee']['country'] = array(
       '#type' 		   => 'item',
       '#title' 		   => $this->t('Country:'),
-      '#markup'      => $this->store->get('country'),
+      '#markup'      => $country_name,
       '#prefix'      => ' ',
       '#suffix'      => '</div>',
     );
@@ -264,69 +279,46 @@ class EmployeePreview extends EmployeeFormBase {
     
     }
     //***************************************************************
-    $form['employee']['class'] = array(
-      '#type' 		   => 'item',
-      '#title' 		   => $this->t('Stream:'),
-      '#markup'      => $this->store->get('class'),
-      '#prefix'      => '</br> </br> <h3 class="box-title">Academic Info <div class="pull-right">
+	
+	$rows = [];
+	foreach($this->store->get('qualification') AS $item)
+	{
+		$rows[] = [
+					$item['class'], $item['stream'], $item['university'], $item['yearofpassing'], $item['score'] . ' %'
+		          ];
+	}
+		
+	$form['employee']['qual'] = array(
+      '#type' 	    => 'table',
+      '#header' 	=>  array(t('Class'), t('Stream'),t('University'), t('Passing Year'), t('Score')),
+      '#rows'		=>  $rows,
+      '#attributes' => ['class' => ['table text-center table-hover table-striped table-bordered dataTable'], 'border' => '1', 'rules' => 'all', 'style'=>['text-align-last: center;']],
+	  '#prefix'      => '</br> </br> <h3 class="box-title">Academic Info <div class="pull-right">
                           <a href="'.$base_url.'/employee/add/academics"><i class="mdi mdi-pencil-circle" title="" style="font-size: x-large;"data-toggle="tooltip" data-original-title="Edit"></i></a> 
                           </div> </h3><hr class="m-t-0 m-b-40"><div class="row">',
-      '#suffix'      => '',
-    );
-    $form['employee']['university'] = array(
-      '#type' 		   => 'item',
-      '#title' 		   => $this->t('University:'),
-      '#markup'      => $this->store->get('university'),
-      '#prefix'      => '',
-      '#suffix'      => '</div>',
-    );
-
-    $form['employee']['yearofpassing'] = array(
-      '#type' 		   => 'item',
-      '#title' 		   => $this->t('Year of passing:'),
-      '#markup'      => $this->store->get('yearofpassing'),
-      '#prefix'      => '<div class="row">',
-      '#suffix'      => '',
-    );
-    $form['employee']['score'] = array(
-      '#type' 		   => 'item',
-      '#title' 		   => $this->t('Score:'),
-      '#markup'      => $this->store->get('score'),
-      '#prefix'      => ' ',
-      '#suffix'      => '</div>',
+	  '#empty'		=>	'No Qualification details are available'
     );
     
-    $form['employee']['organisation'] = array(
-      '#type' 		   => 'item',
-      '#title' 		   => $this->t('organisation:'),
-      '#markup'      => $this->store->get('organisation'),
-      '#prefix'      => '</br> </br>
+	
+	$rows = [];
+	foreach($this->store->get('experience') AS $item)
+	{
+		$rows[] = [
+					$item['organisation'], $item['designation'], $item['fromdate'], $item['todate']
+		          ];
+	}
+		
+	$form['employee']['expr'] = array(
+      '#type' 	    => 'table',
+      '#header' 	=>  array(t('Organisation'), t('Designation'),t('From Date'), t('To Date')),
+      '#rows'		=>  $rows,
+      '#attributes' => ['class' => ['table text-center table-hover table-striped table-bordered dataTable'], 'border' => '1', 'rules' => 'all', 'style'=>['text-align-last: center;']],
+	  '#prefix'      => '</br> </br>
                         <h3 class="box-title">Previous Employement info</h3>
                         <hr class="m-t-0 m-b-40"><div class="row">',
-      '#suffix'      => '',
+	  '#empty'		=>	'No Employment Details are Available'
     );
-    $form['employee']['prevdesignation'] = array(
-      '#type' 		   => 'item',
-      '#title' 		   => $this->t('designation:'),
-      '#markup'      => $this->store->get('prevdesignation'),
-      '#prefix'      => ' ',
-      '#suffix'      => '</div>',
-    );
-    $form['employee']['fromdate'] = array(
-      '#type' 		   => 'item',
-      '#title' 		   => $this->t('From date:'),
-      '#markup'      => $this->store->get('fromdate'),
-      '#prefix'      => '<div class="row">',
-      '#suffix'      => '',
-    );
-    $form['employee']['todate'] = array(
-      '#type' 		   => 'item',
-      '#title' 		   => $this->t('To date:'),
-      '#markup'      => $this->store->get('todate'),
-      '#prefix'      => ' ',
-      '#suffix'      => '</div>',
-    );
-
+    
     //***************************************************************
     
     $form['employee']['id'] = array(
@@ -339,12 +331,9 @@ class EmployeePreview extends EmployeeFormBase {
       '#suffix'      => '',
     );
     
-    $result = $brnobj->getAllBranchDetails();
-    foreach ($result as $row => $content) {
-    if($content->codepk == $this->store->get('branch') )
-    $branch_name = $content->codevalues;
-    }
-
+    $result = $brnobj->getBranchNameFromCode($this->store->get('branch'));
+    $branch_name = $result->codevalues;
+	
     $form['employee']['branch'] = array(
       '#type' 		   => 'item',
       '#title' 		   => $this->t('Branch:'),
@@ -352,12 +341,10 @@ class EmployeePreview extends EmployeeFormBase {
       '#prefix'      => '',
       '#suffix'      => '</div>',
     );
-    $result = $desgnobj->getAllDesignationDetails();
-    foreach ($result as $row => $content) {
-    if($content->codepk == $this->store->get('designation') )
-    $designation_name = $content->codevalues;
-    }
-
+	
+    $result = $desgnobj->getDesignationNameFromCode($this->store->get('designation'));
+    $designation_name = $result->codevalues;
+	
     $form['employee']['designation'] = array(
       '#type' 		   => 'item',
       '#title' 		   => $this->t('Designation:'),
@@ -365,15 +352,10 @@ class EmployeePreview extends EmployeeFormBase {
       '#prefix'      => '<div class="row">',
       '#suffix'      => '',
     );
-    $result = $deptobj->getAllDepartmentDetails();
-    
-    
-    foreach ($result as $row => $content) {
-    if($content->codepk == $this->store->get('department') )
-
-    $department_name = $content->codevalues;
-    }   
    
+    $result = $deptobj->getDepartmentNameFromCode($this->store->get('department'));
+    $department_name = $result->codevalues;
+	
     $form['employee']['department'] = array(
       '#type' 		   => 'item',
       '#title' 		   => $this->t('Department:'),
@@ -407,7 +389,7 @@ class EmployeePreview extends EmployeeFormBase {
     $form['employee']['doj'] = array(
       '#type' 		   => 'item',
       '#title' 		   => $this->t('Date of joining:'),
-      '#markup'      => $this->store->get('doj'),
+      '#markup'      => date("j F Y", strtotime($this->store->get('doj'))),
       '#prefix'      => ' ',
       '#suffix'      => '</div>',
     );

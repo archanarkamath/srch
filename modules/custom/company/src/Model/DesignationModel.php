@@ -82,5 +82,21 @@ class DesignationModel extends ControllerBase {
 		return $res1;
 	}
 
+	/*
+	* get designation name from designation code
+	* @input designation code
+	* @output designation name
+	*/
+	public function getDesignationNameFromCode($designationcode)
+	{
+		$query = db_select('srch_codevalues', 'n');
+				$query->fields('n');	
+				$query->condition('codetype', 'designation', "=");
+				$query->condition('codename', $designationcode, "=");
+				$query->condition('status', 1, "=");
+				$result = $query->execute()->fetch();
+		
+		return $result;
+	}
 
 }

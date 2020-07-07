@@ -28,12 +28,16 @@ class EmployeeOfficialForm extends EmployeeFormBase {
 	 
 	 global $base_url;
 	 
-    if(!$this->store->get('academic_bypass'))
+      if(!$this->store->get('academic_bypass'))
       {	
-        //$response = new RedirectResponse(\Drupal::url('employee.empaddacademic'));
-        //$response->send();
+        $response = new RedirectResponse(\Drupal::url('employee.empaddacademic'));
+        $response->send();
       }
-      
+      if(!$this->store->get('preview_back'))
+	  {
+		parent::deleteOfficialStore();
+	  }
+		
     $form = parent::buildForm($form, $form_state);
     $form['actions']['submit'] = array();
     $desobj = new \Drupal\company\Model\DesignationModel;
@@ -50,18 +54,25 @@ class EmployeeOfficialForm extends EmployeeFormBase {
                                     </ul><div class="row"><div class="panel-body"><h3 class="box-title">Official</h3>
                                     <hr class="m-t-0 m-b-40">';
 	$form['employee']['#suffix'] = '</div></div>';
-  $form['#attached']['library'][] = 'singleportal/master-validation';
+	$form['#attached']['library'][] = 'singleportal/master-validation';
  	$form['#attached']['library'][] = 'singleportal/datetimepicker';
-
+  
+  $empid_config = $conobj->getEmployeeIdConfig();
+  
   $form['employee']['id'] = array(
     '#type'          => 'textfield',
     '#title'         => $this->t('Employee ID'),
     '#default_value' => $this->store->get('id') ? $this->store->get('id') : '',
     '#attributes'    => ['class' => ['form-control', 'validate[required]']],
-    '#field_suffix' => '<i class="fadehide mdi mdi-help-circle" title="Employee id of the person" data-toggle="tooltip"></i>',
+	'#disabled'      => $empid_config['disabled'],
+    '#field_suffix' => '<i class="fadehide mdi mdi-help-circle" title="'.$empid_config['helpmsg'].'" data-toggle="tooltip"></i>',
 
   );
-    
+  if(!empty($empid_config['id']))
+  {
+	  $form['employee']['id']['#value'] = $empid_config['empid'];
+  }
+  
   $brnlist = $brnobj->getAllBranchDetails();
   $brn_option[''] = 'Select Branch';
   foreach($brnlist AS $item)
@@ -194,6 +205,7 @@ class EmployeeOfficialForm extends EmployeeFormBase {
 	$this->store->set('official_back', TRUE);	
     return $form;
   }
+ 
   public function validateForm(array &$form, FormStateInterface $form_state) {
 	  
 	  $empObj = new \Drupal\employee\Model\EmployeeModel;
