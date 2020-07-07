@@ -12,6 +12,7 @@ class DesignationForm extends FormBase {
 
   public function buildForm(array $form, FormStateInterface $form_state) {  
   
+     global $base_url;
     $libobj = new \Drupal\library\Lib\LibController;
     $desobj = new \Drupal\company\Model\DesignationModel;
     $depobj = new \Drupal\company\Model\DepartmentModel;
@@ -49,7 +50,7 @@ class DesignationForm extends FormBase {
 
     );
     
-    	$deplist = $depobj->getAllDepartmentDetails();
+      $deplist = $depobj->getAllDepartmentDetails();
       $dept_option[''] = 'Select Department';
       foreach($deplist AS $item)
       {
@@ -62,7 +63,7 @@ class DesignationForm extends FormBase {
         $dept = $res->codename;
       }
       
-    $form['designation']['departmentlist'] = array(
+    $form['designation']['department'] = array(
       '#type'          => 'select',
       '#title'         => t('Department :'),
       '#options'       => $dept_option,
@@ -70,10 +71,9 @@ class DesignationForm extends FormBase {
       '#prefix'        => '<div class="row"><div class="col-md-12">',
       '#suffix'        => '</div></div>',
       '#default_value' => isset($data)? $dept : '',
-      '#field_suffix' => '<i class="fadehide mdi mdi-help-circle" title="Select Department name in which this Designation belongs" data-toggle="tooltip"></i>',
-
-    );
+      '#field_suffix' => '<a href="'.$base_url.'/department/modal" class="use-ajax button"><i class="fadehide mdi mdi-settings fa-fw"></i></a>',
    // $form['designation']['#type'] = 'actions';
+    );
     $form['designation']['submit'] = array(
       '#type'          => 'submit',
       '#default_value' => ($mode == 'add') ? $this->t('Submit') : $this->t('Update'),
@@ -113,7 +113,7 @@ class DesignationForm extends FormBase {
     $field = $form_state->getValues();
     $name = $field['name'];
     $codename = $field['code'];
-    $parent = $field['departmentlist'];
+    $parent = $field['department'];
     
     $parent = $depobj->getDepartmentId($parent);
    
