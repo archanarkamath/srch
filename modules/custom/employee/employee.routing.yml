@@ -55,3 +55,5 @@ employee.profile:
    _controller: '\Drupal\employee\Controller\Employee::profile'
  requirements:
    _permission: 'access content'
+ options:
+    no_cache: 'TRUE'
