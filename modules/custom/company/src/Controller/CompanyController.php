@@ -15,7 +15,7 @@ class CompanyController extends ControllerBase {
 	$compobj = new \Drupal\company\Model\CompanyModel;
 	$data = $compobj->getCompanyDetailsById(1);
 	$encrypt = new \Drupal\library\Controller\Encrypt;
-	    global $base_url;
+	global $base_url;
 	$asset_url = $base_url.'/'.\Drupal::theme()->getActiveTheme()->getPath();
    	
 	 return array(
@@ -25,7 +25,7 @@ class CompanyController extends ControllerBase {
 					<div class=" col-md-2">
                         <a id="printit" data-toggle="tooltip" data-original-title="Print"><img src="'.$asset_url.'/assets/images/icon/print.png" /></a> 
 						</div></div>',
-    
+						    
       '#data' => array(
 						'logo' => file_create_url("public://logo.png"),
 						'name' => $data->companyname,

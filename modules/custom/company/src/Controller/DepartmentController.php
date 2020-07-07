@@ -53,7 +53,7 @@ class DepartmentController extends ControllerBase {
 						</div>
                         <div class="panel-wrapper collapse in" aria-expanded="true">
                         <div class="panel-body">
-                        <hr>						
+						<hr>
                         <div id="editable-datatable_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
                         <div class="row"><div class="col-sm-6"><a href ="add"><span  type="button" class="btn btn-info">
                         <i class="mdi mdi-plus"></i> Add </span></a></div> <br><br><br></div></div><div class="row"><div class="col-sm-12" id="printable">',
