@@ -50,3 +50,7 @@ company configview:
     title: 'Configuration View'
     description: 'Provide access for viewing Configuration details'
     restrict access: false
+company workorder:
+    title: 'Work Order View'
+    description: 'Provide access for viewing Configuration details'
+    restrict access: false

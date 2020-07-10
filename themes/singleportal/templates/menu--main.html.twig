@@ -10,13 +10,31 @@
       
 	{% if user.hasPermission('company view') or user.hasPermission('company branchview') or  user.hasPermission('company deptview') or user.hasPermission('company desigview') or user.hasPermission('company configview') %}
       <li class=""><a href="javascript:void(0)" class="waves-effect"><i class="mdi mdi-settings fa-fw"></i> <span class="hide-menu">Administrative<span class="fa arrow"></span></span></a>
-        <ul class="nav nav-second-level">
-		 {% if user.hasPermission('company view') %}<li><a href="{{url('<front>')}}company/view"><i class="mdi mdi-bank fa-fw"></i><span class="hide-menu">Company</span></a></li>{% endif %}
+        <ul class="nav nav-second-level two-li">
+		 {% if user.hasPermission('company view') %}
+		 <li><a href="{{url('<front>')}}company/view"><i class="mdi mdi-bank fa-fw"></i><span class="hide-menu">Company</span></a></li>
+		 {% endif %}
           
-          {% if user.hasPermission('company branchview') %}<li> <a href="{{url('<front>')}}branch/list" class="waves-effect"><i class="mdi mdi-source-branch fa-fw"></i><span class="hide-menu">Branch</span></a> </li>{% endif %}
-          {% if user.hasPermission('company deptview') %}<li><a href="{{url('<front>')}}department/view"><i class="mdi mdi-lan fa-fw"></i><span class="hide-menu">Department</span></a></li>{% endif %}
-          {% if user.hasPermission('company desigview') %}<li><a href="{{url('<front>')}}designation/view"><i class="mdi mdi-account-card-details fa-fw"></i><span class="hide-menu">Designation</span></a></li>{% endif %}
-          {% if user.hasPermission('company configview') %}<li><a href="{{url('<front>')}}organisation/config"><i class="mdi mdi-settings fa-fw"></i><span class="hide-menu">Configuration</span></a></li>{% endif %}
+          {% if user.hasPermission('company branchview') %}
+		  <li> <a href="{{url('<front>')}}branch/list" class="waves-effect"><i class="mdi mdi-source-branch fa-fw"></i><span class="hide-menu">Branch</span></a> </li>
+		  {% endif %}
+		  
+          {% if user.hasPermission('company deptview') %}
+		  <li><a href="{{url('<front>')}}department/view"><i class="mdi mdi-lan fa-fw"></i><span class="hide-menu">Department</span></a></li>
+		  {% endif %}
+		  
+          {% if user.hasPermission('company desigview') %}
+		  <li><a href="{{url('<front>')}}designation/view"><i class="mdi mdi-account-card-details fa-fw"></i><span class="hide-menu">Designation</span></a></li>
+		  {% endif %}
+		  
+          {% if user.hasPermission('company configview') %}
+		  <li><a href="{{url('<front>')}}organisation/config"><i class="mdi mdi-settings fa-fw"></i><span class="hide-menu">Configuration</span></a></li>
+		  {% endif %}
+		  
+		  {% if user.hasPermission('company workorder') %}
+		  <li><a href="{{url('<front>')}}wordorder/list"><i class="mdi mdi-settings fa-fw"></i><span class="hide-menu">Work Order</span></a></li>
+		  {% endif %}
+		  
         </ul>
       </li>
       {% endif %} 
