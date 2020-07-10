@@ -50,10 +50,48 @@ public function buildForm(array $form, FormStateInterface $form_state) {
 	 '#prefix' => '<div class="row">',
 	 '#default_value' => !empty($data)? ($data->codevalues == 'Automatic')? 1 : 0 : '',
 	 '#disabled' => ($user->hasPermission('admin configuration')) ? false : true,
-   '#field_suffix' => '<i class="fadehide mdi mdi-help-circle" title="The code which is being used for employee ID generation. For EX:- If your code is ABC then Employee ID will be ABC001, ABC021, ABC0156" data-toggle="tooltip"></i>',
-
+     '#field_suffix' => '<i class="fadehide mdi mdi-help-circle" title="The code which is being used for employee ID generation. For EX:- If your code is ABC then Employee ID will be ABC001, ABC021, ABC0156" data-toggle="tooltip"></i>',
+     '#suffix' => '</div>'
     );
-	
+	$form['company']['Branchcode'] = array(
+      '#type' => 'checkbox',
+      '#title' => t('Automatic Branchcode'),
+      //'#required' => TRUE,
+ 	  '#attributes' => ['class' => ['form-control'], 'data-toggle' => 'toggle', 
+								'data-on' => 'ON', 'data-off' => 'OFF', 
+								'data-onstyle' => 'info'],
+	 '#prefix' => '<div class="row">',
+	 '#default_value' => !empty($data)? ($data->codevalues == 'Automatic')? 1 : 0 : '',
+	 '#disabled' => ($user->hasPermission('admin configuration')) ? false : true,
+     '#field_suffix' => '<i class="fadehide mdi mdi-help-circle" title="The code which is being used for employee ID generation. For EX:- If your code is ABC then Employee ID will be ABC001, ABC021, ABC0156" data-toggle="tooltip"></i>',
+     '#suffix' => '</div>'
+    );
+	$form['company']['Departmentcode'] = array(
+      '#type' => 'checkbox',
+      '#title' => t('Automatic Departmentcode'),
+      //'#required' => TRUE,
+ 	  '#attributes' => ['class' => ['form-control'], 'data-toggle' => 'toggle', 
+								'data-on' => 'ON', 'data-off' => 'OFF', 
+								'data-onstyle' => 'info'],
+	 '#prefix' => '<div class="row">',
+	 '#default_value' => !empty($data)? ($data->codevalues == 'Automatic')? 1 : 0 : '',
+	 '#disabled' => ($user->hasPermission('admin configuration')) ? false : true,
+     '#field_suffix' => '<i class="fadehide mdi mdi-help-circle" title="The code which is being used for employee ID generation. For EX:- If your code is ABC then Employee ID will be ABC001, ABC021, ABC0156" data-toggle="tooltip"></i>',
+     '#suffix' => '</div>'
+    );
+	$form['company']['Designationcode'] = array(
+      '#type' => 'checkbox',
+      '#title' => t('Automatic Designationcode'),
+      //'#required' => TRUE,
+ 	  '#attributes' => ['class' => ['form-control'], 'data-toggle' => 'toggle', 
+								'data-on' => 'ON', 'data-off' => 'OFF', 
+								'data-onstyle' => 'info'],
+	 '#prefix' => '<div class="row">',
+	 '#default_value' => !empty($data)? ($data->codevalues == 'Automatic')? 1 : 0 : '',
+	 '#disabled' => ($user->hasPermission('admin configuration')) ? false : true,
+     '#field_suffix' => '<i class="fadehide mdi mdi-help-circle" title="The code which is being used for employee ID generation. For EX:- If your code is ABC then Employee ID will be ABC001, ABC021, ABC0156" data-toggle="tooltip"></i>',
+     '#suffix' => '</div>'
+    );
 	$form['company']['codeformat'] = array(
       '#type' => 'textfield',
       '#title' => t('Code Format:'),
