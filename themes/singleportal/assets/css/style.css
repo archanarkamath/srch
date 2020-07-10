@@ -626,7 +626,7 @@ hr {
   margin-bottom: 6px;
 }
 label {
-  font-weight: 500;
+  font-weight: 500 !important;
 }
 .btn {
   border-radius: 3px;
