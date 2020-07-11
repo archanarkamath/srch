@@ -175,7 +175,7 @@ company.sit:
  requirements:
    _permission: 'access content'
 
-company.projectview:
+company.projectlist:
  path: '/wordorder/list'
  defaults:
    _title: 'Project List'
@@ -184,3 +184,11 @@ company.projectview:
    _permission: 'access content'
  options:
     no_cache: 'TRUE'
+
+company.projectadd:
+ path: '/wordorder/add'
+ defaults:
+   _title: 'Project Add'
+   _form: '\Drupal\company\Form\WorkorderForm'
+ requirements:
+   _permission: 'access content'
