@@ -244,6 +244,7 @@ class EmployeeModel extends ControllerBase  {
 	
 	public function getAcademicDetailsById($id)
 	{
+	 
 		$query = db_select(DataModel::EMPACADEMIC, 'n');
 		$query->fields('n');	
 		$query->condition('userpk', $id ,"=");
@@ -302,5 +303,115 @@ class EmployeeModel extends ControllerBase  {
 		}
 		
 		return  $avatar;
+	}
+	/* 
+	* joining personalinfo, Contactinfo and Officialinfo
+	* Fetching all Employee details except Academic Info
+    */	
+	public function getEmployeeDetails()
+	{
+		/*
+			    SELECT 
+				   p.firstname,
+				   p.lastname,
+				   p.fathername,
+				   p.mothername,
+				   p.gender,
+				   p.dob,
+				   p.marital,
+				   p.bloodgroup,
+				   p.religion,
+				   p.nationality,
+				   c.phoneno,
+				   c.altphoneno,
+				   c.emrgphoneno,
+				   c.relationship,
+				   c.email,
+				   c.res_address1,
+				   c.res_address2,
+				   s.name,
+				   ct.name,
+				   co.name,
+				   c.res_pincode,
+				   c.perm_address1,
+				   c.perm_address2,
+				   s1.name,
+				   ct1.name,
+				   co1.name,
+				   c.perm_pincode,
+				   o.empid,
+				   o.branch,
+				   o.department,
+				   o.designation,
+				   o.jobtype,
+				   o.jobnature,
+				   o.email,
+				   o.doj,
+				   o.shifttime
+				FROM
+					srch_personalinfo p
+					LEFT JOIN srch_contactinfo c ON p.userpk = c.userpk
+					LEFT JOIN srch_states s ON c.res_state = s.id
+					LEFT JOIN srch_cities ct ON c.res_city = ct.id
+					LEFT JOIN srch_countries co ON c.res_country = co.id
+					LEFT JOIN srch_states s1 ON c.perm_state = s1.id 
+					LEFT JOIN srch_cities ct1 ON c.perm_city = ct1.id 
+					LEFT JOIN srch_countries co1 ON c.res_country = co1.id
+					LEFT JOIN srch_officialinfo o ON o.userpk = c.userpk
+					
+				;
+
+
+		*/
+		$query = db_select(DataModel::EMPPERSONAL, 'p');
+		$query->leftjoin(DataModel::EMPCONTACT, 'c', 'p.userpk = c.userpk');
+		$query->leftjoin(DataModel::STATE, 's', 'c.res_state = s.id');
+		$query->leftjoin(DataModel::CITY, 'ct', 'c.res_city = ct.id');
+		$query->leftjoin(DataModel::COUNTRY, 'co', 'c.res_country = co.id');
+		$query->leftjoin(DataModel::STATE, 's1', 'c.res_state = s1.id');
+		$query->leftjoin(DataModel::CITY, 'ct1', 'c.res_city = ct1.id');
+		$query->leftjoin(DataModel::COUNTRY, 'co1', 'c.res_country = co1.id');
+		$query->leftjoin(DataModel::EMPOFFICIAL, 'o', 'o.userpk = c.userpk');
+
+		
+		$query->addField('p', 'firstname', 'FirstName');
+		$query->addField('p', 'lastname', 'LastName');
+		$query->addField('p', 'fathername', 'FatherName');
+		$query->addField('p', 'mothername', 'MotherName');
+		$query->addField('p', 'gender', 'Gender');
+		$query->addField('p', 'dob', 'DateOfBirth');
+		$query->addField('p', 'marital', 'Marital');
+		$query->addField('p', 'bloodgroup', 'BloodGroup');
+		$query->addField('p', 'religion', 'Religion');
+		$query->addField('p', 'nationality', 'Nationality');
+		$query->addField('c', 'phoneno', 'PhoneNumber');
+		$query->addField('c', 'altphoneno', 'AlternatePhoneNumber');
+		$query->addField('c', 'emrgphoneno', 'EmergencyPhoneNumber');
+		$query->addField('c', 'relationship', 'Relationship');
+		$query->addField('c', 'email', 'Email');
+		$query->addField('c', 'res_address1', 'ResidentAddress1');
+		$query->addField('c', 'res_address2', 'ResidentAddress2');
+		$query->addField('s', 'name', 'State');
+		$query->addField('ct', 'name', 'City');
+		$query->addField('co', 'name', 'Country');
+		$query->addField('c', 'res_pincode', 'Pincode');
+		$query->addField('c', 'perm_address1', 'PermenantAddress1');
+		$query->addField('c', 'perm_address2', 'PermenantAddress2');
+		$query->addField('s1', 'name', 'State');
+		$query->addField('ct1', 'name', 'City');
+		$query->addField('co1', 'name', 'Country');
+		$query->addField('c', 'perm_pincode', 'Pincode');
+		$query->addField('o', 'empid', 'EmployeeID');
+		$query->addField('o', 'branch', 'Branch');
+		$query->addField('o', 'department', 'Department');
+		$query->addField('o', 'designation', 'Designation');
+		$query->addField('o', 'jobtype', 'JobType');
+		$query->addField('o', 'jobnature', 'JobNature');
+		$query->addField('o', 'email', 'Email');
+		$query->addField('o', 'doj', 'DateofJoining');
+		$query->addField('o', 'shifttime', 'ShiftTime');
+		$result = $query->execute()->fetch();
+		return $result;
+
 	}
 }
