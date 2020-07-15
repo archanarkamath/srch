@@ -244,8 +244,7 @@ class EmployeeModel extends ControllerBase  {
 	
 	public function getAcademicDetailsById($id)
 	{
-	 
-		$query = db_select(DataModel::EMPACADEMIC, 'n');
+	 	$query = db_select(DataModel::EMPACADEMIC, 'n');
 		$query->fields('n');	
 		$query->condition('userpk', $id ,"=");
 		$result = $query->execute()->fetchAll();
@@ -360,8 +359,6 @@ class EmployeeModel extends ControllerBase  {
 					LEFT JOIN srch_officialinfo o ON o.userpk = c.userpk
 					
 				;
-
-
 		*/
 		$query = db_select(DataModel::EMPPERSONAL, 'p');
 		$query->leftjoin(DataModel::EMPCONTACT, 'c', 'p.userpk = c.userpk');
