@@ -89,7 +89,7 @@ public function buildForm(array $form, FormStateInterface $form_state) {
 								'data-onstyle' => 'info'],
 	 '#default_value' => !empty($data)? ($data->codevalues == 'Automatic')? 1 : 0 : '',
 	 '#disabled' => ($user->hasPermission('admin configuration')) ? false : true,
-     '#field_suffix' => '<i class="fadehide mdi mdi-help-circle" title="The code which is being used for employee ID generation. For EX:- If your code is ABC then Employee ID will be ABC001, ABC021, ABC0156" data-toggle="tooltip"></i>',
+     '#field_suffix' => '<i class="fadehide mdi mdi-help-circle" title="Make it ON If you need to enter your Department code" data-toggle="tooltip"></i>',
      '#suffix' => '</div>'
     );
 	$form['company']['Designationcode'] = array(
@@ -102,7 +102,7 @@ public function buildForm(array $form, FormStateInterface $form_state) {
 	 '#prefix' => '<div class="row">',
 	 '#default_value' => !empty($data)? ($data->codevalues == 'Automatic')? 1 : 0 : '',
 	 '#disabled' => ($user->hasPermission('admin configuration')) ? false : true,
-     '#field_suffix' => '<i class="fadehide mdi mdi-help-circle" title="The code which is being used for employee ID generation. For EX:- If your code is ABC then Employee ID will be ABC001, ABC021, ABC0156" data-toggle="tooltip"></i>',
+     '#field_suffix' => '<i class="fadehide mdi mdi-help-circle" title="Make it ON If you need to enter your Designation code" data-toggle="tooltip"></i>',
 	 '#suffix' => '</div>'
     );
 	
