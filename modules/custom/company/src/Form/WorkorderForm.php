@@ -17,11 +17,11 @@ class WorkorderForm extends FormBase {
 
     $mode = $libobj->getActionMode();
     
-   
 	$form['#attached']['library'][] = 'singleportal/master-validation';
+	$form['#attached']['library'][] = 'company/workorder-lib';
 	$form['#attributes']['class'] = 'form-horizontal';
 	$form['#attributes']['autocomplete'] = 'off';
-    $form['department']['#prefix'] = '<div class="row"> <div class="panel panel-inverse"><h3 class="box-title">Academic Details</h3>
+    $form['department']['#prefix'] = '<div class="row"> <div class="panel panel-inverse"><h3 class="box-title">Work Order</h3>
                                       <hr/><div class="panel-body">';
     $form['workorder']['name'] = array(
       '#type'          => 'textfield',
@@ -42,80 +42,82 @@ class WorkorderForm extends FormBase {
 	
 	// repeater Field fro Team Form
 	
-	if (empty($name_field_qual)) {
-      $name_field_qual = $form_state->set('num_qual', 1);
+	$team_field_count = $form_state->get('num_team');
+	
+	if (empty($team_field_count)) {
+      $team_field_count = $form_state->set('num_team', 1);
     }
 	
-	$form['team']['actions'] = [
+	$form['addmore']['actions'] = [
         '#type' => 'actions',
       ];
-      $form['team']['actions']['add_name_qual'] = [
+      $form['addmore']['actions']['add_team'] = [
         '#type' => 'submit',
 		'#name' => 'Team',
 		'#prefix' => $html,
         '#value' => ' ',
 		'#limit_validation_errors' => array(),
-        '#submit' => array('::addOneQual'),
+        '#submit' => array('::addOneTeam'),
 	    '#attributes' => ['class' => ['addmore']],
         '#ajax' => [
-          'callback' => '::addmoreCallbackQual',
-          'wrapper' => "qual-id",
+          'callback' => '::addmoreCallbackTeam',
+          'wrapper' => "team-id",
         ],
       ];
 	  
-	$form['workorder']['academics'] = [
+	$form['team']['teamorder'] = [
       //'#prefix' => $html,
-	  '#prefix' => '<div id="qual-id"><div class="panel-body">',
+	  '#prefix' => '<div id="team-id"><div class="panel-body">',
       '#suffix' => '</div></div>',
 	  '#attributes' => ['class' => ['']],
 	  '#type' => 'table',
 	  '#title' => 'Sample Table',
-	  '#header' => [ ['data' => 'SLNO', 'class' => 'text-center'], 
-					 ['data' => 'Team Name', 'class' => 'text-center'], 
-					 ['data' => 'Team Order No', 'class' => 'text-center'],
-					 ['data' => 'Action', 'class' => 'text-left'],
+	  '#header' => [ ['data' => 'SLNO', 'class' => 'text-center', 'width' => '1%'], 
+					 ['data' => 'Team Name', 'class' => 'text-center', 'width' => '13%'], 
+					 ['data' => 'Team Order No', 'class' => 'text-center', 'width' => '13%'],
+					 ['data' => 'Action', 'class' => 'text-left', 'width' => '13%'],
 					]
     ];
 	
 	
 	
 	
-	 for ($i = 0; $i <  $form_state->get('num_qual'); $i++) {   
+	 for ($i = 0; $i <  $form_state->get('num_team'); $i++) {   
 		$cntq = $i + 1;
      
-	 $form['workorder']['academics'][$i]['slno'] = [
+	 $form['team']['teamorder'][$i]['slno'] = [
       '#type' 		   => 'item',
 	  '#markup' => $cntq,
       '#title_display' => 'invisible',	  
     ];
 
-    $form['workorder']['academics'][$i]['stream'] = [
+    $form['team']['teamorder'][$i]['stream'] = [
       '#type' 			=> 'textfield',
       '#title' 			=> $this->t('Team Name'),
-      '#default_value' 	=> isset($temp_stor[$i]['stream']) ? $temp_stor[$i]['stream'] : '',
+      '#default_value' 	=> '',
       '#title_display' => 'invisible',
 	  '#attributes'    => ['class' => ['form-control']],
-    
+	  '#prefix'	=> '',    
     ];
-	 $form['workorder']['academics'][$i]['university'] = [
+	 $form['team']['teamorder'][$i]['university'] = [
       '#type' 			=> 'textfield',
       '#title' 			=> $this->t('Team Order No'),
-      '#default_value' 	=> isset($temp_stor[$i]['university']) ? $temp_stor[$i]['university'] : '',
+      '#default_value' 	=> '',
      '#title_display' => 'invisible',
 	  '#attributes'    => ['class' => ['form-control']],    
     ];
 		
-	if ($i ==  $form_state->get('num_qual') - 1) {
-        $form['workorder']['academics'][$i]['actions']['remove_name_qual'] = [
+	if ($i ==  $form_state->get('num_team') - 1) {
+        $form['team']['teamorder'][$i]['actions']['remove_name_team'] = [
           '#type' => 'submit',
 		  '#name' => 'qualification_remove'.$i,
           '#value' => '.',
 		  '#attributes' => ['class' => ['removeitem']],
 		  '#limit_validation_errors' => array(),
-          '#submit' => array('::removeCallbackQual'),
+          '#submit' => array('::removeCallbackTeam'),
           '#ajax' => [
-            'callback' => '::addmoreCallbackQual',
-            'wrapper' => "qual-id",
+            'callback' => '::addmoreCallbackTeam',
+            'wrapper' => "team-id",
 			'progress' => [
 					  'type' => 'throbber',
 					  'message' => t(''),
@@ -128,7 +130,7 @@ class WorkorderForm extends FormBase {
 	
 	// End of Repeater Field
 	
-	$form['workorder']['submit'] = array(
+	$form['save']['submit'] = array(
       '#type'          => 'submit',
       '#default_value' => ($mode == 'add') ? $this->t('Submit') : $this->t('Update'),
       '#button_type'   => 'primary',
@@ -137,7 +139,7 @@ class WorkorderForm extends FormBase {
       '#suffix'        => '',
     );
 
-    $form['workorder']['cancel'] = array(
+    $form['save']['cancel'] = array(
       '#type' => 'link',
 	  '#title' => t('Cancel'),
       '#attributes'               => ['class'   => ['btn btn-default']],
@@ -145,6 +147,7 @@ class WorkorderForm extends FormBase {
       '#suffix'                   => '</div></div>',
       '#url' => \Drupal\Core\Url::fromRoute('company.departmentview'),
     );
+	$form_state->setCached(FALSE);
     return $form;
 
     }
@@ -163,24 +166,24 @@ class WorkorderForm extends FormBase {
 	}
 	
 	
- public function addmoreCallbackQual(array &$form, FormStateInterface $form_state) {
-    $name_field_qual = $form_state->get('num_qual');
-    return $form['teamdetails'];
+ public function addmoreCallbackTeam(array &$form, FormStateInterface $form_state) {
+    $team_field_count = $form_state->get('num_team');
+    return $form['team'];
   }  
   
-  public function addOneQual(array &$form, FormStateInterface $form_state) {
-    $name_field_qual = $form_state->get('num_qual');
-    $add_button_qual = $name_field_qual + 1;
-    $form_state->set('num_qual', $add_button_qual);
+  public function addOneTeam(array &$form, FormStateInterface $form_state) {
+    $team_field_count = $form_state->get('num_team');
+    $add_button_team = $team_field_count + 1;
+    $form_state->set('num_team', $add_button_team);
     $form_state->setRebuild();
   }
   
-   public function removeCallbackQual(array &$form, FormStateInterface $form_state) {
-    $name_field_qual = $form_state->get('num_qual');
+   public function removeCallbackTeam(array &$form, FormStateInterface $form_state) {
+    $team_field_count = $form_state->get('num_team');
 	
-    if ($name_field_qual > 1) {
-      $remove_button_qual = $name_field_qual - 1;
-      $form_state->set('num_qual', $remove_button_qual);
+    if ($team_field_count > 1) {
+      $remove_button_team = $team_field_count - 1;
+      $form_state->set('num_team', $remove_button_team);
       
     }
     $form_state->setRebuild();

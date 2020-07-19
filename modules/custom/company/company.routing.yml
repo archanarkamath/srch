@@ -188,7 +188,7 @@ company.projectlist:
 company.projectadd:
  path: '/wordorder/add'
  defaults:
-   _title: 'Project Add'
+   _title: 'Work Order'
    _form: '\Drupal\company\Form\WorkorderForm'
  requirements:
    _permission: 'access content'
