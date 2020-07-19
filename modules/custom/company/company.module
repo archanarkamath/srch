@@ -63,3 +63,10 @@ function company_preprocess_image_widget(&$variables) {
       $variables['data'][$child] = $element[$child];
     }
 }
+
+
+function company_preprocess_form_element(&$variables, $hook, &$info) {
+	if (\Drupal::service('path.current')->getPath() == '/wordorder/add') {
+  $info['template'] = 'form-element--multistep-form-three';
+	}
+}
