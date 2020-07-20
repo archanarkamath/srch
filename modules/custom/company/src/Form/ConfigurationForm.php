@@ -133,14 +133,16 @@ public function buildForm(array $form, FormStateInterface $form_state) {
 	
     $field = $form_state->getValues();
 	$employeeIdType = ($field['empidtype']) ? 'Automatic' : 'Manual';
-    
+    $branchCodeType = ($field['Branchcode']) ? 'Automatic' : 'Manual';
+    $designationCodeType = ($field['Designationcode']) ? 'Automatic' : 'Manual';
+    $departmentCodeType = ($field['Departmentcode']) ? 'Automatic' : 'Manual';    
 	 $field  = array(
               'codevalues'  =>  $employeeIdType,
               'description' =>  ($employeeIdType == 'Automatic') ? $field['codeformat'] : '',              
           );
 		 
 		 
-	 $configobj->updateEmpIdType($field);
+	 $configobj->updatAllConfig($field);
 	 drupal_set_message("Employee ID Configuration has been updated.");
 	 
   }

@@ -58,8 +58,12 @@ class ConfigurationModel extends ControllerBase {
 		 }
 		return $jobshift;
 	}
+	/*
+	 * This Update EmployeeID, Branchcode, DesignationCode 
+	 * and DepartmentCode type Configuration
+	*/
 	
-	public function updateEmpIdType($field)
+	public function updateAllConfig($field)
 	{
 		$query = \Drupal::database();
           $query->update(DataModel::CODEVAL)
