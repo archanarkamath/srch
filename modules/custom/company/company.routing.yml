@@ -174,3 +174,21 @@ company.sit:
    _form: '\Drupal\company\Form\DesignationForm'
  requirements:
    _permission: 'access content'
+
+company.projectlist:
+ path: '/wordorder/list'
+ defaults:
+   _title: 'Project List'
+   _controller: '\Drupal\company\Controller\WorkorderController::listing'
+ requirements:
+   _permission: 'access content'
+ options:
+    no_cache: 'TRUE'
+
+company.projectadd:
+ path: '/wordorder/add'
+ defaults:
+   _title: 'Work Order'
+   _form: '\Drupal\company\Form\WorkorderForm'
+ requirements:
+   _permission: 'access content'
