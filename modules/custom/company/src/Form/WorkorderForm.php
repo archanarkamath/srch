@@ -23,7 +23,7 @@ class WorkorderForm extends FormBase {
 	$form['#attributes']['autocomplete'] = 'off';
     $form['department']['#prefix'] = '<div class="row"> <div class="panel panel-inverse"><h3 class="box-title">Work Order</h3>
                                       <hr/><div class="panel-body">';
-    $form['workorder']['name'] = array(
+    $form['workorder']['workname'] = array(
       '#type'          => 'textfield',
       '#title'         => t('Work order Name:'),
       '#attributes'    => ['class' => ['form-control', 'validate[required,custom[onlyLetterSp]]']],
@@ -91,7 +91,7 @@ class WorkorderForm extends FormBase {
       '#title_display' => 'invisible',	  
     ];
 
-    $form['team']['teamorder'][$i]['stream'] = [
+    $form['team']['teamorder'][$i]['name'] = [
       '#type' 			=> 'textfield',
       '#title' 			=> $this->t('Team Name'),
       '#default_value' 	=> '',
@@ -99,7 +99,7 @@ class WorkorderForm extends FormBase {
 	  '#attributes'    => ['class' => ['form-control']],
 	  '#prefix'	=> '',    
     ];
-	 $form['team']['teamorder'][$i]['university'] = [
+	 $form['team']['teamorder'][$i]['order'] = [
       '#type' 			=> 'textfield',
       '#title' 			=> $this->t('Team Order No'),
       '#default_value' 	=> '',
@@ -145,7 +145,7 @@ class WorkorderForm extends FormBase {
       '#attributes'               => ['class'   => ['btn btn-default']],
       //'#limit_validation_errors'  => array(),
       '#suffix'                   => '</div></div>',
-      '#url' => \Drupal\Core\Url::fromRoute('company.departmentview'),
+      '#url' => \Drupal\Core\Url::fromRoute('company.projectlist'),
     );
 	$form_state->setCached(FALSE);
     return $form;
@@ -156,13 +156,34 @@ class WorkorderForm extends FormBase {
    
   }
   
-  public function ActionCancel(array &$form, FormStateInterface $form_state)
-  {	  
-	$form_state->setRedirect('company.departmentview');
-  }
   
   public function submitForm(array &$form, FormStateInterface $form_state) {
 		
+		$worobj = new \Drupal\company\Model\WorkorderModel;	
+		
+		$field = $form_state->getValues();
+		$data = array(
+						'workorder' => array(
+												'codename'	=>	$field['workcode'],
+												'codevalues'=>	$field['workname']	
+											),
+						'teamorder'	=>	array()
+					);
+					
+		//looping team repeater array and collecting data
+		foreach( $field['teamorder'] AS $team )
+		{
+			$data['teamorder'][]	=	array( 
+												'codename' 	=>	$team['order'],
+												'codevalues'=>	$team['name']
+											);
+		}
+		
+		$worobj->setWorkOrder( $data );
+		
+		drupal_set_message("Word oRder has been created.");
+		
+		$form_state->setRedirect('company.projectlist');
 	}
 	
 	
