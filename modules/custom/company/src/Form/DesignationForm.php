@@ -16,7 +16,8 @@ class DesignationForm extends FormBase {
     $libobj = new \Drupal\library\Lib\LibController;
     $desobj = new \Drupal\company\Model\DesignationModel;
     $depobj = new \Drupal\company\Model\DepartmentModel;
-
+	$conobj = new \Drupal\company\Model\ConfigurationModel;
+	
     $mode = $libobj->getActionMode();
     $form_title = 'Add Designation Details';
     if($mode == 'edit'){
@@ -38,6 +39,9 @@ class DesignationForm extends FormBase {
       '#suffix'        => '</div></div>',
       '#default_value' => isset($data)? $data->codevalues : '',
     );
+	
+	$descode_config = $conobj->getDesignationcodeConfig();
+	
     $form['designation']['code'] = array(
       '#type'          => 'textfield',
       '#title'         => t('Designation Code:'),
@@ -45,8 +49,8 @@ class DesignationForm extends FormBase {
       '#prefix'        => '<div class="row"><div class="col-md-12">',
       '#suffix'        => '</div></div>',
       '#default_value' => isset($data)? $data->codename : '',
-      '#disabled'      =>  isset($data)? "disabled" : '',
-      '#field_suffix' => '<i class="fadehide mdi mdi-help-circle" title="Unique code for this Designation used for internal backend purpose. Cannot be changed once added" data-toggle="tooltip"></i>',
+      '#disabled'      =>  $descode_config['disabled'],
+      '#field_suffix' => '<i class="fadehide mdi mdi-help-circle" title="'.$descode_config['helpmsg'].'" data-toggle="tooltip"></i>',
 
     );
     
@@ -109,17 +113,29 @@ class DesignationForm extends FormBase {
     $libobj = new \Drupal\library\Lib\LibController;
     $desobj = new \Drupal\company\Model\DesignationModel;
     $depobj = new \Drupal\company\Model\DepartmentModel;
-
-    $field = $form_state->getValues();
+	$conobj = new \Drupal\company\Model\ConfigurationModel;
+	
+	$dsgcode_config = $conobj->getDesignationcodeConfig();
+	$field = $form_state->getValues();
+	if ( $dsgcode_config['disabled'] == "disabled" )  
+	{
+		
+    $dsg_codename = $libobj->generateCode('DG', $field['name']);
+    $code = $dsg_codename;
+    }
+	else 
+	{
+	  $code = $field['code'];	 
+	}
+	
     $name = $field['name'];
-    $codename = $field['code'];
     $parent = $field['department'];
     
     $parent = $depobj->getDepartmentId($parent);
    
     $field  = array(
       'codevalues' =>  $name,
-      'codename'   =>  $codename,
+      'codename'   =>  $code,
       'parent'   =>  $parent->codepk,
       'codetype'   => 'designation',             
      );

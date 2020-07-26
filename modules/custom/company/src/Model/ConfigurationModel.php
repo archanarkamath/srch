@@ -61,18 +61,23 @@ class ConfigurationModel extends ControllerBase {
 	/*
 	 * This Update EmployeeID, Branchcode, DesignationCode 
 	 * and DepartmentCode type Configuration
-	*/
+	 	*/
 	
-	public function updateAllConfig($field)
+	public function updatAllConfig($field)
 	{
-		$query = \Drupal::database();
-          $query->update(DataModel::CODEVAL)
-              ->fields($field)
-              ->condition('codename', 'EMPID', "=")
-              ->condition('codetype', 'employeeid', "=")
+		foreach( $field AS $item)
+		{
+			//echo $item['codename'] . "<br/>";
+			$query = \Drupal::database();
+			$query->update(DataModel::CODEVAL)
+              ->fields($item)
+              ->condition('codename', $item['codename'], "=")
+              ->condition('codetype', $item['codetype'], "=")
               ->execute();
+			  
+				}
 	}
-	
+		
 	public function getEmpIdType()
 	{
 		$query = db_select(DataModel::CODEVAL, 'n'); 
@@ -84,6 +89,43 @@ class ConfigurationModel extends ControllerBase {
 		
 		return $res;
 	}
+	
+	public function getBranchcodeType()
+	{
+		$query = db_select(DataModel::CODEVAL, 'n'); 
+		$query->fields('n')		
+		->condition('codename', 'BRNCD', "=")
+        ->condition('codetype', 'branchcode', "=");
+		$result = $query->execute()->fetch();
+		$res = @$result;	
+		
+		return $res;
+	}
+	
+	public function getDepratmentcodeType()
+	{
+		$query = db_select(DataModel::CODEVAL, 'n'); 
+		$query->fields('n')		
+		->condition('codename', 'DPTCD', "=")
+        ->condition('codetype', 'departmentcode', "=");
+		$result = $query->execute()->fetch();
+		$res = @$result;	
+		
+		return $res;
+	}
+	
+	public function getDesignationcodeType()
+	{
+		$query = db_select(DataModel::CODEVAL, 'n'); 
+		$query->fields('n')		
+		->condition('codename', 'DSGCD', "=")
+        ->condition('codetype', 'designationcode', "=");
+		$result = $query->execute()->fetch();
+		$res = @$result;	
+		
+		return $res;
+	}
+	
 	
 	/*
 	* This checks the Employee id type configuration
@@ -109,6 +151,81 @@ class ConfigurationModel extends ControllerBase {
 			$res['disabled'] = '';
 			$res['empid'] = '';
 			$res['helpmsg'] = 'Mention Employee Id of the person';
+		}
+		
+		return $res;
+	}
+	
+	public function getBranchcodeConfig()
+	{
+		$query = db_select(DataModel::CODEVAL, 'n'); 
+		$query->fields('n')		
+		->condition('codename', 'BRNCD', "=")
+        ->condition('codetype', 'branchcode', "=");
+		$result = $query->execute()->fetch();
+		
+		$res = [];
+		if($result->codevalues == 'off')
+		{
+			$res['disabled'] = 'disabled';
+			$res['branchcode'] = $result->description . 'XXXX';
+			$res['helpmsg'] = 'Branch Code will be auto generate';			
+		}
+		else
+		{
+			$res['disabled'] = '';
+			$res['branchcode'] = '';
+			$res['helpmsg'] = 'Mention Branch Code of the person';
+		}
+		
+		return $res;
+	}
+	
+	public function getDepartmentcodeConfig()
+	{
+		$query = db_select(DataModel::CODEVAL, 'n'); 
+		$query->fields('n')		
+		->condition('codename', 'DPTCD', "=")
+        ->condition('codetype', 'departmentcode', "=");
+		$result = $query->execute()->fetch();
+		
+		$res = [];
+		if($result->codevalues == 'off')
+		{
+			$res['disabled'] = 'disabled';
+			$res['departmentcode'] = $result->description . 'XXXX';
+			$res['helpmsg'] = 'Department Code will be auto generate';			
+		}
+		else
+		{
+			$res['disabled'] = '';
+			$res['departmentcode'] = '';
+			$res['helpmsg'] = 'Mention Department Code of the person';
+		}
+		
+		return $res;
+	}
+	
+	public function getDesignationcodeConfig()
+	{
+		$query = db_select(DataModel::CODEVAL, 'n'); 
+		$query->fields('n')		
+		->condition('codename', 'DSGCD', "=")
+        ->condition('codetype', 'designationcode', "=");
+		$result = $query->execute()->fetch();
+		
+		$res = [];
+		if($result->codevalues == 'off')
+		{
+			$res['disabled'] = 'disabled';
+			$res['designationcode'] = $result->description . 'XXXX';
+			$res['helpmsg'] = 'Designation Code will be auto generate';			
+		}
+		else
+		{
+			$res['disabled'] = '';
+			$res['departmentcode'] = '';
+			$res['helpmsg'] = 'Mention Designation Code of the person';
 		}
 		
 		return $res;

@@ -14,7 +14,7 @@ class DepartmentForm extends FormBase {
   
     $libobj = new \Drupal\library\Lib\LibController;
     $brnobj = new \Drupal\company\Model\DepartmentModel;
-
+	$conobj = new \Drupal\company\Model\ConfigurationModel;
     $mode = $libobj->getActionMode();
     
     if($mode == 'edit'){
@@ -37,6 +37,9 @@ class DepartmentForm extends FormBase {
       '#suffix'        => '</div>',
       '#default_value' => isset($data)? $data->codevalues : '',
     );
+	
+	$dptcode_config = $conobj->getDepartmentcodeConfig();
+	 
     $form['department']['code'] = array(
       '#type'          => 'textfield',
       '#title'         => t('Department Code:'),
@@ -44,8 +47,8 @@ class DepartmentForm extends FormBase {
       '#prefix'        => '<div class="row">',
       '#suffix'        => '</div>',
       '#default_value' => isset($data)? $data->codename : '',
-      '#disabled'      =>  isset($data)? "disabled" : '',
-      '#field_suffix' => '<i class="fadehide mdi mdi-help-circle" title="Unique Code for this department used for internal backend purpose. Cannot be changed once added" data-toggle="tooltip"></i>',
+      '#disabled'      =>  $dptcode_config['disabled'],
+      '#field_suffix' => '<i class="fadehide mdi mdi-help-circle" title="'.$dptcode_config['helpmsg'].'" data-toggle="tooltip"></i>',
 
     );
     
@@ -93,14 +96,26 @@ class DepartmentForm extends FormBase {
   public function submitForm(array &$form, FormStateInterface $form_state) {
     $libobj = new \Drupal\library\Lib\LibController;
     $brnobj = new \Drupal\company\Model\DepartmentModel;
-
+    $conobj = new \Drupal\company\Model\ConfigurationModel;
+	
     $field = $form_state->getValues();
+	$dptcode_config = $conobj->getDepartmentcodeConfig();
+	
+	if ( $dptcode_config['disabled'] == "disabled" )  
+	{
+      $dpt_codename = $libobj->generateCode('DT', $field['name']);
+      $code = $dpt_codename;
+    }
+	else 
+	{
+	  $code = $field['code'];	 
+	}
+	
     $name = $field['name'];
-    $codename = $field['code'];
-
+   
     $field  = array(
       'codevalues' =>  $name,
-      'codename'   =>  $codename,
+      'codename'   =>  $code,
       'codetype'   => 'department',             
      );
 

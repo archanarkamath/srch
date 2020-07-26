@@ -31,6 +31,7 @@ class BranchForm extends FormBase {
 	$libobj = new \Drupal\library\Lib\LibController;
 	$brnobj = new \Drupal\company\Model\BranchModel;
 	$encrypt = new \Drupal\library\Controller\Encrypt;
+	$conobj = new \Drupal\company\Model\ConfigurationModel;
 	
 	$mode = $libobj->getActionMode();
 	$form_state->setCached(FALSE);
@@ -57,6 +58,7 @@ class BranchForm extends FormBase {
 
     );
 	
+	$branchcode_config = $conobj->getBranchcodeConfig();
     
     $form['branch']['code'] = array(
       '#type'          => 'textfield',
@@ -65,8 +67,8 @@ class BranchForm extends FormBase {
       //'#prefix'        => '<div class="row">',
       '#suffix'        => '</div>',
       '#default_value' => isset($data)? $data->codename : '',
-      '#disabled'      =>  isset($data)? "disabled" : '',
-      '#field_suffix' => '<i class="fadehide mdi mdi-help-circle" title="Unique code for this branch used for internal backend purpose. Cannot be changed once added" data-toggle="tooltip"></i>',
+      '#disabled'      =>  $branchcode_config['disabled'],
+      '#field_suffix' => '<i class="fadehide mdi mdi-help-circle" title="'.$branchcode_config['helpmsg'].'" data-toggle="tooltip"></i>',
     );
     	
 	$statelist = $libobj->getStateList();
@@ -174,11 +176,22 @@ $form['branch']['pincode'] = array(
     $libobj = new \Drupal\library\Lib\LibController;
 	$brnobj = new \Drupal\company\Model\BranchModel;
 	$encrypt = new \Drupal\library\Controller\Encrypt;
+	$conobj = new \Drupal\company\Model\ConfigurationModel;
 	
 	$field = $form_state->getValues();
-   
+	$branchcode_config = $conobj->getBranchcodeConfig();
+    
+	if ( $branchcode_config['disabled'] == "disabled" )  
+	{
+	   $br_codename = $libobj->generateCode('BR', $field['name']);
+       $code = $br_codename;
+    }
+	else 
+	{
+	  $code = $field['code'];	 
+	}
+
     $name = $field['name'];
-    $code = $field['code'];
     $location = $field['location'];
     $city = $field['city'];
     $state = $field['state'];
@@ -186,7 +199,7 @@ $form['branch']['pincode'] = array(
     
 	 $data  = array(
               'codevalues' =>  $name,
-              'codename' =>  $code,
+              'codename' => $code,
               'codetype' => 'branch',
               'location' =>  $location,
               'city' =>  $city,

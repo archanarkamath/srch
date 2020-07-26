@@ -12,3 +12,8 @@ Add gear Popup icon in designation form
  Add Export Icons for Employee form and coding for that same
  Add Toggle buttons in Configuration form for Branchcode, DesignationCode and Department Code
  
+26-7-2020
+------------------------------------------------------
+@author - Rakhi
+  Implement the disabled functionality for Branchcode, DesignationCode and DepartmentCode
+  Add a toggle button in connfiguration form for Workorder Code 
