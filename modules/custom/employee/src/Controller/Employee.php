@@ -35,18 +35,84 @@ class Employee extends ControllerBase {
       '#prefix'     => '<div class="panel panel-info">
                         <h3 class="box-title col-md-10">Employees List</h3>
                         <div class=" col-md-2">
-                        <i class="mdi-file-import mdi fa-fw"></i><i class="mdi-file-import mdi fa-fw"></i><i class="mdi-file-import mdi fa-fw"></i><i class="mdi-file-import mdi fa-fw"></i> <i class="mdi-printer mdi fa-fw"></i> <i class="mdi-download mdi fa-fw"></i></div>
+                        <a href="#" id="exportit" data-toggle="tooltip" data-original-title="Word Document"><img src="'.$asset_url.'/assets/images/icon/word.png" /></a> &nbsp;
+						<a href="'.$base_url.'/employee/export/excel" data-toggle="tooltip" data-original-title="Excel"><img src="'.$asset_url.'/assets/images/icon/excel.png" /></a> &nbsp;
+						<a id="" data-toggle="tooltip" data-original-title="PDF"><img src="'.$asset_url.'/assets/images/icon/pdf.png" /></a> &nbsp;
+						<a id="printit" data-toggle="tooltip" data-original-title="Print"><img src="'.$asset_url.'/assets/images/icon/print.png" /></a> 
+						</div>
                         <div class="panel-wrapper collapse in" aria-expanded="true">
                         <div class="panel-body">	
                         <hr>
                         <div id="editable-datatable_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
                         <div class="row"><div class="col-sm-6"><a href ="'.$base_url.'/employee/add/personal"><span  type="button" class="btn btn-info" style="background-color: #4c5667">
-                        <i class="mdi mdi-plus"></i> Add </span></a></div> <br><br><br></div></div><div class="row"><div class="col-sm-12">',
+                        <i class="mdi mdi-plus"></i> Add </span></a></div> <br><br><br></div></div><div class="row"><div class="col-sm-12" id="printable">',
       '#suffix'     => '</div></div></div></div></div></div>',
 	  '#empty'		=>	'No Employee has been added yet.'
     );
     return $element;
   }
+  public function exportToExcel()
+	 {
+		 $xcel = new \Drupal\library\Controller\Excel;
+		 $empobj = new EmployeeModel;
+		 $result = $empobj->getEmployeeList();
+		 $user = \Drupal::currentUser();
+		 $emp_details = $empobj->getEmployeeDetails();
+		 //$headings = "SLNO" . "\t" . "Branch Name" . "\t" . "State" . "\t" . "City" . "\t" . "Location" . "\t" . "Pincode" . "\t"; 
+		 $headings = ['Name', 'LastName', 'FatherName', 'mothername', 'DOB', 'Gender', 'marital', 'Blood Group', 'Religion', 'Nationality','PhoneNumber', 'AlternatePhoneNumber', 'EmergencyPhoneNumber', 'Relationship', 'Email', 'ResidentAddress1', 'ResidentAddress2', 'State', 'City', 'Country', 'Pincode', 'PermenantAddress1', 'PermenantAddress2', 'State', 'City', 'Country', 'Pincode', 'EmployeeID', 'Branch', 'Department', 'Designation', 'JobType', 'JobNature', 'Email', 'DateofJoining','ShiftTime'];
+		 $dataRow = array();
+		 $dataRow = array($headings);
+		 foreach($result AS $item)
+		 {
+			 			 
+			 $dataRow[] = array(
+								'firstname'	=> 	$emp_details->FirstName,
+								'lastname'		=> 	$emp_details->LastName,
+						        'fathername'	=> 	$emp_details->FatherName,
+						        'mothername'	=> 	$emp_details->MotherName,
+						        'dob'			=> 	date("j F Y", strtotime($emp_details->DateOfBirth)),
+								'gender'		=> 	($emp_details->Gender == 'M') ? 'Male' : 'Female',
+						        'marital'		=> 	($emp_details->Marital == 'M') ? 'Married' : 'Unmarried',
+						        'bloodgroup'	=> 	$emp_details->BloodGroup,
+                                'religion'		=> 	$emp_details->Religion,
+						        'nationality'	=> 	$emp_details->Nationality,
+								
+						        'phoneno'		=>	$emp_details->PhoneNumber,
+						        'altphone'		=>	$emp_details->AlternatePhoneNumber,
+						        'emrgphone'		=>	$emp_details->EmergencyPhoneNumber,
+						        'relationship'	=>	$emp_details->Relationship,
+						        'pers_email'	=>	$emp_details->Email,
+						        'res_address1'	=>	$emp_details->ResidentAddress1,
+						        'res_address2'	=>	$emp_details->residentAddress2,
+						        'res_state'		=>	$emp_details->State,
+						        'res_city'		=>	$emp_details->City,
+						        'res_country'	=>	$emp_details->Country,
+						        'res_pincode'	=>	$emp_details->Pincode,
+						        'perm_address1'	=>	$emp_details->PermenantAddress1,
+						        'perm_address2'	=>	$emp_details->PermenantAddress2,
+						        'perm_state'	=>	$emp_details->s1_name,
+						        'perm_city'		=>	$emp_details->ct1_name,
+						        'perm_country'	=>	$emp_details->co1_name,
+						        'perm_pincode'	=>	$emp_details->c_perm_pincode,
+						
+						        'empid'			=>  $emp_details->EmployeeID,
+						        'branch'		=>	$emp_details->Branch,
+						        'department'	=>	$emp_details->Department,
+						        'designation' 	=>  $emp_details->Designation,
+						        'jobtype' 		=> 	$emp_details->JobType,
+								'jobnature' 	=> 	$emp_details->JobNature,
+								'email' 		=> 	$emp_details->o_email,
+								'joining' 		=> 	date("j F Y", strtotime($emp_details->DateofJoining)),
+								'jobshift' 		=> 	$emp_details->ShiftTime ,
+								
+							);
+			 
+			 
+		 }
+		$filename = 'employee_details_'.date('ymds');
+		$result = $xcel->generateExcel($filename, $dataRow);
+		
+	 }
   
 /*
 * Display Employee Profile 
@@ -142,5 +208,5 @@ class Employee extends ControllerBase {
     );
 	
   }
-  
+   
 }
