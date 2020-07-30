@@ -5,27 +5,46 @@ namespace Drupal\company\Model;
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Link;
 use Drupal\Core\Url;
+use Drupal\library\Lib\DataModel;
 
 class WorkorderModel extends ControllerBase {
 	
 	public function getWorkorderList()
 	{
-		$query = db_select('srch_companyinfo', 'n');
-				$query->leftjoin('srch_codevalues', 'cd', 'cd.codename = n.companytype');
-				$query->leftjoin('srch_cities', 'ct', 'ct.id = n.city');
-				$query->leftjoin('srch_states', 'st', 'st.id = n.state');
-				$query->leftjoin('srch_countries', 'cnt', 'cnt.id = n.country');
-				$query->addField('ct', 'name', 'cityname');
-				$query->addField('st', 'name', 'statename');
-				$query->addField('cnt', 'name', 'countryname');
-				$query->fields('n');
-				$query->fields('cd', ['codevalues']);				
-				$query->condition('n.companypk', $id, "=");
+		$query = db_select( DataModel::CODEVAL, 'n');
+				$query->fields('n');			
+				$query->condition('n.codetype', 'workorder', "=");
 				$query->condition('n.status', 1, "=");
-				$result = $query->execute()->fetch();
+				$query->orderBy('createdon', 'DESC');
+				$result = $query->execute()->fetchAll();
 		
 		$res = @$result;	
 		
 		return $res;
+	}
+	
+	/*
+	* @param $data array which includes work & team details
+	* which needs to be insert in srch_codevalues table
+	*/
+	public function setWorkOrder( $data )
+	{
+		$data['workorder']['codetype']	=	'workorder';
+		
+		$query = \Drupal::database();
+        $last_workorder_id = $query ->insert( DataModel::CODEVAL )
+				   ->fields($data['workorder'])
+				   ->execute();
+		   
+		foreach( $data['teamorder']  AS  $team )
+		{
+			//inserting column codetype & parent
+			$team['codetype']	=	'teamorder';
+			$team['parent']	=	$last_workorder_id;
+			
+			$query ->insert( DataModel::CODEVAL )
+               ->fields($team)
+               ->execute();
+		}
 	}
 }

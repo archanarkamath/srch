@@ -1,10 +1,10 @@
 (function($) {
   $(document).ready(function() {
          
-	$('#edit-name').parent().removeClass();
-	$('#edit-name').parent().addClass('col-md-9');
-	$('#edit-name').parent().parent().parent().removeClass('');
-	$('#edit-name').parent().parent().parent().addClass('col-md-6');
+	$('#edit-workname').parent().removeClass();
+	$('#edit-workname').parent().addClass('col-md-9');
+	$('#edit-workname').parent().parent().parent().removeClass('');
+	$('#edit-workname').parent().parent().parent().addClass('col-md-6');
 	
 	$('#edit-workcode').parent().removeClass();
 	$('#edit-workcode').parent().addClass('col-md-9');

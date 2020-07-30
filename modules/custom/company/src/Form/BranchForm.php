@@ -31,6 +31,7 @@ class BranchForm extends FormBase {
 	$libobj = new \Drupal\library\Lib\LibController;
 	$brnobj = new \Drupal\company\Model\BranchModel;
 	$encrypt = new \Drupal\library\Controller\Encrypt;
+	$conobj = new \Drupal\company\Model\ConfigurationModel;
 	
 	$mode = $libobj->getActionMode();
 	$form_state->setCached(FALSE);
@@ -57,16 +58,28 @@ class BranchForm extends FormBase {
 
     );
 	
-    
+	$branchcode_config = $conobj->getBranchCodeConfig();    
+	$brnch_config = [];	
+	$brnch_config['disabled'] = '';
+	$brnch_config['branchcode'] = '';
+	$brnch_config['helpmsg'] = 'Mention Branch Code of the person';
+	
+	if($branchcode_config->codevalues == 'off')
+	{
+		$brnch_config['disabled'] = 'disabled';
+		$brnch_config['branchcode'] = 'XXXXXXX';
+		$brnch_config['helpmsg'] = 'Branch Code will be auto generate';			
+	}
+	
     $form['branch']['code'] = array(
       '#type'          => 'textfield',
       '#title'         => t('Branch Code:'),
       '#attributes'    => ['class' => ['form-control', 'validate[required,custom[onlyLetterSp]]']],
       //'#prefix'        => '<div class="row">',
       '#suffix'        => '</div>',
-      '#default_value' => isset($data)? $data->codename : '',
-      '#disabled'      =>  isset($data)? "disabled" : '',
-      '#field_suffix' => '<i class="fadehide mdi mdi-help-circle" title="Unique code for this branch used for internal backend purpose. Cannot be changed once added" data-toggle="tooltip"></i>',
+      '#default_value' => isset($data)? $data->codename : $brnch_config['branchcode'],
+      '#disabled'      =>  $brnch_config['disabled'],
+      '#field_suffix' => '<i class="fadehide mdi mdi-help-circle" title="'.$brnch_config['helpmsg'].'" data-toggle="tooltip"></i>',
     );
     	
 	$statelist = $libobj->getStateList();
@@ -174,11 +187,16 @@ $form['branch']['pincode'] = array(
     $libobj = new \Drupal\library\Lib\LibController;
 	$brnobj = new \Drupal\company\Model\BranchModel;
 	$encrypt = new \Drupal\library\Controller\Encrypt;
+	$conobj = new \Drupal\company\Model\ConfigurationModel;
 	
 	$field = $form_state->getValues();
-   
+	$code_config = $conobj->getBranchCodeConfig();
+    
+	//check codevalues OFF then auto generate the code values 
+	$code = ( $code_config->codevalues == 'on' ) ? $field['code'] : $libobj->generateCode('BR', $field['name']) ;
+	
+
     $name = $field['name'];
-    $code = $field['code'];
     $location = $field['location'];
     $city = $field['city'];
     $state = $field['state'];
@@ -186,7 +204,7 @@ $form['branch']['pincode'] = array(
     
 	 $data  = array(
               'codevalues' =>  $name,
-              'codename' =>  $code,
+              'codename' => $code,
               'codetype' => 'branch',
               'location' =>  $location,
               'city' =>  $city,
