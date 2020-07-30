@@ -16,7 +16,8 @@ class DesignationForm extends FormBase {
     $libobj = new \Drupal\library\Lib\LibController;
     $desobj = new \Drupal\company\Model\DesignationModel;
     $depobj = new \Drupal\company\Model\DepartmentModel;
-
+	$conobj = new \Drupal\company\Model\ConfigurationModel;
+	
     $mode = $libobj->getActionMode();
     $form_title = 'Add Designation Details';
     if($mode == 'edit'){
@@ -38,15 +39,29 @@ class DesignationForm extends FormBase {
       '#suffix'        => '</div></div>',
       '#default_value' => isset($data)? $data->codevalues : '',
     );
+	
+	$descode_config = $conobj->getDesignationCodeConfig();
+	$desconf = [];
+	$desconf['disabled'] = '';
+	$desconf['departmentcode'] = '';
+	$desconf['helpmsg'] = 'Mention Designation Code of the person';
+	
+	if($descode_config->codevalues == 'off')
+	{
+		$desconf['disabled'] = 'disabled';
+		$desconf['designationcode'] = 'XXXXXXX';
+		$desconf['helpmsg'] = 'Designation Code will be auto generate';			
+	}
+	
     $form['designation']['code'] = array(
       '#type'          => 'textfield',
       '#title'         => t('Designation Code:'),
       '#attributes'    => ['class' => ['form-control', 'validate[required,custom[onlyLetterSp]]']],
       '#prefix'        => '<div class="row"><div class="col-md-12">',
       '#suffix'        => '</div></div>',
-      '#default_value' => isset($data)? $data->codename : '',
-      '#disabled'      =>  isset($data)? "disabled" : '',
-      '#field_suffix' => '<i class="fadehide mdi mdi-help-circle" title="Unique code for this Designation used for internal backend purpose. Cannot be changed once added" data-toggle="tooltip"></i>',
+      '#default_value' => isset($data)? $data->codename : $desconf['designationcode'],
+      '#disabled'      =>  $desconf['disabled'],
+      '#field_suffix' => '<i class="fadehide mdi mdi-help-circle" title="'.$desconf['helpmsg'].'" data-toggle="tooltip"></i>',
 
     );
     
@@ -109,17 +124,23 @@ class DesignationForm extends FormBase {
     $libobj = new \Drupal\library\Lib\LibController;
     $desobj = new \Drupal\company\Model\DesignationModel;
     $depobj = new \Drupal\company\Model\DepartmentModel;
-
-    $field = $form_state->getValues();
+	$conobj = new \Drupal\company\Model\ConfigurationModel;
+	
+	$code_config = $conobj->getDesignationCodeConfig();
+	$field = $form_state->getValues();
+	
+	//check codevalues OFF then auto generate the code values 
+	$code = ( $code_config->codevalues == 'on' ) ? $field['code'] : $libobj->generateCode('DSG', $field['name']) ;
+	
+	
     $name = $field['name'];
-    $codename = $field['code'];
     $parent = $field['department'];
     
     $parent = $depobj->getDepartmentId($parent);
    
     $field  = array(
       'codevalues' =>  $name,
-      'codename'   =>  $codename,
+      'codename'   =>  $code,
       'parent'   =>  $parent->codepk,
       'codetype'   => 'designation',             
      );
