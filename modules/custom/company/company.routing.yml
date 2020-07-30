@@ -192,3 +192,11 @@ company.projectadd:
    _form: '\Drupal\company\Form\WorkorderForm'
  requirements:
    _permission: 'access content'
+
+company.projectedit:
+ path: '/wordorder/edit/{arg}'
+ defaults:
+   _title: 'Edit Work Order'
+   _form: '\Drupal\company\Form\WorkorderForm'
+ requirements:
+   _permission: 'access content'

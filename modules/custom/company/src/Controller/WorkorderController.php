@@ -11,18 +11,27 @@ class WorkorderController extends ControllerBase {
 
   public function listing() {
     
-   $dptobj = new \Drupal\company\Model\DepartmentModel;
-   $result = $dptobj->getAllDepartmentDetails();
+   $wrkobj = new \Drupal\company\Model\WorkorderModel;
+   $result = $wrkobj->getWorkorderList();
    $encrypt = new Encrypt;
    
     global $base_url;
 	$asset_url = $base_url.'/'.\Drupal::theme()->getActiveTheme()->getPath();
     $rows = array();
     $sl = 0;
-    
+	
+    foreach ($result as $content) { 
+	  $sl++;
+      $html = ['#markup' => '<a href="'.$base_url.'/workorder/edit/'.$content->codepk.'" style="text-align:center"> 
+      <i class="icon-note" title="" data-toggle="tooltip" data-original-title="Edit"></i></a>'];
+      $rows[] =   array(
+                    'data' =>  array( $sl, $content->codevalues, $content->codename, render($html))
+      );
+    }
+	
     $element['display']['Departmentlist'] = array(
       '#type'       => 'table',
-      '#header'     =>  array(),      
+      '#header'     =>  array('No', 'Work Name', 'Work Order', 'Action'),      
       '#rows'       =>  $rows,
       '#attributes' => ['class' => ['text-center table table-hover table-striped table-bordered dataTable'], 'border' => '1', 'rules' => 'all', 'style'=>['text-align-last: center;']],
       '#prefix'     => '<div class="panel panel-info">

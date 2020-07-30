@@ -69,7 +69,6 @@ public function buildForm(array $form, FormStateInterface $form_state) {
     );
 	
 	$brch = $configobj->getBranchCodeConfig();
-	
 	$form['company']['Branchcode'] = array(
       '#type' => 'checkbox',
       '#title' => t('Branch Code'),
@@ -84,7 +83,6 @@ public function buildForm(array $form, FormStateInterface $form_state) {
     );
 	
 	$dept = $configobj->getDepartmentCodeConfig();
-	
 	$form['company']['Departmentcode'] = array(
       '#type' => 'checkbox',
       '#title' => t('Department Code'),
@@ -99,7 +97,7 @@ public function buildForm(array $form, FormStateInterface $form_state) {
     );
 	
 	$desg = $configobj->getDesignationCodeConfig();
-	
+
 	$form['company']['Designationcode'] = array(
       '#type' => 'checkbox',
       '#title' => t('Designation Code'),
@@ -122,10 +120,10 @@ public function buildForm(array $form, FormStateInterface $form_state) {
  	  '#attributes' => ['class' => ['form-control'], 'data-toggle' => 'toggle', 
 								'data-on' => 'ON', 'data-off' => 'OFF', 
 								'data-onstyle' => 'info'],
-	 '#default_value' => '',
+	 '#default_value' => !empty($data)? ($data->codevalues == 'Automatic')? 1 : 0 : '',
 	 '#disabled' => ($user->hasPermission('admin configuration')) ? false : true,
-     '#field_suffix' => '<i class="fadehide mdi mdi-help-circle" title="Make it ON If you need to enter your Workorder code" data-toggle="tooltip"></i>',
-     '#suffix' => '</div>'
+     '#field_suffix' => '<i class="fadehide mdi mdi-help-circle" title="Make it ON If you need to enter your Designation code" data-toggle="tooltip"></i>',
+	 '#suffix' => '</div>'
     );
 	
 	$form['company']['#type'] = 'actions';
