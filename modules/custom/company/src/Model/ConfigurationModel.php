@@ -58,16 +58,15 @@ class ConfigurationModel extends ControllerBase {
 		 }
 		return $jobshift;
 	}
-	/*
-	 * This Update EmployeeID, Branchcode, DesignationCode 
-	 * and DepartmentCode type Configuration
-	 	*/
-	
+
+     /*
+	 * @param $field is an array of field ON/OFF value
+	 * needs to udpate on DB srch_codevalues
+	 */
 	public function updatAllConfig($field)
 	{
 		foreach( $field AS $item)
 		{
-			//echo $item['codename'] . "<br/>";
 			$query = \Drupal::database();
 			$query->update(DataModel::CODEVAL)
               ->fields($item)
@@ -75,7 +74,7 @@ class ConfigurationModel extends ControllerBase {
               ->condition('codetype', $item['codetype'], "=")
               ->execute();
 			  
-				}
+		}
 	}
 		
 	public function getEmpIdType()
@@ -84,42 +83,6 @@ class ConfigurationModel extends ControllerBase {
 		$query->fields('n')		
 		->condition('codename', 'EMPID', "=")
         ->condition('codetype', 'employeeid', "=");
-		$result = $query->execute()->fetch();
-		$res = @$result;	
-		
-		return $res;
-	}
-	
-	public function getBranchcodeType()
-	{
-		$query = db_select(DataModel::CODEVAL, 'n'); 
-		$query->fields('n')		
-		->condition('codename', 'BRNCD', "=")
-        ->condition('codetype', 'branchcode', "=");
-		$result = $query->execute()->fetch();
-		$res = @$result;	
-		
-		return $res;
-	}
-	
-	public function getDepratmentcodeType()
-	{
-		$query = db_select(DataModel::CODEVAL, 'n'); 
-		$query->fields('n')		
-		->condition('codename', 'DPTCD', "=")
-        ->condition('codetype', 'departmentcode', "=");
-		$result = $query->execute()->fetch();
-		$res = @$result;	
-		
-		return $res;
-	}
-	
-	public function getDesignationcodeType()
-	{
-		$query = db_select(DataModel::CODEVAL, 'n'); 
-		$query->fields('n')		
-		->condition('codename', 'DSGCD', "=")
-        ->condition('codetype', 'designationcode', "=");
 		$result = $query->execute()->fetch();
 		$res = @$result;	
 		
@@ -156,7 +119,10 @@ class ConfigurationModel extends ControllerBase {
 		return $res;
 	}
 	
-	public function getBranchcodeConfig()
+	/*
+	* @return Branch Code Toggle On/Off
+	*/
+	public function getBranchCodeConfig()
 	{
 		$query = db_select(DataModel::CODEVAL, 'n'); 
 		$query->fields('n')		
@@ -164,24 +130,13 @@ class ConfigurationModel extends ControllerBase {
         ->condition('codetype', 'branchcode', "=");
 		$result = $query->execute()->fetch();
 		
-		$res = [];
-		if($result->codevalues == 'off')
-		{
-			$res['disabled'] = 'disabled';
-			$res['branchcode'] = $result->description . 'XXXX';
-			$res['helpmsg'] = 'Branch Code will be auto generate';			
-		}
-		else
-		{
-			$res['disabled'] = '';
-			$res['branchcode'] = '';
-			$res['helpmsg'] = 'Mention Branch Code of the person';
-		}
-		
-		return $res;
+		return $result;
 	}
 	
-	public function getDepartmentcodeConfig()
+	/*
+	* @return Department Code Toggle On/Off
+	*/
+	public function getDepartmentCodeConfig()
 	{
 		$query = db_select(DataModel::CODEVAL, 'n'); 
 		$query->fields('n')		
@@ -189,24 +144,13 @@ class ConfigurationModel extends ControllerBase {
         ->condition('codetype', 'departmentcode', "=");
 		$result = $query->execute()->fetch();
 		
-		$res = [];
-		if($result->codevalues == 'off')
-		{
-			$res['disabled'] = 'disabled';
-			$res['departmentcode'] = $result->description . 'XXXX';
-			$res['helpmsg'] = 'Department Code will be auto generate';			
-		}
-		else
-		{
-			$res['disabled'] = '';
-			$res['departmentcode'] = '';
-			$res['helpmsg'] = 'Mention Department Code of the person';
-		}
-		
-		return $res;
+		return $result;
 	}
 	
-	public function getDesignationcodeConfig()
+	/*
+	* @return Designation Code Toggle On/Off
+	*/
+	public function getDesignationCodeConfig()
 	{
 		$query = db_select(DataModel::CODEVAL, 'n'); 
 		$query->fields('n')		
@@ -214,21 +158,15 @@ class ConfigurationModel extends ControllerBase {
         ->condition('codetype', 'designationcode', "=");
 		$result = $query->execute()->fetch();
 		
-		$res = [];
-		if($result->codevalues == 'off')
-		{
-			$res['disabled'] = 'disabled';
-			$res['designationcode'] = $result->description . 'XXXX';
-			$res['helpmsg'] = 'Designation Code will be auto generate';			
-		}
-		else
-		{
-			$res['disabled'] = '';
-			$res['departmentcode'] = '';
-			$res['helpmsg'] = 'Mention Designation Code of the person';
-		}
-		
-		return $res;
+		return $result;
+	}
+	
+	/*
+	* @return Work order Code Toggle On/Off
+	*/
+	public function getWorkorderCodeConfig()
+	{
+		// write the code for work order config
 	}
 	
 	public function setShiftTiming($field)

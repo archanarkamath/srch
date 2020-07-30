@@ -58,17 +58,28 @@ class BranchForm extends FormBase {
 
     );
 	
-	$branchcode_config = $conobj->getBranchcodeConfig();
-    
+	$branchcode_config = $conobj->getBranchCodeConfig();    
+	$brnch_config = [];	
+	$brnch_config['disabled'] = '';
+	$brnch_config['branchcode'] = '';
+	$brnch_config['helpmsg'] = 'Mention Branch Code of the person';
+	
+	if($branchcode_config->codevalues == 'off')
+	{
+		$brnch_config['disabled'] = 'disabled';
+		$brnch_config['branchcode'] = 'XXXXXXX';
+		$brnch_config['helpmsg'] = 'Branch Code will be auto generate';			
+	}
+	
     $form['branch']['code'] = array(
       '#type'          => 'textfield',
       '#title'         => t('Branch Code:'),
       '#attributes'    => ['class' => ['form-control', 'validate[required,custom[onlyLetterSp]]']],
       //'#prefix'        => '<div class="row">',
       '#suffix'        => '</div>',
-      '#default_value' => isset($data)? $data->codename : '',
-      '#disabled'      =>  $branchcode_config['disabled'],
-      '#field_suffix' => '<i class="fadehide mdi mdi-help-circle" title="'.$branchcode_config['helpmsg'].'" data-toggle="tooltip"></i>',
+      '#default_value' => isset($data)? $data->codename : $brnch_config['branchcode'],
+      '#disabled'      =>  $brnch_config['disabled'],
+      '#field_suffix' => '<i class="fadehide mdi mdi-help-circle" title="'.$brnch_config['helpmsg'].'" data-toggle="tooltip"></i>',
     );
     	
 	$statelist = $libobj->getStateList();
@@ -179,17 +190,11 @@ $form['branch']['pincode'] = array(
 	$conobj = new \Drupal\company\Model\ConfigurationModel;
 	
 	$field = $form_state->getValues();
-	$branchcode_config = $conobj->getBranchcodeConfig();
+	$code_config = $conobj->getBranchCodeConfig();
     
-	if ( $branchcode_config['disabled'] == "disabled" )  
-	{
-	   $br_codename = $libobj->generateCode('BR', $field['name']);
-       $code = $br_codename;
-    }
-	else 
-	{
-	  $code = $field['code'];	 
-	}
+	//check codevalues OFF then auto generate the code values 
+	$code = ( $code_config->codevalues == 'on' ) ? $field['code'] : $libobj->generateCode('BR', $field['name']) ;
+	
 
     $name = $field['name'];
     $location = $field['location'];

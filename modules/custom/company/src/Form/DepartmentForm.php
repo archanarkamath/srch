@@ -39,16 +39,26 @@ class DepartmentForm extends FormBase {
     );
 	
 	$dptcode_config = $conobj->getDepartmentcodeConfig();
-	 
+	$dpt_conf = [];
+	$dpt_conf['disabled'] = '';
+	$dpt_conf['departmentcode'] = '';
+	$dpt_conf['helpmsg'] = 'Mention Department Code of the person';
+	if($dptcode_config->codevalues == 'off')
+	{
+		$dpt_conf['disabled'] = 'disabled';
+		$dpt_conf['departmentcode'] = 'XXXXXXX';
+		$dpt_conf['helpmsg'] = 'Department Code will be auto generate';			
+	}
+	
     $form['department']['code'] = array(
       '#type'          => 'textfield',
       '#title'         => t('Department Code:'),
       '#attributes'    => ['class' => ['form-control', 'validate[required,custom[onlyLetterSp]]']],
       '#prefix'        => '<div class="row">',
       '#suffix'        => '</div>',
-      '#default_value' => isset($data)? $data->codename : '',
-      '#disabled'      =>  $dptcode_config['disabled'],
-      '#field_suffix' => '<i class="fadehide mdi mdi-help-circle" title="'.$dptcode_config['helpmsg'].'" data-toggle="tooltip"></i>',
+      '#default_value' => isset($data)? $data->codename : $dpt_conf['departmentcode'],
+      '#disabled'      =>  $dpt_conf['disabled'],
+      '#field_suffix' => '<i class="fadehide mdi mdi-help-circle" title="'.$dpt_conf['helpmsg'].'" data-toggle="tooltip"></i>',
 
     );
     
@@ -99,17 +109,10 @@ class DepartmentForm extends FormBase {
     $conobj = new \Drupal\company\Model\ConfigurationModel;
 	
     $field = $form_state->getValues();
-	$dptcode_config = $conobj->getDepartmentcodeConfig();
+	$code_config = $conobj->getDepartmentCodeConfig();
 	
-	if ( $dptcode_config['disabled'] == "disabled" )  
-	{
-      $dpt_codename = $libobj->generateCode('DT', $field['name']);
-      $code = $dpt_codename;
-    }
-	else 
-	{
-	  $code = $field['code'];	 
-	}
+	//check codevalues OFF then auto generate the code values 
+	$code = ( $code_config->codevalues == 'on' ) ? $field['code'] : $libobj->generateCode('DPT', $field['name']) ;
 	
     $name = $field['name'];
    

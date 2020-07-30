@@ -40,7 +40,18 @@ class DesignationForm extends FormBase {
       '#default_value' => isset($data)? $data->codevalues : '',
     );
 	
-	$descode_config = $conobj->getDesignationcodeConfig();
+	$descode_config = $conobj->getDesignationCodeConfig();
+	$desconf = [];
+	$desconf['disabled'] = '';
+	$desconf['departmentcode'] = '';
+	$desconf['helpmsg'] = 'Mention Designation Code of the person';
+	
+	if($descode_config->codevalues == 'off')
+	{
+		$desconf['disabled'] = 'disabled';
+		$desconf['designationcode'] = 'XXXXXXX';
+		$desconf['helpmsg'] = 'Designation Code will be auto generate';			
+	}
 	
     $form['designation']['code'] = array(
       '#type'          => 'textfield',
@@ -48,9 +59,9 @@ class DesignationForm extends FormBase {
       '#attributes'    => ['class' => ['form-control', 'validate[required,custom[onlyLetterSp]]']],
       '#prefix'        => '<div class="row"><div class="col-md-12">',
       '#suffix'        => '</div></div>',
-      '#default_value' => isset($data)? $data->codename : '',
-      '#disabled'      =>  $descode_config['disabled'],
-      '#field_suffix' => '<i class="fadehide mdi mdi-help-circle" title="'.$descode_config['helpmsg'].'" data-toggle="tooltip"></i>',
+      '#default_value' => isset($data)? $data->codename : $desconf['designationcode'],
+      '#disabled'      =>  $desconf['disabled'],
+      '#field_suffix' => '<i class="fadehide mdi mdi-help-circle" title="'.$desconf['helpmsg'].'" data-toggle="tooltip"></i>',
 
     );
     
@@ -115,18 +126,12 @@ class DesignationForm extends FormBase {
     $depobj = new \Drupal\company\Model\DepartmentModel;
 	$conobj = new \Drupal\company\Model\ConfigurationModel;
 	
-	$dsgcode_config = $conobj->getDesignationcodeConfig();
+	$code_config = $conobj->getDesignationCodeConfig();
 	$field = $form_state->getValues();
-	if ( $dsgcode_config['disabled'] == "disabled" )  
-	{
-		
-    $dsg_codename = $libobj->generateCode('DG', $field['name']);
-    $code = $dsg_codename;
-    }
-	else 
-	{
-	  $code = $field['code'];	 
-	}
+	
+	//check codevalues OFF then auto generate the code values 
+	$code = ( $code_config->codevalues == 'on' ) ? $field['code'] : $libobj->generateCode('DSG', $field['name']) ;
+	
 	
     $name = $field['name'];
     $parent = $field['department'];

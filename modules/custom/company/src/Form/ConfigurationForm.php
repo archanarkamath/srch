@@ -68,7 +68,7 @@ public function buildForm(array $form, FormStateInterface $form_state) {
 	 '#disabled' => ($user->hasPermission('admin configuration')) ? false : true,
     );
 	
-	$brch = $configobj->getBranchcodeType();
+	$brch = $configobj->getBranchCodeConfig();
 	
 	$form['company']['Branchcode'] = array(
       '#type' => 'checkbox',
@@ -83,7 +83,7 @@ public function buildForm(array $form, FormStateInterface $form_state) {
      '#field_suffix' => '<i class="fadehide mdi mdi-help-circle" title="Make it ON If you need to enter your branch code" data-toggle="tooltip"></i>',
     );
 	
-	$dept = $configobj->getDepratmentcodeType();
+	$dept = $configobj->getDepartmentCodeConfig();
 	
 	$form['company']['Departmentcode'] = array(
       '#type' => 'checkbox',
@@ -98,7 +98,7 @@ public function buildForm(array $form, FormStateInterface $form_state) {
      '#suffix' => '</div>'
     );
 	
-	$desg = $configobj->getDesignationcodeType();
+	$desg = $configobj->getDesignationCodeConfig();
 	
 	$form['company']['Designationcode'] = array(
       '#type' => 'checkbox',
@@ -113,6 +113,8 @@ public function buildForm(array $form, FormStateInterface $form_state) {
      '#field_suffix' => '<i class="fadehide mdi mdi-help-circle" title="Make it ON If you need to enter your Designation code" data-toggle="tooltip"></i>',
     );
 	
+	$wrkord_conf = $configobj->getWorkorderCodeConfig();
+	
 	$form['company']['Workordercode'] = array(
       '#type' => 'checkbox',
       '#title' => t('Workorder code'),
@@ -120,7 +122,7 @@ public function buildForm(array $form, FormStateInterface $form_state) {
  	  '#attributes' => ['class' => ['form-control'], 'data-toggle' => 'toggle', 
 								'data-on' => 'ON', 'data-off' => 'OFF', 
 								'data-onstyle' => 'info'],
-	 '#default_value' => !empty($dept)? ($dept->codevalues == 'on')? 1 : 0 : '',
+	 '#default_value' => '',
 	 '#disabled' => ($user->hasPermission('admin configuration')) ? false : true,
      '#field_suffix' => '<i class="fadehide mdi mdi-help-circle" title="Make it ON If you need to enter your Workorder code" data-toggle="tooltip"></i>',
      '#suffix' => '</div>'
