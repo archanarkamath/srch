@@ -128,7 +128,7 @@ company.designationedit:
 company.configuration:
  path: '/organisation/config'
  defaults:
-   _title: 'Genarel Configuration'
+   _title: 'General Configuration'
    _form: '\Drupal\company\Form\ConfigurationForm'
  requirements:
    _permission: 'access content'
