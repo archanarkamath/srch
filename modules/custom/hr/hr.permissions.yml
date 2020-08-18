@@ -1,4 +1,0 @@
-hr unitinfo:
-    title: 'Unit Information'
-    description: 'Provide unit information'
-    restrict access: false
