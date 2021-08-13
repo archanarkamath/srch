@@ -5,3 +5,6 @@ css
 /sites/default/settings.php
 /sites/default/files/avatar
 /sites/default/files/styles
+.DS_Store
+.lando.yml
+/sites/.DS_Store
