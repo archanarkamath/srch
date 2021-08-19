@@ -47,4 +47,36 @@ class WorkorderModel extends ControllerBase {
                ->execute();
 		}
 	}
+
+	/*
+	* @param $id which includes work order no
+	* to get work order dertails
+	*/
+	public function getWorkorderDetailsById( $id )
+	{
+		$query = db_select( DataModel::CODEVAL, 'n' );
+				$query->fields('n');	
+				$query->condition('codetype', 'workorder', "=");
+				$query->condition('codepk', $id, "=");
+				$query->condition('status', 1, "=");
+				$result = $query->execute()->fetch();
+			
+		return $result;
+	}
+
+	/*
+	* @param $work_ord_no which includes work order no
+	* to get team order dertails
+	*/
+	public function getTeamListByWorkorderno( $work_ord_no )
+	{
+		$query = db_select( DataModel::CODEVAL, 'n' );
+				$query->fields('n');	
+				$query->condition('codetype', 'teamorder', "=");
+				$query->condition('parent', $work_ord_no, "=");
+				$query->condition('status', 1, "=");
+				$result = $query->execute()->fetchAll();
+				
+		return $result;
+	}
 }

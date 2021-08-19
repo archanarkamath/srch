@@ -176,7 +176,7 @@ company.sit:
    _permission: 'access content'
 
 company.projectlist:
- path: '/wordorder/list'
+ path: '/workorder/list'
  defaults:
    _title: 'Project List'
    _controller: '\Drupal\company\Controller\WorkorderController::listing'
@@ -186,7 +186,7 @@ company.projectlist:
     no_cache: 'TRUE'
 
 company.projectadd:
- path: '/wordorder/add'
+ path: '/workorder/add'
  defaults:
    _title: 'Work Order'
    _form: '\Drupal\company\Form\WorkorderForm'
@@ -194,7 +194,7 @@ company.projectadd:
    _permission: 'access content'
 
 company.projectedit:
- path: '/wordorder/edit/{arg}'
+ path: '/workorder/edit/{arg}'
  defaults:
    _title: 'Edit Work Order'
    _form: '\Drupal\company\Form\WorkorderForm'

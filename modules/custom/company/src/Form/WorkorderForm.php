@@ -13,10 +13,16 @@ class WorkorderForm extends FormBase {
   public function buildForm(array $form, FormStateInterface $form_state) {  
   
     $libobj = new \Drupal\library\Lib\LibController;
-    $brnobj = new \Drupal\company\Model\DepartmentModel;
+    $wrkobj = new \Drupal\company\Model\WorkorderModel;
 
     $mode = $libobj->getActionMode();
-    
+    if($mode == 'edit'){
+      $pk = $libobj->getIdFromUrl();
+      $data_work = $wrkobj->getWorkorderDetailsById( $pk );
+      $data_team = $wrkobj->getTeamListByWorkorderno( $pk );
+    }
+
+
 	$form['#attached']['library'][] = 'singleportal/master-validation';
 	$form['#attached']['library'][] = 'company/workorder-lib';
 	$form['#attributes']['class'] = 'form-horizontal';
@@ -28,7 +34,7 @@ class WorkorderForm extends FormBase {
       '#title'         => t('Work order Name:'),
       '#attributes'    => ['class' => ['form-control', 'validate[required,custom[onlyLetterSp]]']],
       '#prefix'        => '<div class="row">',
-      '#default_value' => isset($data)? $data->codevalues : '',
+      '#default_value' => isset($data_work)? $data_work->codevalues : '',
     );
 	
 	 $form['workorder']['workcode'] = array(
@@ -36,7 +42,7 @@ class WorkorderForm extends FormBase {
       '#title'         => t('Work order No:'),
       '#attributes'    => ['class' => ['form-control', 'validate[required,custom[onlyLetterSp]]']],
       '#suffix'        => '</div>',
-      '#default_value' => isset($data)? $data->codevalues : '',
+      '#default_value' => isset($data_work)? $data_work->codename : '',
     );
     
 	
@@ -54,7 +60,7 @@ class WorkorderForm extends FormBase {
       $form['addmore']['actions']['add_team'] = [
         '#type' => 'submit',
 		'#name' => 'Team',
-		'#prefix' => $html,
+		//'#prefix' => $html,
         '#value' => ' ',
 		'#limit_validation_errors' => array(),
         '#submit' => array('::addOneTeam'),
@@ -181,7 +187,7 @@ class WorkorderForm extends FormBase {
 		
 		$worobj->setWorkOrder( $data );
 		
-		drupal_set_message("Word oRder has been created.");
+		drupal_set_message("Word Order has been created.");
 		
 		$form_state->setRedirect('company.projectlist');
 	}
