@@ -37,12 +37,29 @@ class WorkorderForm extends FormBase {
       '#default_value' => isset($data_work)? $data_work->codevalues : '',
     );
 	
+	$workcode_config = $conobj->getWorkorderCodeConfig();    
+	$work_config = [];	
+	$work_config['disabled'] = '';
+	$work_config['workordercode'] = '';
+	$work_config['helpmsg'] = 'Mention Workorder Code of the person';
+	
+	if($workcode_config->codevalues == 'off')
+	{
+		$work_config['disabled'] = 'disabled';
+		$work_config['branchcode'] = 'XXXXXXX';
+		$work_config['helpmsg'] = 'Workorder Code will be auto generate';			
+	}
+	
 	 $form['workorder']['workcode'] = array(
       '#type'          => 'textfield',
       '#title'         => t('Work order No:'),
       '#attributes'    => ['class' => ['form-control', 'validate[required,custom[onlyLetterSp]]']],
+
       '#suffix'        => '</div>',
       '#default_value' => isset($data_work)? $data_work->codename : '',
+      '#disabled'      =>  $work_config['disabled'],
+	  '#field_suffix' => '<i class="fadehide mdi mdi-help-circle" title="'.$work_config['helpmsg'].'" data-toggle="tooltip"></i>',
+
     );
     
 	
@@ -165,17 +182,24 @@ class WorkorderForm extends FormBase {
   
   public function submitForm(array &$form, FormStateInterface $form_state) {
 		
-		$worobj = new \Drupal\company\Model\WorkorderModel;	
+		$worobj = new \Drupal\company\Model\WorkorderModel;
+        $conobj = new \Drupal\company\Model\ConfigurationModel;		
+		$libobj = new \Drupal\library\Lib\LibController;
 		
 		$field = $form_state->getValues();
+		$code_config = $conobj->getWorkorderCodeConfig();
+		
+		//check codevalues OFF then auto generate the code values 
+	    $code = ( $code_config->codevalues == 'on' ) ? $field['workcode'] : $libobj->generateCode('WR', $field['workname']) ;
+	    
 		$data = array(
 						'workorder' => array(
-												'codename'	=>	$field['workcode'],
+												'codename'	=>	$code,
 												'codevalues'=>	$field['workname']	
 											),
 						'teamorder'	=>	array()
 					);
-					
+	    
 		//looping team repeater array and collecting data
 		foreach( $field['teamorder'] AS $team )
 		{
@@ -187,7 +211,8 @@ class WorkorderForm extends FormBase {
 		
 		$worobj->setWorkOrder( $data );
 		
-		drupal_set_message("Word Order has been created.");
+		drupal_set_message("Work Order has been created.");
+
 		
 		$form_state->setRedirect('company.projectlist');
 	}
