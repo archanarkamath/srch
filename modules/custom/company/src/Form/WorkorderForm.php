@@ -37,18 +37,18 @@ class WorkorderForm extends FormBase {
       '#default_value' => isset($data_work)? $data_work->codevalues : '',
     );
 	
-	$workcode_config = $conobj->getWorkorderCodeConfig();    
+	//$workcode_config = $conobj->getWorkorderCodeConfig();    
 	$work_config = [];	
 	$work_config['disabled'] = '';
 	$work_config['workordercode'] = '';
 	$work_config['helpmsg'] = 'Mention Workorder Code of the person';
 	
-	if($workcode_config->codevalues == 'off')
+	/*if($workcode_config->codevalues == 'off')
 	{
 		$work_config['disabled'] = 'disabled';
 		$work_config['branchcode'] = 'XXXXXXX';
 		$work_config['helpmsg'] = 'Workorder Code will be auto generate';			
-	}
+	}*/
 	
 	 $form['workorder']['workcode'] = array(
       '#type'          => 'textfield',
