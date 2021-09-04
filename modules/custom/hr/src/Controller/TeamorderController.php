@@ -1,18 +1,19 @@
 <?php
 
-namespace Drupal\company\Controller;
+namespace Drupal\hr\Controller;
 
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Link;
 use Drupal\Core\Url;
 use Drupal\library\Controller\Encrypt;
 
-class WorkorderController extends ControllerBase {
+class TeamorderController extends ControllerBase {
 
   public function listing() {
     
-   $wrkobj = new \Drupal\company\Model\WorkorderModel;
-   $result = $wrkobj->getWorkorderList();
+   $tmobj = new \Drupal\hr\Model\TeamorderModel;
+   $wkobj = new \Drupal\company\Model\WorkOrderModel;
+   $result = $tmobj->getTeamorderList();
    $encrypt = new Encrypt;
    
     global $base_url;
@@ -22,20 +23,21 @@ class WorkorderController extends ControllerBase {
 	
     foreach ($result as $content) { 
 	  $sl++;
-      $html = ['#markup' => '<a href="'.$base_url.'/workorder/edit/'.$content->codepk.'" style="text-align:center"> 
+	  $work = $wkobj->getWorkOrderDetailsById($content->parent);
+      $html = ['#markup' => '<a href="'.$base_url.'/teamorder/edit/'.$content->codepk.'" style="text-align:center"> 
       <i class="icon-note" title="" data-toggle="tooltip" data-original-title="Edit"></i></a>'];
       $rows[] =   array(
-                    'data' =>  array( $sl, $content->codevalues, $content->codename, render($html))
+                    'data' =>  array( $sl, $content->codevalues, $content->codename, $work->codevalues, render($html))
       );
     }
 	
-    $element['display']['WorkOrderList'] = array(
+    $element['display']['TeamOrderList'] = array(
       '#type'       => 'table',
-      '#header'     =>  array('No', 'Work Name', 'Work Order', 'Action'),      
+      '#header'     =>  array(t('No'), t('Team Name'), t('Team Order'), t('Work order name'), t('Action')),      
       '#rows'       =>  $rows,
       '#attributes' => ['class' => ['text-center table table-hover table-striped table-bordered dataTable'], 'border' => '1', 'rules' => 'all', 'style'=>['text-align-last: center;']],
       '#prefix'     => '<div class="panel panel-info">
-                        <h3 class="box-title  col-md-10">Work List</h3>
+                        <h3 class="box-title  col-md-10">Team List</h3>
 					<div class=" col-md-2">
                         <a href="#" id="exportit" data-toggle="tooltip" data-original-title="Word Document"><img src="'.$asset_url.'/assets/images/icon/word.png" /></a> &nbsp;
 						<a href="'.$base_url.'/department/export/excel" data-toggle="tooltip" data-original-title="Excel"><img src="'.$asset_url.'/assets/images/icon/excel.png" /></a> &nbsp;
@@ -49,7 +51,7 @@ class WorkorderController extends ControllerBase {
                         <div class="row"><div class="col-sm-6"><a href ="add"><span  type="button" class="btn btn-info">
                         <i class="mdi mdi-plus"></i> Add </span></a></div> <br><br><br></div></div><div class="row"><div class="col-sm-12" id="printable">',
       '#suffix'     => '</div></div></div></div></div></div>',
-	  '#empty'		=>	'No Work order has been created yet.'
+	  '#empty'		=>	'No Team order has been created yet.'
     );
     return $element;
   }

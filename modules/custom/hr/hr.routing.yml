@@ -1,0 +1,31 @@
+hr.unitinfo:
+ path: '/unitinfo/unitinfo'
+ defaults:
+   _title: 'Unit Information Details'
+   _form: '\Drupal\hr\Form\UnitInformationForm'
+ requirements:
+   _permission: 'access content'
+
+hr.teamorderadd:
+ path: '/teamorder/add'
+ defaults:
+   _title: 'Add Team Order'
+   _form: '\Drupal\hr\Form\TeamorderForm'
+ requirements:
+   _permission: 'access content'
+
+hr.teamorderlist:
+ path: '/teamorder/list'
+ defaults:
+   _title: 'Team Order List'
+   _controller: '\Drupal\hr\Controller\TeamorderController::listing'
+ requirements:
+   _permission: 'access content'
+
+hr.teamorderedit:
+ path: '/teamorder/edit/{arg}'
+ defaults:
+   _title: 'Update Team Order'
+   _form: '\Drupal\hr\Form\TeamorderForm'
+ requirements:
+   _permission: 'access content'

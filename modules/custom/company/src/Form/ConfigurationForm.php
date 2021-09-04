@@ -120,7 +120,7 @@ public function buildForm(array $form, FormStateInterface $form_state) {
  	  '#attributes' => ['class' => ['form-control'], 'data-toggle' => 'toggle', 
 								'data-on' => 'ON', 'data-off' => 'OFF', 
 								'data-onstyle' => 'info'],
-	 '#default_value' => !empty($wrkord_conf)? ($wrkord_conf->codevalues == 'on')? 1 : 0 : '',
+	 '#default_value' => !empty($data)? ($data->codevalues == 'Automatic')? 1 : 0 : '',
 	 '#disabled' => ($user->hasPermission('admin configuration')) ? false : true,
      '#field_suffix' => '<i class="fadehide mdi mdi-help-circle" title="Make it ON If you need to enter your Designation code" data-toggle="tooltip"></i>',
 	 '#suffix' => '</div>'
@@ -156,8 +156,7 @@ public function buildForm(array $form, FormStateInterface $form_state) {
     $branchCodeType = ($field['Branchcode']) ? 'on' : 'off';
     $designationCodeType = ($field['Designationcode']) ? 'on' : 'off';
     $departmentCodeType = ($field['Departmentcode']) ? 'on' : 'off';    
-    $workorderCodeType = ($field['Workordercode']) ? 'on' : 'off';
-	
+
 	 $field  = array(
 				array(
 						'codetype'  	=>  'employeeid',
@@ -178,12 +177,7 @@ public function buildForm(array $form, FormStateInterface $form_state) {
 						'codetype'  	=>  'departmentcode',
 						'codename' 	    =>	'DPTCD',
 						'codevalues'	=>	$departmentCodeType
-					),
-                array(
-						'codetype'  	=>  'workordercode',
-						'codename' 	    =>	'WRKCD',
-						'codevalues'	=>	$workorderCodeType
-					) 					
+					)     					
           );
 		 
 		 $configobj->updatAllConfig($field);

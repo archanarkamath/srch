@@ -166,13 +166,7 @@ class ConfigurationModel extends ControllerBase {
 	*/
 	public function getWorkorderCodeConfig()
 	{
-		$query = db_select(DataModel::CODEVAL, 'n'); 
-		$query->fields('n')		
-		->condition('codename', 'WRKCD', "=")
-        ->condition('codetype', 'workordercode', "=");
-		$result = $query->execute()->fetch();
-		
-		return $result;
+		// write the code for work order config
 	}
 	
 	public function setShiftTiming($field)
