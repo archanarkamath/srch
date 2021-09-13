@@ -29,7 +29,7 @@ class WorkorderController extends ControllerBase {
       );
     }
 	
-    $element['display']['WorkOrderList'] = array(
+    $element['display']['Departmentlist'] = array(
       '#type'       => 'table',
       '#header'     =>  array('No', 'Work Name', 'Work Order', 'Action'),      
       '#rows'       =>  $rows,
