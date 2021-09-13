@@ -44,9 +44,6 @@
 	  <li class=""><a href="javascript:void(0)" class="waves-effect"><i class="mdi mdi-account-settings-variant fa-fw"></i> <span class="hide-menu">HR Management<span class="fa arrow"></span></span></a>
         <ul class="nav nav-second-level">
           {% if user.hasPermission('employee emplview') %}<li><a href="{{url('<front>')}}employee"><i class="icon-user fa-fw"></i><span class="hide-menu">Employee</span></a></li>{% endif %}
-		  {% if user.hasPermission('hr unitinfo') %}<li><a href="{{url('<front>')}}unitinfo/unitinfo"><i class="mdi mdi-settings fa-fw"></i><span class="hide-menu">Unit Information</span></a></li>{% endif %}
-		  {% if user.hasPermission('company workorder') %}<li><a href="{{url('<front>')}}teamorder/list"><i class="mdi mdi-account-multiple-outline fa-fw users-cog"></i><span class="hide-menu">Team order</span></a></li>{% endif %}
-		 
         </ul>
       </li>
      {% endif %}

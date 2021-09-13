@@ -188,15 +188,15 @@ company.projectlist:
 company.projectadd:
  path: '/wordorder/add'
  defaults:
-   _title: 'Add Work Order'
+   _title: 'Work Order'
    _form: '\Drupal\company\Form\WorkorderForm'
  requirements:
    _permission: 'access content'
 
-company.workorderedit:
- path: '/workorder/edit/{arg}'
+company.projectedit:
+ path: '/wordorder/edit/{arg}'
  defaults:
-   _title: 'Update Work order Details'
+   _title: 'Edit Work Order'
    _form: '\Drupal\company\Form\WorkorderForm'
  requirements:
    _permission: 'access content'
