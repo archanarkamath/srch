@@ -1,0 +1,5 @@
+name: xsmind
+recipe: drupal8
+config:
+  webroot: .
+  drush: ^9
